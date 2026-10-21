@@ -97,6 +97,10 @@ p {
 document.getElementById("readBtn").onclick = function() {
   document.getElementById("fullArticle").style.display = "block";
 };
+document.getElementById("menuBtn").onclick = function() {
+  const menu = document.getElementById("siteMenu");
+  menu.style.display = menu.style.display === "none" ? "block" : "none";
+};
 </script>
 </body>
 </html>

@@ -67,15 +67,36 @@ p {
   background-color: #367563;
   color: #ffffff;
 } 
-</style>
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.header h2 {
+  margin: 0;
+  color: #245548;
+  font-size: 22px;
+}
+
+#menuBtn {
+  font-size: 22px;
+  padding: 8px 12px;
+  cursor: pointer;
+}
+ </style>
 </head>
 <body>
   <div class="card">
-    <h1>স্বাগতম!</h1>
- <h2>Hasan Alamin</h2>
-    <button id="menuBtn">☰</button>
-    
-<nav id="siteMenu" style="display: none;">
+  <div class="header">
+  <button id="menuBtn">☰</button>
+  <h2>Hasan Alamin</h2>
+</div>
+<h1>স্বাগতম!</h1>
+    <nav id="siteMenu" style="display: none;">
   <h3>Main Menu</h3>
 
   <a href="#home">🏠 হোম</a>

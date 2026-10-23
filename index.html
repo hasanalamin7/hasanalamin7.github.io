@@ -56,35 +56,56 @@ p {
 }
 #siteMenu {
   background-color: #f5f1e8;
-  margin: 20px auto;
+  marfff0px auto;
   padding: 15px;
   border-radius: 12px;
   border: 1px solid #d5dfd9;
 }
 
-#siteMenu h3 {
-  color: #245548;
-  font-size: 20px;
-  margin-top: 0;
+#siteMenu {
+  box-sizing: border-box;
+  width: 260px;
+  max-width: 100%;
+  margin: 16px 0;
+  padding: 12px;
+  border: 1px solid #49A982;
+  border-radius: 10px;
+  background-color: rgba(16, 27, 25, 0.95);
+  text-align: left;
 }
 
 #siteMenu a {
   display: block;
-  color: #245548;
+  color: #49A982;
   text-decoration: none;
-  background-color: #ffffff;
-  margin: 8px 0;
-  padding: 12px;
-  border-radius: 8px;
+  margin: 0;
+  padding: 12px 8px;
+  border-bottom: 1px solid rgba(73, 169, 130, 0.3);
   font-size: 16px;
   text-align: left;
 }
 
-#siteMenu a:hover {
-  background-color: #367563;
-  color: #ffffff;
-} 
+#siteMenu a:last-child {
+  border-bottom: none;
+}
 
+#siteMenu a:hover {
+  background-color: #245548;
+  color: #ffffff;
+}
+
+#welcome {
+  text-align: left;
+  color: #ffffff;
+}
+
+#welcome h2 {
+  color: #49A982;
+}
+
+#welcome p {
+  color: #eeeeee;
+}
 .header {
   display: flex;
   align-items: center;
@@ -98,7 +119,6 @@ p {
   color: #49A982;
   font-size: 22px;
 }
-
 #menuBtn {
   font-size: 22px;
   padding: 8px 12px;

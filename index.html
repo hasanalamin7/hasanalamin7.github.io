@@ -193,8 +193,14 @@ document.getElementById("readBtn").onclick = function() {
 };
 document.getElementById("menuBtn").onclick = function() {
   const menu = document.getElementById("siteMenu");
-  menu.style.display = menu.style.display === "none" ? "block" : "none";
+  const welcome = document.getElementById("welcome");
+
+  const isClosed = menu.style.display === "none";
+
+  menu.style.display = isClosed ? "block" : "none";
+  welcome.style.display = isClosed ? "none" : "block";
 };
+
 </script>
 </body>
 </html>

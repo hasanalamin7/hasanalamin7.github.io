@@ -275,7 +275,24 @@ p {
 </a>
   </div>
 <script>
-  document.getElementById("aboutBtn").onclick = function() {
+  let currentQuote = 0;
+const quotes = document.querySelectorAll(".quote");
+const dots = document.querySelectorAll(".quoteDot");
+
+function showQuote(index) {
+  quotes[currentQuote].classList.remove("active");
+  dots[currentQuote].classList.remove("active");
+
+  currentQuote = index;
+
+  quotes[currentQuote].classList.add("active");
+  dots[currentQuote].classList.add("active");
+}
+
+setInterval(function() {
+  showQuote((currentQuote + 1) % quotes.length);
+}, 6000);
+document.getElementById("aboutBtn").onclick = function() {
     document.getElementById("aboutText").style.display = "block";
   };
 document.getElementById("readBtn").onclick = function() {

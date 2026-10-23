@@ -10,7 +10,23 @@
       font-family: Arial, sans-serif;
       text-align: center;
     }
-    h1 {
+   
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 75%;
+  height: 100%;
+  background-image: url("FB_IMG_1720919174248.jpg");
+  background-repeat: no-repeat;
+  background-position: right center;
+  background-size: contain;
+  opacity: 0.12;
+  pointer-events: none;
+  z-index: 0;
+}
+   h1 {
     color: #245548;
 }
 p { 

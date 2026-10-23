@@ -121,7 +121,14 @@ p {
 .quote {
   display: none;
 }
-
+.quote::before {
+  content: "“";
+  display: block;
+  color: #49A982;
+  font-size: 48px;
+  line-height: 1;
+  margin-bottom: 8px;
+}
 .quote.active {
   display: block;
 }

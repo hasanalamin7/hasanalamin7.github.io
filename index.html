@@ -301,7 +301,10 @@ function openWriting() {
   document.getElementById("siteMenu").style.display = "none";
   document.getElementById("welcome").style.display = "none";
 }
-  
+  function openArticle() {
+  document.getElementById("writingText").style.display = "none";
+  document.getElementById("article1").style.display = "block";
+}
   function showQuote(index) {
   quotes[currentQuote].classList.remove("active");
   dots[currentQuote].classList.remove("active");

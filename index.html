@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Hasan Alamin</title>
  <style>
-    body {
+  body {
       background-color: #101B19;
       font-family: Arial, sans-serif;
       text-align: center;
@@ -236,7 +236,7 @@ p {
 </div>
   <nav id="siteMenu" style="display: none;">
   <a href="#home">🏠 হোম</a>
-  <a href="#aboutText">👤 আমার পরিচিতি</a>
+  <a href="#aboutText" onclick="openAbout(); return false;">👤 আমার পরিচিতি</a>
   <a href="#writing">📖 আমার লিখালিখি</a>
   <a href="#videos">🎬 ভিডিও</a>
   <a href="#books">📚 বইয়ের পাতার গল্প</a>
@@ -265,8 +265,14 @@ p {
   let currentQuote = 0;
 const quotes = document.querySelectorAll(".quote");
 const dots = document.querySelectorAll(".quoteDot");
+function openAbout() {
+  document.getElementById("aboutText").style.display = "block";
+  document.getElementById("siteMenu").style.display = "none";
+  document.getElementById("welcome").style.display = "none";
+}
 
-function showQuote(index) {
+  
+  function showQuote(index) {
   quotes[currentQuote].classList.remove("active");
   dots[currentQuote].classList.remove("active");
 

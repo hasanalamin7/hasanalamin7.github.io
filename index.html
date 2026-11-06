@@ -352,9 +352,12 @@ function openWriting() {
   document.getElementById("siteMenu").style.display = "none";
   document.getElementById("welcome").style.display = "none";
 }
-  function openArticle() {
+  function openCategory(category) {
   document.getElementById("writingText").style.display = "none";
-  document.getElementById("article1").style.display = "block";
+
+  if (category === "life") {
+    document.getElementById("article1").style.display = "block";
+  }
 }
   function showQuote(index) {
   quotes[currentQuote].classList.remove("active");

@@ -365,11 +365,10 @@ function openWriting() {
   document.getElementById("writingText").style.display = "none";
 
   if (category === "life") {
-    document.getElementById("lifeCategory").style.display = "block";
+    document.getElementById("lifeCategory").style.display = "none";
+    document.getElementById("article1").style.display = "block";
   }
-}
-
-function openArticle() {
+  function openArticle() {
   document.getElementById("lifeCategory").style.display = "none";
   document.getElementById("article1").style.display = "block";
 }

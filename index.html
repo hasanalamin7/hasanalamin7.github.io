@@ -325,7 +325,9 @@ setInterval(function() {
   document.getElementById("menuBtn").onclick = function() {
   const menu = document.getElementById("siteMenu");
   const welcome = document.getElementById("welcome");
-
+document.getElementById("aboutText").style.display = "none";
+document.getElementById("writingText").style.display = "none";
+document.getElementById("article1").style.display = "none";
   const isClosed = menu.style.display === "none";
 
   menu.style.display = isClosed ? "block" : "none";

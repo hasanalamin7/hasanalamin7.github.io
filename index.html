@@ -448,14 +448,15 @@ function openWriting() {
   document.getElementById("siteMenu").style.display = "none";
   document.getElementById("welcome").style.display = "none";
 }
-  function openCategory(category) {
+function openCategory(category) {
   document.getElementById("writingText").style.display = "none";
+  document.getElementById("lifeCategory").style.display = "none";
+  document.getElementById("article1").style.display = "none";
 
   if (category === "life") {
-    document.getElementById("lifeCategory").style.display = "none";
     document.getElementById("article1").style.display = "block";
   }
-  } 
+}
     function openArticle() {
   document.getElementById("lifeCategory").style.display = "none";
   document.getElementById("article1").style.display = "block";

@@ -661,9 +661,15 @@ function openCategory(category) {
   if (category === "current") {
     document.getElementById("currentCategory").style.display = "block";
 }
- if (category === "personal") {
+  if (category === "personal") {
   document.getElementById("personalCategory").style.display = "block";
   }
+
+  if (category === "literature") {
+    document.getElementById("literatureCategory").style.display = "block";
+  }
+}
+
 function returnToLife() {
   document.getElementById("article1").style.display = "none";
   document.getElementById("lifeCategory").style.display = "none";

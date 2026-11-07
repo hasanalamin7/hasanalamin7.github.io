@@ -561,9 +561,12 @@ function openCategory(category) {
 
   if (category === "current") {
     document.getElementById("currentCategory").style.display = "block";
-  }
 }
-    function openArticle() {
+ if (category === "personal") {
+  document.getElementById("personalCategory").style.display = "block";
+}
+}
+ function openArticle() {
   document.getElementById("lifeCategory").style.display = "none";
   document.getElementById("article1").style.display = "block";
 }

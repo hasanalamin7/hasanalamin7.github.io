@@ -353,6 +353,76 @@ p {
   color: #FFFFFF;
   text-shadow: 0 0 5px rgba(255, 255, 255, 0.25);
 }
+ /* ===== Premium Website Animations ===== */
+
+@keyframes fadeSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-15px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(18px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Header Animation */
+.header {
+    animation: fadeSlideIn 0.9s ease both;
+}
+
+/* Quote Slider Transition */
+.quote {
+    display: block !important;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(12px);
+    transition:
+        opacity 0.8s ease,
+        transform 0.8s ease,
+        visibility 0.8s ease;
+}
+
+.quote.active {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+/* Content Animation */
+#welcome,
+#aboutText,
+#writingText,
+#articleList,
+#article1,
+#societyCategory,
+#currentCategory,
+#personalCategory,
+#literatureCategory,
+#thoughtsCategory {
+    animation: fadeUp 0.7s ease both;
+}
+
+/* Respect Reduced Motion Preference */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+    }
+}
  </style>
 </head>
 <body>

@@ -423,6 +423,64 @@ p {
         transition-duration: 0.01ms !important;
     }
 }
+ /* ===== Premium Menu Animation ===== */
+
+@keyframes menuFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-12px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+#siteMenu[style*="display: block"] {
+    animation: menuFadeIn 0.45s ease both;
+}
+
+/* Menu Item Animation */
+
+#siteMenu a {
+    transition:
+        color 0.3s ease,
+        background-color 0.3s ease,
+        padding-left 0.3s ease;
+    animation: menuFadeIn 0.5s ease both;
+}
+
+#siteMenu a:nth-child(1) {
+    animation-delay: 0.05s;
+}
+
+#siteMenu a:nth-child(2) {
+    animation-delay: 0.10s;
+}
+
+#siteMenu a:nth-child(3) {
+    animation-delay: 0.15s;
+}
+
+#siteMenu a:nth-child(4) {
+    animation-delay: 0.20s;
+}
+
+#siteMenu a:nth-child(5) {
+    animation-delay: 0.25s;
+}
+
+#siteMenu a:nth-child(6) {
+    animation-delay: 0.30s;
+}
+
+/* Menu Hover Effect */
+
+#siteMenu a:hover {
+    color: #D6B978;
+    background-color: rgba(73, 169, 130, 0.12);
+    padding-left: 15px;
+}
  </style>
 </head>
 <body>

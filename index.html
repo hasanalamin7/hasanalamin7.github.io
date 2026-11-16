@@ -1123,7 +1123,29 @@ function returnToMenu() {
   document.getElementById("siteMenu").style.display = "block";
   document.getElementById("welcome").style.display = "none";
 }
+function open2027() {
+  const sections = [
+    "aboutText",
+    "writingText",
+    "article1",
+    "lifeCategory",
+    "societyCategory",
+    "currentCategory",
+    "personalCategory",
+    "literatureCategory",
+    "thoughtsCategory",
+    "videos"
+  ];
 
+  sections.forEach(id => {
+    const section = document.getElementById(id);
+    if (section) section.style.display = "none";
+  });
+
+  document.getElementById("siteMenu").style.display = "none";
+  document.getElementById("welcome").style.display = "none";
+  document.getElementById("goals2027").style.display = "block";
+}
   function openAbout() {
   document.getElementById("aboutText").style.display = "block";
   document.getElementById("writingText").style.display = "none";

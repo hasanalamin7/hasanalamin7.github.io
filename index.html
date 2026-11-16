@@ -1100,12 +1100,30 @@ function openVideos() {
   document.getElementById("siteMenu").style.display = "none";
   document.getElementById("welcome").style.display = "none";
 }
-
 function returnToMenu() {
-  document.getElementById("videos").style.display = "none";
+  const sections = [
+    "aboutText",
+    "writingText",
+    "article1",
+    "lifeCategory",
+    "societyCategory",
+    "currentCategory",
+    "personalCategory",
+    "literatureCategory",
+    "thoughtsCategory",
+    "videos",
+    "goals2027"
+  ];
+
+  sections.forEach(id => {
+    const section = document.getElementById(id);
+    if (section) section.style.display = "none";
+  });
+
   document.getElementById("siteMenu").style.display = "block";
   document.getElementById("welcome").style.display = "none";
 }
+
   function openAbout() {
   document.getElementById("aboutText").style.display = "block";
   document.getElementById("writingText").style.display = "none";

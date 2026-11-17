@@ -5,19 +5,23 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Hasan Alamin</title>
  <style>
-  body {
-      background-color: #101B19;
-      font-family: Arial, sans-serif;
-      text-align: center;
-    }
-h1 {
-    color: #245548;
+  /* ===== BASIC DESIGN ===== */
+body {
+  background-color: #101B19;
+  font-family: Arial, sans-serif;
+  text-align: center;
 }
+
+h1 {
+  color: #245548;
+}
+
 p {
-    color: #444444;
-    font-size: 18px;
-    }
- button {
+  color: #444444;
+  font-size: 18px;
+}
+
+button {
   background-color: #245548;
   color: white;
   padding: 12px 20px;
@@ -25,9 +29,11 @@ p {
   border-radius: 20px;
   font-size: 22px;
 }
- button:hover {
+
+button:hover {
   background-color: #367563;
 }
+
 .card {
   background-color: transparent;
   width: 100%;
@@ -40,12 +46,33 @@ p {
   position: relative;
   z-index: 1;
 }
-#siteMenu {
-  background-color: #f5f1e8;
-  padding: 15px;
-  border-radius: 12px;
-  border: 1px solid #d5dfd9;
+
+/* ===== HEADER ===== */
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0;
+  margin-bottom: 20px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #49A982;
+  animation: fadeSlideIn 0.9s ease both;
 }
+
+.header h2 {
+  margin: 0;
+  color: #49A982;
+  font-size: 22px;
+}
+
+#menuBtn {
+  font-size: 22px;
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+/* ===== MENU ===== */
 
 #siteMenu {
   box-sizing: border-box;
@@ -59,6 +86,10 @@ p {
   text-align: left;
 }
 
+#siteMenu[style*="display: block"] {
+  animation: menuFadeIn 0.45s ease both;
+}
+
 #siteMenu a {
   display: block;
   color: #49A982;
@@ -68,20 +99,35 @@ p {
   border-bottom: 1px solid rgba(73, 169, 130, 0.3);
   font-size: 16px;
   text-align: left;
+  transition: color 0.3s ease, background-color 0.3s ease;
+  animation: menuFadeIn 0.45s ease both;
 }
 
 #siteMenu a:last-child {
   border-bottom: none;
 }
 
-#sitpersonalCategory {
-   background-color: #245548;
-  color: #ffffff;
+#siteMenu a:nth-child(1) { animation-delay: 0.05s; }
+#siteMenu a:nth-child(2) { animation-delay: 0.12s; }
+#siteMenu a:nth-child(3) { animation-delay: 0.19s; }
+#siteMenu a:nth-child(4) { animation-delay: 0.26s; }
+#siteMenu a:nth-child(5) { animation-delay: 0.33s; }
+#siteMenu a:nth-child(6) { animation-delay: 0.40s; }
+#siteMenu a:nth-child(7) { animation-delay: 0.47s; }
+
+#siteMenu a:hover,
+#siteMenu a:focus {
+  color: #D6B978;
+  background-color: rgba(73, 169, 130, 0.12);
+  outline: none;
 }
+
+/* ===== WELCOME ===== */
 
 #welcome {
   text-align: left;
   color: #ffffff;
+  animation: fadeUp 0.7s ease both;
 }
 
 #welcome h2 {
@@ -89,9 +135,13 @@ p {
   font-size: 18px;
   text-align: left;
 }
+
 #welcome p {
   color: #eeeeee;
 }
+
+/* ===== QUOTE SLIDER ===== */
+
 #quoteSlider {
   position: relative;
   z-index: 1;
@@ -103,15 +153,47 @@ p {
 }
 
 .quote {
-  display: none;
   position: absolute;
   top: 5px;
   left: 10px;
   right: 35%;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(12px);
+  transition:
+    opacity 0.8s ease,
+    transform 0.8s ease,
+    visibility 0.8s ease;
 }
 
 .quote.active {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.quote::before {
+  content: "“";
   display: block;
+  color: #49A982;
+  font-size: 48px;
+  line-height: 1;
+  margin-bottom: -28px;
+}
+
+.quote p {
+  color: #eeeeee;
+  font-size: 16px;
+  font-weight: 300;
+  line-height: 1.6;
+  margin: 0 0 10px;
+}
+
+.quote span {
+  display: block;
+  color: #49A982;
+  font-size: 15px;
+  text-align: left;
 }
 
 #quoteDots {
@@ -122,42 +204,6 @@ p {
   justify-content: flex-start;
   gap: 8px;
   margin-top: 0;
-}
-
-.quote {
-  display: none;
-}
-.quote::before {
-  content: "“";
-  display: block;
-  color: #49A982;
-  font-size: 48px;
-  line-height: 1;
-  margin-bottom: -28px;
-}
-.quote.active {
-  display: block;
-}
-
-.quote p {
-  color: #eeeeee;
-  font-size: 16px;
-  font-weight: 300;
-  line-height: 1.6;
-  margin: 0 0 10px;
-}
-.quote span {
-  display: block;
-  color: #49A982;
-  font-size: 15px;
-  text-align: left;
-}
-
-#quoteDots {
-  display: flex;
-  justify-content: flex-start;
-  gap: 8px;
-  margin-top: 15px;
 }
 
 .quoteDot {
@@ -172,37 +218,71 @@ p {
 .quoteDot.active {
   background-color: #49A982;
 }
-.header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between ;
-  gap: 0;
-  margin-bottom: 20px;
-  padding-bottom: 12px;
-  border-bottom: 1px solid #49A982;
-}
 
-.header h2 {
-  margin: 0;
-  color: #49A982;
-  font-size: 22px;
-}
-#menuBtn {
-  font-size: 22px;
-  padding: 8px 12px;
-  cursor: pointer;
-}
- #aboutText {
+/* ===== ABOUT ===== */
+
+#aboutText {
   background: rgba(73, 169, 130, 0.15);
   padding: 20px;
   border-radius: 12px;
   color: #E8F1ED;
+  animation: fadeUp 0.7s ease both;
 }
 
 #aboutText p {
   color: #E8F1ED;
   line-height: 1.8;
 }
+
+/* ===== WRITING SECTION ===== */
+
+#writingText {
+  animation: fadeUp 0.7s ease both;
+}
+
+#writingText > h2 {
+  color: #49A982;
+  text-align: left;
+  font-size: 22px;
+  margin-bottom: 12px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(73, 169, 130, 0.5);
+}
+
+#articleList {
+  background: rgba(73, 169, 130, 0.10);
+  border: 1px solid #49A982;
+  border-radius: 12px;
+  padding: 15px;
+  margin-top: 15px;
+  text-align: left;
+  animation: fadeUp 0.7s ease both;
+}
+
+#articleList p {
+  margin: 0;
+  border-bottom: 1px solid rgba(73, 169, 130, 0.25);
+}
+
+#articleList p:last-child {
+  border-bottom: none;
+}
+
+#articleList a {
+  display: block;
+  color: #E8F1ED;
+  text-decoration: none;
+  padding: 14px 10px;
+  font-size: 17px;
+}
+
+#articleList a:hover {
+  background: rgba(73, 169, 130, 0.15);
+  color: #49A982;
+}
+
+/* ===== ARTICLES ===== */
+
 #article1,
 #societyCategory,
 #currentCategory,
@@ -216,8 +296,10 @@ p {
   text-align: left;
   position: relative;
   box-shadow: 0 0 18px rgba(73, 169, 130, 0.25);
+  animation: fadeUp 0.7s ease both;
 }
-   #article1 > p:first-child,
+
+#article1 > p:first-child,
 #societyCategory > p:first-child,
 #currentCategory > p:first-child,
 #personalCategory > p:first-child,
@@ -243,6 +325,7 @@ p {
   text-decoration: none;
   font-size: 14px;
 }
+
 #article1 h2,
 #article1 p,
 #societyCategory h2,
@@ -252,270 +335,34 @@ p {
 #personalCategory h2,
 #personalCategory p,
 #literatureCategory h2,
-#literatureCategory p { 
+#literatureCategory p {
   color: #E8F1ED;
   line-height: 1.9;
 }
 
-#articleList {
-  background: rgba(73, 169, 130, 0.10);
-  border: 1px solid #49A982;
-  border-radius: 12px;
-  padding: 15px;
-  margin-top: 15px;
-  text-align: left;
-}
-
-#articleList p {
-  margin: 0;
-  border-bottom: 1px solid rgba(73, 169, 130, 0.25);
-}
-
-#articleList p:last-child {
-  border-bottom: none;
-}
-
-#articleList a {
-  display: block;
-  color: #E8F1ED;
-  text-decoration: none;
-  padding: 14px 10px;
-  font-size: 17px;
-}
-
-#articleList a:hover {
-  background: rgba(73, 169, 130, 0.15);
-  color: #49A982;
-}
-   
-#writingText > h2 {
-  color: #49A982;
-  text-align: left;
-  font-size: 22px;
-  margin-bottom: 12px;
-  padding-bottom: 10px;
-  border-bottom: 1px solid rgba(73, 169, 130, 0.5);
-}
- #footer {
-  margin-top: 40px;
-  padding: 25px 10px;
-  border-top: 1px solid #49A982;
-  text-align: center;
-}
-
-#footer h3 {
-  color: #D6B978;
-  font-size: 18px;
-  margin-bottom: 20px;
-}
-
-.social-links {
-  display: flex;
-  justify-content: center;
-  gap: 18px;
-}
-
-.social-links a {
-  width: 42px;
-  height: 42px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid #49A982;
-  border-radius: 50%;
-  color: #49A982;
-  font-size: 22px;
-  text-decoration: none;
-}
- .social-links a {
-  border: 1px solid #D4AF37;
-  border-radius: 50%;
-  padding: 10px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  transition: 0.3s;
-}
-
-.social-links a:hover {
-  background: #D4AF37;
-  color: #101B19;
-}
-   .red-point {
-  color: #D66B6B;
-  font-weight: 600;
-}
- #literatureCategory h3 {
+#literatureCategory h3 {
   color: #D66B6B;
 }
- #thoughtsCategory h2,
+
+#thoughtsCategory h2,
 #thoughtsCategory p {
   color: #FFFFFF;
   text-shadow: 0 0 5px rgba(255, 255, 255, 0.25);
 }
- /* ===== Premium Website Animations ===== */
 
-@keyframes fadeSlideIn {
-    from {
-        opacity: 0;
-        transform: translateY(-15px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+.red-point {
+  color: #D66B6B;
+  font-weight: 600;
 }
 
-@keyframes fadeUp {
-    from {
-        opacity: 0;
-        transform: translateY(18px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* Header Animation */
-.header {
-    animation: fadeSlideIn 0.9s ease both;
-}
-
-/* Quote Slider Transition */
-.quote {
-    display: block !important;
-    opacity: 0;
-    visibility: hidden;
-    transform: translateY(12px);
-    transition:
-        opacity 0.8s ease,
-        transform 0.8s ease,
-        visibility 0.8s ease;
-}
-
-.quote.active {
-    opacity: 1;
-    visibility: visible;
-    transform: translateY(0);
-}
-
-/* Content Animation */
-#welcome,
-#aboutText,
-#writingText,
-#articleList,
-#article1,
-#societyCategory,
-#currentCategory,
-#personalCategory,
-#literatureCategory,
-#thoughtsCategory {
-    animation: fadeUp 0.7s ease both;
-}
-
-/* Respect Reduced Motion Preference */
-@media (prefers-reduced-motion: reduce) {
-    *,
-    *::before,
-    *::after {
-        animation-duration: 0.01ms !important;
-        transition-duration: 0.01ms !important;
-    }
-}
- /* ===== Premium Menu Animation ===== */
-
-@keyframes menuFadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(-12px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-#siteMenu[style*="display: block"] {
-    animation: menuFadeIn 0.45s ease both;
-}
-
-/* Menu Item Animation */
-
-#siteMenu a {
-    transition:
-        color 0.3s ease,
-        background-color 0.3s ease,
-        padding-left 0.3s ease;
-    animation: menuFadeIn 0.5s ease both;
-}
-
-#siteMenu a:nth-child(1) {
-    animation-delay: 0.05s;
-}
-
-#siteMenu a:nth-child(2) {
-    animation-delay: 0.10s;
-}
-
-#siteMenu a:nth-child(3) {
-    animation-delay: 0.15s;
-}
-
-#siteMenu a:nth-child(4) {
-    animation-delay: 0.20s;
-}
-
-#siteMenu a:nth-child(5) {
-    animation-delay: 0.25s;
-}
-
-#siteMenu a:nth-child(6) {
-    animation-delay: 0.30s;
-}
-
-/* Menu Hover Effect */
-
-#siteMenu a:hover {
-    color: #D6B978;
-    background-color: rgba(73, 169, 130, 0.12);
-    padding-left: 15px;
-}
- /* ===== Menu Options Animation ===== */
-
-@keyframes menuItemReveal {
-    from {
-        opacity: 0;
-        transform: translateX(-15px);
-    }
-    to {
-        opacity: 1;
-        transform: translateX(0);
-    }
-}
-
-#siteMenu a {
-    animation: menuItemReveal 0.45s ease both;
-}
-
-#siteMenu a:nth-child(1) { animation-delay: 0.05s; }
-#siteMenu a:nth-child(2) { animation-delay: 0.12s; }
-#siteMenu a:nth-child(3) { animation-delay: 0.19s; }
-#siteMenu a:nth-child(4) { animation-delay: 0.26s; }
-#siteMenu a:nth-child(5) { animation-delay: 0.33s; }
-#siteMenu a:nth-child(6) { animation-delay: 0.40s; }
-#siteMenu a:focus {
-    color: #D6B978;
-    background-color: rgba(214, 185, 120, 0.18);
-    outline: none;
-}
- /* ===== MY 2027 SECTION ===== */
+/* ===== MY 2027 SECTION ===== */
 
 #goals2027 {
   display: none;
   text-align: left;
   padding: 20px 5px;
   color: #E8EDE9;
+  animation: fadeUp 0.7s ease both;
 }
 
 .goals-hero {
@@ -597,7 +444,10 @@ p {
   display: inline-block;
   margin-bottom: 18px;
 }
- .reflection-card {
+
+/* ===== REFLECTION CARD ===== */
+
+.reflection-card {
   background: linear-gradient(145deg, #172923, #101B19);
   border-top: 1px solid #D6B978;
   border-bottom: 1px solid #D6B978;
@@ -619,6 +469,7 @@ p {
   text-align: left;
   margin-bottom: 16px;
 }
+
 .reflection-label {
   display: inline-block;
   background: #493D24;
@@ -632,7 +483,94 @@ p {
   text-align: center;
 }
 
- </style>
+/* ===== FOOTER ===== */
+
+#footer {
+  margin-top: 40px;
+  padding: 25px 10px;
+  border-top: 1px solid #49A982;
+  text-align: center;
+}
+
+#footer h3 {
+  color: #D6B978;
+  font-size: 18px;
+  margin-bottom: 20px;
+}
+
+.social-links {
+  display: flex;
+  justify-content: center;
+  gap: 18px;
+}
+
+.social-links a {
+  box-sizing: border-box;
+  width: 42px;
+  height: 42px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #D4AF37;
+  border-radius: 50%;
+  color: #49A982;
+  font-size: 22px;
+  text-decoration: none;
+  transition: 0.3s;
+}
+
+.social-links a:hover {
+  background: #D4AF37;
+  color: #101B19;
+}
+
+/* ===== ANIMATIONS ===== */
+
+@keyframes fadeSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes menuFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ===== REDUCED MOTION ===== */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+</style>
 </head>
 <body>
   <div class="card">
@@ -1133,128 +1071,117 @@ HASAN ALAMIN
   </div>
 </footer>
 <script>
-  let currentQuote = 0;
-const quotes = document.querySelectorAll(".quote");
-const dots = document.querySelectorAll(".quoteDot");
-function openVideos() {
-  document.getElementById("aboutText").style.display = "none";
-  document.getElementById("writingText").style.display = "none";
-  document.getElementById("article1").style.display = "none";
-  document.getElementById("lifeCategory").style.display = "none";
-  document.getElementById("videos").style.display = "block";
+// ===== WEBSITE NAVIGATION =====
+
+const sectionIds = [
+  "aboutText",
+  "writingText",
+  "article1",
+  "lifeCategory",
+  "societyCategory",
+  "currentCategory",
+  "personalCategory",
+  "literatureCategory",
+  "thoughtsCategory",
+  "videos",
+  "goals2027"
+];
+
+function hideAllSections() {
+  sectionIds.forEach(id => {
+    const section = document.getElementById(id);
+
+    if (section) {
+      section.style.display = "none";
+    }
+  });
+}
+
+function showSection(id) {
+  hideAllSections();
+
   document.getElementById("siteMenu").style.display = "none";
   document.getElementById("welcome").style.display = "none";
-}
-function returnToMenu() {
-  const sections = [
-    "aboutText",
-    "writingText",
-    "article1",
-    "lifeCategory",
-    "societyCategory",
-    "currentCategory",
-    "personalCategory",
-    "literatureCategory",
-    "thoughtsCategory",
-    "videos",
-    "goals2027"
-  ];
 
-  sections.forEach(id => {
-    const section = document.getElementById(id);
-    if (section) section.style.display = "none";
-  });
+  const section = document.getElementById(id);
+
+  if (section) {
+    section.style.display = "block";
+  }
+}
+
+// ===== MAIN SECTIONS =====
+
+function openHome() {
+  hideAllSections();
+
+  document.getElementById("siteMenu").style.display = "none";
+  document.getElementById("welcome").style.display = "block";
+}
+
+function returnToMenu() {
+  hideAllSections();
 
   document.getElementById("siteMenu").style.display = "block";
   document.getElementById("welcome").style.display = "none";
 }
-function open2027() {
-  const sections = [
-    "aboutText",
-    "writingText",
-    "article1",
-    "lifeCategory",
-    "societyCategory",
-    "currentCategory",
-    "personalCategory",
-    "literatureCategory",
-    "thoughtsCategory",
-    "videos"
-  ];
 
-  sections.forEach(id => {
-    const section = document.getElementById(id);
-    if (section) section.style.display = "none";
-  });
+function openAbout() {
+  showSection("aboutText");
+}
 
-  document.getElementById("siteMenu").style.display = "none";
-  document.getElementById("welcome").style.display = "none";
-  document.getElementById("goals2027").style.display = "block";
-}
-  function openAbout() {
-  document.getElementById("aboutText").style.display = "block";
-  document.getElementById("writingText").style.display = "none";
-  document.getElementById("videos").style.display = "none";
-  document.getElementById("article1").style.display = "none";
-  document.getElementById("societyCategory").style.display = "none";
-  document.getElementById("currentCategory").style.display = "none";
-  document.getElementById("personalCategory").style.display = "none";
-  document.getElementById("literatureCategory").style.display = "none";
-  document.getElementById("thoughtsCategory").style.display = "none";
-  document.getElementById("siteMenu").style.display = "none";
-  document.getElementById("welcome").style.display = "none";
-}
-  
 function openWriting() {
-  document.getElementById("writingText").style.display = "block";
-  document.getElementById("siteMenu").style.display = "none";
-  document.getElementById("welcome").style.display = "none";
+  showSection("writingText");
 }
+
+function openVideos() {
+  showSection("videos");
+}
+
+function open2027() {
+  showSection("goals2027");
+}
+
+// ===== WRITING CATEGORIES =====
+
 function openCategory(category) {
-  document.getElementById("writingText").style.display = "none";
-  document.getElementById("lifeCategory").style.display = "none";
-  document.getElementById("societyCategory").style.display = "none";
-  document.getElementById("currentCategory").style.display = "none";
-  document.getElementById("personalCategory").style.display = "none";
-  document.getElementById("literatureCategory").style.display = "none";
-  document.getElementById("thoughtsCategory").style.display = "none";
-  document.getElementById("article1").style.display = "none";
+  const categorySections = {
+    life: "article1",
+    society: "societyCategory",
+    current: "currentCategory",
+    personal: "personalCategory",
+    literature: "literatureCategory",
+    thoughts: "thoughtsCategory"
+  };
 
-  if (category === "life") {
-    document.getElementById("article1").style.display = "block";
+  const sectionId = categorySections[category];
+
+  if (sectionId) {
+    showSection(sectionId);
   }
-
-  if (category === "society") {
-    document.getElementById("societyCategory").style.display = "block";
-  }
-
-  if (category === "current") {
-    document.getElementById("currentCategory").style.display = "block";
 }
-  if (category === "personal") {
-  document.getElementById("personalCategory").style.display = "block";
-  }
 
-  if (category === "literature") {
-    document.getElementById("literatureCategory").style.display = "block";
-  }
-  
-  if (category === "thoughts") {
-  document.getElementById("thoughtsCategory").style.display = "block";
-}
-}
 function returnToLife() {
-  document.getElementById("article1").style.display = "none";
-  document.getElementById("lifeCategory").style.display = "none";
-  document.getElementById("societyCategory").style.display = "none";
-  document.getElementById("currentCategory").style.display = "none";
-  document.getElementById("personalCategory").style.display = "none";
-  document.getElementById("literatureCategory").style.display = "none";
-  document.getElementById("thoughtsCategory").style.display = "none";
-  document.getElementById("writingText").style.display = "block";
+  showSection("writingText");
 }
 
-  function showQuote(index) {
+// ===== QUOTE SLIDER =====
+
+let currentQuote = 0;
+
+const quotes = document.querySelectorAll(".quote");
+const dots = document.querySelectorAll(".quoteDot");
+
+function showQuote(index) {
+  if (
+    quotes.length === 0 ||
+    index < 0 ||
+    index >= quotes.length ||
+    index >= dots.length
+  ) {
+    return;
+  }
+
   quotes[currentQuote].classList.remove("active");
   dots[currentQuote].classList.remove("active");
 
@@ -1264,24 +1191,44 @@ function returnToLife() {
   dots[currentQuote].classList.add("active");
 }
 
-setInterval(function() {
-  showQuote((currentQuote + 1) % quotes.length);
-}, 4000);
-  document.getElementById("menuBtn").onclick = function() {
+if (quotes.length > 1 && quotes.length === dots.length) {
+  setInterval(function() {
+    showQuote((currentQuote + 1) % quotes.length);
+  }, 4000);
+}
+
+// ===== MENU BUTTON =====
+
+document.getElementById("menuBtn").onclick = function() {
   const menu = document.getElementById("siteMenu");
   const welcome = document.getElementById("welcome");
-document.getElementById("aboutText").style.display = "none";
-document.getElementById("writingText").style.display = "none";
-document.getElementById("article1").style.display = "none";
-document.getElementById("lifeCategory").style.display = "none";
-const isClosed = menu.style.display === "none";
 
-  menu.style.display = isClosed ? "block" : "none";
-  welcome.style.display = isClosed ? "none" : "block";
+  const isClosed = menu.style.display === "none";
+
+  if (isClosed) {
+    hideAllSections();
+
+    menu.style.display = "block";
+    welcome.style.display = "none";
+  } else {
+    menu.style.display = "none";
+    welcome.style.display = "block";
+  }
 };
-document.getElementById("aboutText").style.display = "none";
-document.getElementById("writingText").style.display = "none";
-document.getElementById("article1").style.display = "none";
+
+// ===== HOME MENU LINK =====
+
+document.querySelector('#siteMenu a[href="#home"]').onclick = function(event) {
+  event.preventDefault();
+  openHome();
+};
+
+// ===== INITIAL PAGE STATE =====
+
+hideAllSections();
+
+document.getElementById("siteMenu").style.display = "none";
+document.getElementById("welcome").style.display = "block";
 </script>
 </body>
 </html>

@@ -1288,7 +1288,6 @@ hideAllSections();
 document.getElementById("siteMenu").style.display = "none";
 document.getElementById("welcome").style.display = "block";
 </script>
-
 <script>
 const SUPABASE_URL = "https://rtevxoywkcvbprafkhxr.supabase.co";
 const SUPABASE_KEY = "sb_publishable_EuPBlIzVy4ztbWnml3KEag_WinN7S5a";
@@ -1297,30 +1296,6 @@ const supabaseClient = supabase.createClient(
   SUPABASE_URL,
   SUPABASE_KEY
 );
-  
-async function testSupabaseConnection() {
-  try {
-    const response = await fetch(
-      `${SUPABASE_URL}/auth/v1/settings`,
-      {
-        headers: {
-          apikey: SUPABASE_KEY
-        }
-      }
-    );
-
-    if (!response.ok) {
-      throw new Error(`HTTP ${response.status}`);
-    }
-
-    alert("Supabase Connection Successful!");
-  } catch (error) {
-    alert("Supabase Connection Failed: " + error.message);
-  }
-}
-
-testSupabaseConnection();
-
 </script>
 </body>
 </html>

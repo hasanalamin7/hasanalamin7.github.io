@@ -1288,6 +1288,16 @@ hideAllSections();
 document.getElementById("siteMenu").style.display = "none";
 document.getElementById("welcome").style.display = "block";
 </script>
+
+<script>
+const SUPABASE_URL = "https://rtevxoywkcvbprafkhxr.supabase.co/rest/v1/";
+const SUPABASE_KEY = "sb_publishable_EuPBlIzVy4ztbWnml3KEag_WinN7S5a";
+
+const supabaseClient = supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_KEY
+);
+</script>
 </body>
 </html>
 

@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="bn">
 <head>
@@ -68,6 +69,11 @@
       cursor: pointer;
     }
 
+    button:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
     #message {
       margin-top: 18px;
       line-height: 1.5;
@@ -126,10 +132,11 @@
       const password = document.getElementById("password").value;
 
       loginButton.disabled = true;
-      loginButton.textContent = "Logging in...";
+      loginButton.textContent = "Checking...";
       message.textContent = "";
 
       try {
+        // Step 1: Authenticate user
         const { data, error } =
           await supabaseClient.auth.signInWithPassword({
             email,
@@ -138,19 +145,44 @@
 
         if (error) throw error;
 
-        message.style.color = "#49A982";
-        message.textContent = "Login successful!";
+        // Step 2: Get user's role from database
+        const { data: roleData, error: roleError } =
+          await supabaseClient
+            .from("user_roles")
+            .select("role")
+            .eq("user_id", data.user.id)
+            .single();
 
-        // Role verification and dashboard routing
-        // will be added in the next step.
+        if (roleError || !roleData) {
+          throw new Error("Your account has no assigned role.");
+        }
+
+        // Step 3: Redirect according to role
+        if (roleData.role === "admin") {
+          message.style.color = "#49A982";
+          message.textContent = "Welcome, Admin!";
+
+          window.location.href = "admin.html";
+
+        } else if (roleData.role === "observer") {
+          message.style.color = "#49A982";
+          message.textContent = "Welcome, Observer!";
+
+          window.location.href = "observer.html";
+
+        } else {
+          throw new Error("Unauthorized account role.");
+        }
 
       } catch (error) {
-        message.style.color = "#D66B6B";
-        message.textContent = "Login failed: " + error.message;
-      }
+        await supabaseClient.auth.signOut();
 
-      loginButton.disabled = false;
-      loginButton.textContent = "Login";
+        message.style.color = "#D66B6B";
+        message.textContent = error.message;
+
+        loginButton.disabled = false;
+        loginButton.textContent = "Login";
+      }
     });
   </script>
 

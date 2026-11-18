@@ -1297,6 +1297,20 @@ const supabaseClient = supabase.createClient(
   SUPABASE_URL,
   SUPABASE_KEY
 );
+  async function testSupabaseConnection() {
+  const { data, error } = await supabaseClient
+    .from('profiles')
+    .select('*')
+    .limit(1);
+
+  if (error) {
+    console.error("Supabase Test:", error.message);
+  } else {
+    console.log("Supabase Connection Successful!", data);
+  }
+}
+
+testSupabaseConnection();
 </script>
 </body>
 </html>

@@ -1,1 +1,156 @@
 
+
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard | Hasan Alamin</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: #101B19;
+      color: #fff;
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 850px;
+      margin: 40px auto;
+    }
+
+    header {
+      padding-bottom: 20px;
+      border-bottom: 1px solid #355447;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    h1 {
+      color: #49A982;
+      font-size: 23px;
+      margin: 0;
+    }
+
+    .panel {
+      margin-top: 25px;
+      padding: 25px;
+      background: #192824;
+      border: 1px solid #355447;
+      border-radius: 14px;
+    }
+
+    .panel h2 {
+      color: #D6B978;
+      margin-top: 0;
+    }
+
+    button {
+      padding: 11px 18px;
+      background: #49A982;
+      color: #101B19;
+      border: none;
+      border-radius: 7px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    #logoutButton {
+      background: #D66B6B;
+      color: white;
+    }
+
+    #status {
+      color: #bbb;
+      line-height: 1.6;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+
+    <header>
+      <h1>HASAN ALAMIN</h1>
+      <button id="logoutButton" hidden>Logout</button>
+    </header>
+
+    <section class="panel">
+      <h2>Admin Dashboard</h2>
+      <p id="status">Verifying access...</p>
+    </section>
+
+  </div>
+
+  <script>
+    const SUPABASE_URL = "https://rtevxoywkcvbprafkhxr.supabase.co";
+    const SUPABASE_KEY = "sb_publishable_EuPBlIzVy4ztbWnml3KEag_WinN7S5a";
+
+    const supabaseClient = supabase.createClient(
+      SUPABASE_URL,
+      SUPABASE_KEY
+    );
+
+    const status = document.getElementById("status");
+    const logoutButton = document.getElementById("logoutButton");
+
+    async function checkAdminAccess() {
+      try {
+        const { data: sessionData, error: sessionError } =
+          await supabaseClient.auth.getSession();
+
+        if (sessionError) throw sessionError;
+
+        const session = sessionData.session;
+
+        if (!session) {
+          window.location.replace("login.html");
+          return;
+        }
+
+        const { data: roleData, error: roleError } =
+          await supabaseClient
+            .from("user_roles")
+            .select("role")
+            .eq("user_id", session.user.id)
+            .single();
+
+        if (roleError || !roleData || roleData.role !== "admin") {
+          await supabaseClient.auth.signOut();
+          window.location.replace("login.html");
+          return;
+        }
+
+        status.textContent =
+          "Welcome, Admin! Your access has been verified.";
+
+        logoutButton.hidden = false;
+
+      } catch (error) {
+        status.textContent = "Access verification failed: " + error.message;
+      }
+    }
+
+    logoutButton.addEventListener("click", async function() {
+      await supabaseClient.auth.signOut();
+      window.location.replace("login.html");
+    });
+
+    checkAdminAccess();
+  </script>
+
+</body>
+</html>

@@ -1297,20 +1297,30 @@ const supabaseClient = supabase.createClient(
   SUPABASE_URL,
   SUPABASE_KEY
 );
-  async function testSupabaseConnection() {
-  const { data, error } = await supabaseClient
-    .from('profiles')
-    .select('*')
-    .limit(1);
+  
+async function testSupabaseConnection() {
+  try {
+    const response = await fetch(
+      `${SUPABASE_URL}/auth/v1/settings`,
+      {
+        headers: {
+          apikey: SUPABASE_KEY
+        }
+      }
+    );
 
-  if (error) {
-    console.error("Supabase Test:", error.message);
-  } else {
-    console.log("Supabase Connection Successful!", data);
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}`);
+    }
+
+    alert("Supabase Connection Successful!");
+  } catch (error) {
+    alert("Supabase Connection Failed: " + error.message);
   }
 }
 
 testSupabaseConnection();
+
 </script>
 </body>
 </html>

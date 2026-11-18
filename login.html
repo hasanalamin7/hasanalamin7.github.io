@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="bn">
 <head>
@@ -74,6 +73,15 @@
       cursor: not-allowed;
     }
 
+    .forgot-button {
+      margin-top: 12px;
+      padding: 8px;
+      background: transparent;
+      color: #49A982;
+      font-size: 14px;
+      font-weight: normal;
+    }
+
     #message {
       margin-top: 18px;
       line-height: 1.5;
@@ -84,10 +92,12 @@
 <body>
 
   <div class="login-box">
+
     <h2>HASAN ALAMIN</h2>
     <p>Private Dashboard Login</p>
 
     <form id="loginForm">
+
       <input
         type="email"
         id="email"
@@ -107,14 +117,27 @@
       <button type="submit" id="loginButton">
         Login
       </button>
+
     </form>
 
+    <button
+      type="button"
+      class="forgot-button"
+      id="forgotButton"
+    >
+      Forgot Password?
+    </button>
+
     <p id="message"></p>
+
   </div>
 
   <script>
-    const SUPABASE_URL = "https://rtevxoywkcvbprafkhxr.supabase.co";
-    const SUPABASE_KEY = "sb_publishable_EuPBlIzVy4ztbWnml3KEag_WinN7S5a";
+    const SUPABASE_URL =
+      "https://rtevxoywkcvbprafkhxr.supabase.co";
+
+    const SUPABASE_KEY =
+      "sb_publishable_EuPBlIzVy4ztbWnml3KEag_WinN7S5a";
 
     const supabaseClient = supabase.createClient(
       SUPABASE_URL,
@@ -124,19 +147,23 @@
     const loginForm = document.getElementById("loginForm");
     const message = document.getElementById("message");
     const loginButton = document.getElementById("loginButton");
+    const forgotButton = document.getElementById("forgotButton");
+    const emailInput = document.getElementById("email");
+
+    // LOGIN SYSTEM
 
     loginForm.addEventListener("submit", async function(event) {
       event.preventDefault();
 
-      const email = document.getElementById("email").value.trim();
+      const email = emailInput.value.trim();
       const password = document.getElementById("password").value;
 
       loginButton.disabled = true;
+      forgotButton.disabled = true;
       loginButton.textContent = "Checking...";
       message.textContent = "";
 
       try {
-        // Step 1: Authenticate user
         const { data, error } =
           await supabaseClient.auth.signInWithPassword({
             email,
@@ -145,7 +172,6 @@
 
         if (error) throw error;
 
-        // Step 2: Get user's role from database
         const { data: roleData, error: roleError } =
           await supabaseClient
             .from("user_roles")
@@ -157,7 +183,6 @@
           throw new Error("Your account has no assigned role.");
         }
 
-        // Step 3: Redirect according to role
         if (roleData.role === "admin") {
           message.style.color = "#49A982";
           message.textContent = "Welcome, Admin!";
@@ -181,9 +206,58 @@
         message.textContent = error.message;
 
         loginButton.disabled = false;
+        forgotButton.disabled = false;
         loginButton.textContent = "Login";
       }
     });
+
+
+    // FORGOT PASSWORD SYSTEM
+
+    forgotButton.addEventListener("click", async function() {
+
+      const email = emailInput.value.trim();
+
+      if (!email) {
+        message.style.color = "#D66B6B";
+        message.textContent =
+          "Please enter your email address first.";
+        emailInput.focus();
+        return;
+      }
+
+      forgotButton.disabled = true;
+      loginButton.disabled = true;
+      forgotButton.textContent = "Sending...";
+      message.textContent = "";
+
+      try {
+        const { error } =
+          await supabaseClient.auth.resetPasswordForEmail(email, {
+            redirectTo:
+              "https://hasanalamin7.github.io/reset-password.html"
+          });
+
+        if (error) throw error;
+
+        message.style.color = "#49A982";
+        message.textContent =
+          "Password recovery email sent. Please check your inbox.";
+
+      } catch (error) {
+
+        message.style.color = "#D66B6B";
+        message.textContent = error.message;
+
+      } finally {
+
+        forgotButton.disabled = false;
+        loginButton.disabled = false;
+        forgotButton.textContent = "Forgot Password?";
+
+      }
+    });
+
   </script>
 
 </body>

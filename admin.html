@@ -486,14 +486,58 @@
       </div>
     </section>
 
-    <section class="section" id="activities">
-      <h2 class="section-title">Daily Activities</h2>
-      <div class="panel">
-        <h3>My Daily Activities</h3>
-        <p class="empty">Daily tasks and study time will appear here.</p>
-      </div>
-    </section>
+    
+<section class="section" id="activities">
+  <h2 class="section-title">Daily Activities</h2>
 
+  <div class="panel">
+    <h3 id="activityFormHeading">Add New Activity</h3>
+
+    <form id="activityForm" class="activity-form">
+      <div class="field full">
+        <label for="activityTitle">Activity Title *</label>
+        <input id="activityTitle" type="text" required maxlength="200"
+          placeholder="যেমন: HTML Practice">
+      </div>
+
+      <div class="field">
+        <label for="activityDate">Activity Date</label>
+        <input id="activityDate" type="date">
+      </div>
+
+      <div class="field">
+        <label for="activityDuration">Duration (Minutes)</label>
+        <input id="activityDuration" type="number" min="0" step="1" value="0">
+      </div>
+
+      <div class="field">
+        <label for="activityStatus">Status</label>
+        <select id="activityStatus">
+          <option value="Completed">Completed</option>
+          <option value="In Progress">In Progress</option>
+          <option value="Not Completed">Not Completed</option>
+        </select>
+      </div>
+
+      <div class="field full">
+        <label for="activityNotes">Notes</label>
+        <textarea id="activityNotes" placeholder="অতিরিক্ত তথ্য বা নোট"></textarea>
+      </div>
+
+      <div class="form-actions">
+        <button class="primary-btn" id="saveActivityButton" type="submit">Save Activity</button>
+        <button class="secondary-btn" id="cancelActivityEditButton" type="button" hidden>Cancel Edit</button>
+      </div>
+    </form>
+  <p class="message" id="activityMessage" role="status"></p>
+  </div>
+  <div class="panel">
+    <h3>My Daily Activities</h3>
+    <div id="activityList" class="activity-list">
+      <p class="empty">Loading activities...</p>
+    </div>
+  </div>
+</section>
     <section class="section" id="projects">
       <h2 class="section-title">Projects</h2>
       <div class="panel">

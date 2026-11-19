@@ -682,7 +682,81 @@
     });
   });
 
-  function showLearningMessage(message, isError = false) {
+  function showActivityMessage(message, isError = false) {
+    activityMessage.textContent = message;
+    activityMessage.style.color = isError ? "#D66B6B" : "#49A982";
+  }
+
+  async function loadActivities() {
+    activityList.replaceChildren();
+    addTextElement(activityList, "p", "empty", "Loading activities...");
+
+    try {
+      const { data, error } = await supabaseClient
+        .from("daily_activities")
+        .select("*")
+        .order("activity_date", { ascending: false, nullsFirst: false });
+
+      if (error) throw error;
+
+      activityList.replaceChildren();
+
+      if (!data || data.length === 0) {
+        addTextElement(
+          activityList, "p", "empty",
+          "এখনো কোনো Daily Activity যোগ করা হয়নি।"
+        );
+        return;
+      }
+
+      data.forEach(item => {
+        const card = document.createElement("div");
+        card.className = "activity-item";
+
+        addTextElement(card, "h3", "", item.title);
+
+        addTextElement(
+          card, "div", "item-meta",
+          "Date: " + (item.activity_date || "Not specified") +
+          " | Duration: " + (item.duration_minutes ?? 0) + " minutes" +
+          " | Status: " + (item.status || "Not specified")
+        );
+
+        if (item.notes) {
+          addTextElement(
+            card, "p", "item-notes", "Notes: " + item.notes
+          );
+        }
+
+        const actions = document.createElement("div");
+        actions.className = "item-actions";
+
+        const editButton = document.createElement("button");
+        editButton.className = "edit-btn";
+        editButton.textContent = "Edit";
+        editButton.addEventListener("click", () => editActivity(item));
+
+        const deleteButton = document.createElement("button");
+        deleteButton.className = "delete-btn";
+        deleteButton.textContent = "Delete";
+        deleteButton.addEventListener(
+          "click", () => deleteActivity(item.id)
+        );
+
+        actions.append(editButton, deleteButton);
+        card.appendChild(actions);
+        activityList.appendChild(card);
+      });
+
+    } catch (error) {
+      activityList.replaceChildren();
+      addTextElement(
+        activityList, "p", "message",
+        "Could not load activities: " + error.message
+      );
+    }
+  }
+ function showLearningMessage(message, isError = false) {
     learningMessage.textContent = message;
     learningMessage.style.color = isError ? "#D66B6B" : "#49A982";
   }

@@ -3,99 +3,356 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Admin Dashboard | Hasan Alamin</title>
+  <title>Personal Skill Dashboard | Hasan Alamin</title>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <style>
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     body {
       margin: 0;
-      min-height: 100vh;
       background: #101B19;
       color: #fff;
       font-family: Arial, sans-serif;
-      padding: 20px;
     }
 
-    .container {
-      max-width: 850px;
-      margin: 40px auto;
-    }
+    button { cursor: pointer; font-family: inherit; }
 
-    header {
-      padding-bottom: 20px;
+    .topbar {
+      min-height: 70px;
+      padding: 15px 22px;
       border-bottom: 1px solid #355447;
       display: flex;
-      justify-content: space-between;
       align-items: center;
+      justify-content: space-between;
       gap: 12px;
-      flex-wrap: wrap;
     }
 
-    h1 {
+    .brand {
       color: #49A982;
-      font-size: 23px;
+      font-size: 20px;
+      font-weight: bold;
+      letter-spacing: 1px;
+    }
+
+    .logout {
+      background: #D66B6B;
+      color: white;
+      border: 0;
+      padding: 10px 15px;
+      border-radius: 7px;
+      font-weight: bold;
+    }
+
+    .layout {
+      display: flex;
+      min-height: calc(100vh - 70px);
+    }
+
+    .sidebar {
+      width: 225px;
+      flex-shrink: 0;
+      padding: 22px 14px;
+      border-right: 1px solid #355447;
+      background: #14221E;
+    }
+
+    .sidebar h3 {
+      color: #D6B978;
+      font-size: 13px;
+      margin: 0 10px 18px;
+      letter-spacing: 1px;
+    }
+
+    .nav-btn {
+      width: 100%;
+      padding: 13px 12px;
+      margin-bottom: 7px;
+      border: 1px solid transparent;
+      border-radius: 8px;
+      background: transparent;
+      color: #c7d2ce;
+      text-align: left;
+      font-size: 14px;
+    }
+
+    .nav-btn:hover,
+    .nav-btn.active {
+      background: #203A30;
+      border-color: #355447;
+      color: #49A982;
+    }
+
+    main {
+      flex: 1;
+      min-width: 0;
+      padding: 28px;
+      max-width: 1200px;
+    }
+
+    .welcome {
+      margin-bottom: 26px;
+    }
+
+    .welcome h1 {
+      color: #D6B978;
+      font-size: 25px;
+      margin: 0 0 9px;
+    }
+
+    .welcome p {
+      color: #aebbb5;
       margin: 0;
+      line-height: 1.6;
+    }
+
+    .section { display: none; }
+    .section.active { display: block; }
+
+    .section-title {
+      color: #D6B978;
+      font-size: 22px;
+      margin: 0 0 20px;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .card {
+      padding: 21px;
+      background: #192824;
+      border: 1px solid #355447;
+      border-radius: 12px;
+    }
+
+    .card h3 {
+      margin: 0 0 12px;
+      color: #c9d5cf;
+      font-size: 15px;
+    }
+
+    .number {
+      color: #49A982;
+      font-size: 28px;
+      font-weight: bold;
+    }
+
+    .description {
+      color: #8f9f98;
+      font-size: 13px;
+      margin-top: 7px;
     }
 
     .panel {
-      margin-top: 25px;
-      padding: 25px;
+      margin-top: 22px;
+      padding: 22px;
       background: #192824;
       border: 1px solid #355447;
-      border-radius: 14px;
+      border-radius: 12px;
     }
 
-    .panel h2 {
+    .panel h3 {
       color: #D6B978;
       margin-top: 0;
     }
 
-    button {
-      padding: 11px 18px;
-      background: #49A982;
-      color: #101B19;
-      border: none;
-      border-radius: 7px;
-      font-weight: bold;
-      cursor: pointer;
+    .empty {
+      color: #9baaa3;
+      line-height: 1.7;
+      font-size: 14px;
     }
 
-    #logoutButton {
-      background: #D66B6B;
-      color: white;
+    .status {
+      color: #49A982;
+      font-size: 13px;
+      margin-top: 12px;
     }
 
-    #status {
-      color: #bbb;
-      line-height: 1.6;
+    @media (max-width: 650px) {
+      .layout { display: block; }
+
+      .sidebar {
+        width: 100%;
+        border-right: 0;
+        border-bottom: 1px solid #355447;
+        padding: 12px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+      }
+
+      .sidebar h3 {
+        width: 100%;
+        margin: 3px 5px 7px;
+      }
+
+      .nav-btn {
+        width: auto;
+        flex: 1 1 29%;
+        margin: 0;
+        padding: 11px 7px;
+        text-align: center;
+        font-size: 12px;
+      }
+
+      main { padding: 20px 15px; }
+      .cards { grid-template-columns: 1fr; }
+      .welcome h1 { font-size: 22px; }
     }
   </style>
 </head>
 
 <body>
 
-  <div class="container">
+  <header class="topbar">
+    <div class="brand">HASAN ALAMIN</div>
+    <button class="logout" id="logoutButton" hidden>Logout</button>
+  </header>
 
-    <header>
-      <h1>HASAN ALAMIN</h1>
-      <button id="logoutButton" hidden>Logout</button>
-    </header>
+  <div class="layout" id="dashboard" hidden>
 
-    <section class="panel">
-      <h2>Admin Dashboard</h2>
-      <p id="status">Verifying access...</p>
-    </section>
+    <aside class="sidebar">
+      <h3>PERSONAL SKILL</h3>
 
+      <button class="nav-btn active" data-page="learning">
+        Learning
+      </button>
+
+      <button class="nav-btn" data-page="activities">
+        Daily Activities
+      </button>
+
+      <button class="nav-btn" data-page="projects">
+        Projects
+      </button>
+
+      <button class="nav-btn" data-page="goals">
+        Goals
+      </button>
+
+      <button class="nav-btn" data-page="reports">
+        Reports
+      </button>
+    </aside>
+
+    <main>
+
+      <div class="welcome">
+        <h1 id="pageHeading">Overview</h1>
+        <p id="pageDescription">
+          Welcome to your Personal Skill Dashboard.
+          Track your learning, activities, projects and goals.
+        </p>
+      </div>
+
+      <section class="section active" id="overview">
+
+        <h2 class="section-title">Overview</h2>
+
+        <div class="cards">
+
+          <div class="card">
+            <h3>Learning Items</h3>
+            <div class="number">—</div>
+            <div class="description">Learning progress</div>
+          </div>
+
+          <div class="card">
+            <h3>Daily Activities</h3>
+            <div class="number">—</div>
+            <div class="description">Recorded activities</div>
+          </div>
+
+          <div class="card">
+            <h3>Projects</h3>
+            <div class="number">—</div>
+            <div class="description">Project progress</div>
+          </div>
+
+          <div class="card">
+            <h3>Goals</h3>
+            <div class="number">—</div>
+            <div class="description">Personal and career goals</div>
+          </div>
+
+        </div>
+
+        <div class="panel">
+          <h3>Recent Activities</h3>
+          <p class="empty">
+            Your recent activities will appear here
+            after the database is connected.
+          </p>
+        </div>
+
+      </section>
+
+      <section class="section" id="learning">
+        <h2 class="section-title">Learning</h2>
+        <div class="panel">
+          <h3>My Learning</h3>
+          <p class="empty">
+            Learning items, progress and notes will appear here.
+          </p>
+        </div>
+      </section>
+
+      <section class="section" id="activities">
+        <h2 class="section-title">Daily Activities</h2>
+        <div class="panel">
+          <h3>My Daily Activities</h3>
+          <p class="empty">
+            Daily tasks and study time will appear here.
+          </p>
+        </div>
+      </section>
+
+      <section class="section" id="projects">
+        <h2 class="section-title">Projects</h2>
+        <div class="panel">
+          <h3>My Projects</h3>
+          <p class="empty">
+            Projects, deadlines and progress will appear here.
+          </p>
+        </div>
+      </section>
+
+      <section class="section" id="goals">
+        <h2 class="section-title">Goals</h2>
+        <div class="panel">
+          <h3>My Goals</h3>
+          <p class="empty">
+            Personal and career goals will appear here.
+          </p>
+        </div>
+      </section>
+
+      <section class="section" id="reports">
+        <h2 class="section-title">Reports</h2>
+        <div class="panel">
+          <h3>My Reports</h3>
+          <p class="empty">
+            Learning, activities, projects and goals reports
+            will appear here after database integration.
+          </p>
+        </div>
+      </section>
+
+      <p class="status" id="status">Verifying Admin access...</p>
+
+    </main>
   </div>
 
   <script>
-    const SUPABASE_URL = "https://rtevxoywkcvbprafkhxr.supabase.co";
-    const SUPABASE_KEY = "sb_publishable_EuPBlIzVy4ztbWnml3KEag_WinN7S5a";
+    const SUPABASE_URL =
+      "https://rtevxoywkcvbprafkhxr.supabase.co";
+
+    const SUPABASE_KEY =
+      "sb_publishable_EuPBlIzVy4ztbWnml3KEag_WinN7S5a";
 
     const supabaseClient = supabase.createClient(
       SUPABASE_URL,
@@ -104,6 +361,7 @@
 
     const status = document.getElementById("status");
     const logoutButton = document.getElementById("logoutButton");
+    const dashboard = document.getElementById("dashboard");
 
     async function checkAdminAccess() {
       try {
@@ -132,17 +390,65 @@
           return;
         }
 
-        status.textContent =
-          "Welcome, Admin! Your access has been verified.";
-
+        dashboard.hidden = false;
         logoutButton.hidden = false;
+        status.textContent = "Admin access verified.";
 
       } catch (error) {
-        status.textContent = "Access verification failed: " + error.message;
+        status.textContent =
+          "Access verification failed: " + error.message;
       }
     }
 
-    logoutButton.addEventListener("click", async function() {
+    const pageInfo = {
+      learning: {
+        title: "Learning",
+        description: "Manage your learning topics and progress."
+      },
+      activities: {
+        title: "Daily Activities",
+        description: "Track your daily work and study time."
+      },
+      projects: {
+        title: "Projects",
+        description: "Manage your projects and progress."
+      },
+      goals: {
+        title: "Goals",
+        description: "Track your personal and career goals."
+      },
+      reports: {
+        title: "Reports",
+        description: "Review your learning and development reports."
+      }
+    };
+
+    document.querySelectorAll(".nav-btn").forEach(button => {
+      button.addEventListener("click", () => {
+        const page = button.dataset.page;
+
+        document.querySelectorAll(".nav-btn").forEach(item => {
+          item.classList.remove("active");
+        });
+
+        button.classList.add("active");
+
+        document.querySelectorAll(".section").forEach(section => {
+          section.classList.remove("active");
+        });
+
+        document.getElementById(page).classList.add("active");
+
+        document.getElementById("pageHeading").textContent =
+          pageInfo[page].title;
+
+        document.getElementById("pageDescription").textContent =
+          pageInfo[page].description;
+      });
+    });
+
+    logoutButton.addEventListener("click", async () => {
+      logoutButton.disabled = true;
       await supabaseClient.auth.signOut();
       window.location.replace("login.html");
     });

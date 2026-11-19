@@ -1091,7 +1091,49 @@
     }
   }
 
-  logoutButton.addEventListener("click", async () => {
+  function resetActivityForm() {
+    activityForm.reset();
+    editingActivityId = null;
+
+    document.getElementById("activityDuration").value = 0;
+
+    document.getElementById("activityFormHeading").textContent =
+      "Add New Activity";
+
+    document.getElementById("saveActivityButton").textContent =
+      "Save Activity";
+
+    document.getElementById("cancelActivityEditButton").hidden = true;
+  }
+
+  document.getElementById("cancelActivityEditButton").addEventListener(
+    "click", () => {
+      resetActivityForm();
+      showActivityMessage("Edit cancelled.");
+    }
+  );
+
+  async function deleteActivity(id) {
+    if (!confirm("এই Activity-টি কি মুছে ফেলতে চাস?")) {
+      return;
+    }
+
+    try {
+      const { error } = await supabaseClient
+        .from("daily_activities")
+        .delete()
+        .eq("id", id);
+
+      if (error) throw error;
+
+      showActivityMessage("Activity deleted successfully.");
+      await loadActivities();
+
+    } catch (error) {
+      showActivityMessage("Delete failed: " + error.message, true);
+    }
+  }
+ logoutButton.addEventListener("click", async () => {
     logoutButton.disabled = true;
     await supabaseClient.auth.signOut();
     window.location.replace("login.html");

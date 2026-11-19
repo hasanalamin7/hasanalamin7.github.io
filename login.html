@@ -179,9 +179,15 @@
             .eq("user_id", data.user.id)
             .single();
 
-        if (roleError || !roleData) {
-          throw new Error("Your account has no assigned role.");
-        }
+        if (roleError) {
+  throw new Error(
+    "Role Error: " + roleError.message
+  );
+}
+
+if (!roleData) {
+  throw new Error("No role record found.");
+}
 
         if (roleData.role === "admin") {
           message.style.color = "#49A982";

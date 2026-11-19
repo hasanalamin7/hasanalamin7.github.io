@@ -682,6 +682,94 @@
     });
   });
 
+  activityForm.addEventListener("submit", async event => {
+    event.preventDefault();
+
+    const title = document.getElementById("activityTitle").value.trim();
+    const duration = Number(
+      document.getElementById("activityDuration").value
+    );
+
+    if (!title) {
+      showActivityMessage("Activity Title লিখতে হবে।", true);
+      return;
+    }
+
+    if (!Number.isInteger(duration) || duration < 0) {
+      showActivityMessage("Duration শূন্য বা তার বেশি পূর্ণসংখ্যা হতে হবে।", true);
+      return;
+    }
+
+    const activityData = {
+      title: title,
+      activity_date: document.getElementById("activityDate").value || null,
+      duration_minutes: duration,
+      status: document.getElementById("activityStatus").value,
+      notes: document.getElementById("activityNotes").value.trim(),
+      updated_at: new Date().toISOString()
+    };
+
+    const saveButton = document.getElementById("saveActivityButton");
+    saveButton.disabled = true;
+    showActivityMessage("Saving...");
+
+    try {
+      let result;
+
+      if (editingActivityId !== null) {
+        result = await supabaseClient
+          .from("daily_activities")
+          .update(activityData)
+          .eq("id", editingActivityId);
+      } else {
+        result = await supabaseClient
+          .from("daily_activities")
+          .insert(activityData);
+      }
+
+      if (result.error) throw result.error;
+
+      showActivityMessage(
+        editingActivityId !== null
+          ? "Activity updated successfully."
+          : "Activity added successfully."
+      );
+
+      resetActivityForm();
+      await loadActivities();
+
+    } catch (error) {
+      showActivityMessage("Save failed: " + error.message, true);
+    } finally {
+      saveButton.disabled = false;
+    }
+  });
+
+  function editActivity(item) {
+    editingActivityId = item.id;
+
+    document.getElementById("activityTitle").value = item.title || "";
+    document.getElementById("activityDate").value =
+      item.activity_date || "";
+    document.getElementById("activityDuration").value =
+      item.duration_minutes ?? 0;
+    document.getElementById("activityStatus").value =
+      item.status || "Completed";
+    document.getElementById("activityNotes").value = item.notes || "";
+
+    document.getElementById("activityFormHeading").textContent =
+      "Edit Activity";
+
+    document.getElementById("saveActivityButton").textContent =
+      "Update Activity";
+
+    document.getElementById("cancelActivityEditButton").hidden = false;
+
+    showActivityMessage("Editing: " + item.title);
+
+    activityForm.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+  
   function showActivityMessage(message, isError = false) {
     activityMessage.textContent = message;
     activityMessage.style.color = isError ? "#D66B6B" : "#49A982";

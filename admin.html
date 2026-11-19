@@ -628,7 +628,7 @@
       status.textContent = "Admin access verified.";
 
       await loadLearningItems();
-
+      await loadActivities();
     } catch (error) {
       status.textContent =
         "Access verification failed: " + error.message;

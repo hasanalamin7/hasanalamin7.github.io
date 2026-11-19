@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Personal Skill Dashboard | Hasan Alamin</title>
-
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <style>
@@ -91,9 +90,7 @@
       max-width: 1200px;
     }
 
-    .welcome {
-      margin-bottom: 26px;
-    }
+    .welcome { margin-bottom: 26px; }
 
     .welcome h1 {
       color: #D6B978;
@@ -122,7 +119,7 @@
       gap: 16px;
     }
 
-    .card {
+    .card, .panel, .learning-item {
       padding: 21px;
       background: #192824;
       border: 1px solid #355447;
@@ -147,13 +144,7 @@
       margin-top: 7px;
     }
 
-    .panel {
-      margin-top: 22px;
-      padding: 22px;
-      background: #192824;
-      border: 1px solid #355447;
-      border-radius: 12px;
-    }
+    .panel { margin-top: 22px; }
 
     .panel h3 {
       color: #D6B978;
@@ -170,6 +161,130 @@
       color: #49A982;
       font-size: 13px;
       margin-top: 12px;
+    }
+
+    .learning-form {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+    }
+
+    .field.full { grid-column: 1 / -1; }
+
+    .field label {
+      color: #c9d5cf;
+      font-size: 13px;
+    }
+
+    .field input,
+    .field textarea,
+    .field select {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #355447;
+      border-radius: 7px;
+      background: #101B19;
+      color: white;
+      font-size: 14px;
+      font-family: inherit;
+    }
+
+    .field textarea {
+      min-height: 85px;
+      resize: vertical;
+    }
+
+    .form-actions {
+      grid-column: 1 / -1;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .primary-btn, .secondary-btn, .edit-btn, .delete-btn {
+      border: 0;
+      border-radius: 7px;
+      padding: 11px 16px;
+      font-weight: bold;
+    }
+
+    .primary-btn {
+      background: #49A982;
+      color: #101B19;
+    }
+
+    .secondary-btn {
+      background: #355447;
+      color: white;
+    }
+
+    .edit-btn {
+      background: #D6B978;
+      color: #101B19;
+      padding: 8px 12px;
+    }
+
+    .delete-btn {
+      background: #D66B6B;
+      color: white;
+      padding: 8px 12px;
+    }
+
+    .learning-list {
+      display: grid;
+      gap: 14px;
+      margin-top: 18px;
+    }
+
+    .learning-item h3 {
+      margin: 0 0 9px;
+      color: #D6B978;
+    }
+
+    .item-description, .item-notes {
+      color: #aebbb5;
+      font-size: 14px;
+      line-height: 1.6;
+      white-space: pre-wrap;
+    }
+
+    .item-meta {
+      color: #49A982;
+      font-size: 13px;
+      line-height: 1.8;
+      margin: 12px 0;
+    }
+
+    .progress-track {
+      height: 8px;
+      background: #101B19;
+      border-radius: 10px;
+      overflow: hidden;
+      margin: 9px 0;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: #49A982;
+      border-radius: 10px;
+    }
+
+    .item-actions {
+      display: flex;
+      gap: 8px;
+      margin-top: 14px;
+    }
+
+    .message {
+      font-size: 13px;
+      margin-top: 12px;
+      line-height: 1.5;
     }
 
     @media (max-width: 650px) {
@@ -202,259 +317,548 @@
       main { padding: 20px 15px; }
       .cards { grid-template-columns: 1fr; }
       .welcome h1 { font-size: 22px; }
+      .learning-form { grid-template-columns: 1fr; }
+      .field.full, .form-actions { grid-column: auto; }
+      .brand { font-size: 15px; }
     }
   </style>
 </head>
 
 <body>
 
-  <header class="topbar">
-    <div class="brand">PERSONAL SKILL DASHBOARD</div>
-    <button class="logout" id="logoutButton" hidden>Logout</button>
-  </header>
+<header class="topbar">
+  <div class="brand">PERSONAL SKILL DASHBOARD</div>
+  <button class="logout" id="logoutButton" hidden>Logout</button>
+</header>
 
-  <div class="layout" id="dashboard" hidden>
+<div class="layout" id="dashboard" hidden>
 
-    <aside class="sidebar">
-      <h3>PERSONAL SKILL</h3>
+  <aside class="sidebar">
+    <h3>PERSONAL SKILL</h3>
+    <button class="nav-btn active" data-page="learning">Learning</button>
+    <button class="nav-btn" data-page="activities">Daily Activities</button>
+    <button class="nav-btn" data-page="projects">Projects</button>
+    <button class="nav-btn" data-page="goals">Goals</button>
+    <button class="nav-btn" data-page="reports">Reports</button>
+  </aside>
 
-      <button class="nav-btn active" data-page="learning">
-        Learning
-      </button>
+  <main>
 
-      <button class="nav-btn" data-page="activities">
-        Daily Activities
-      </button>
+    <div class="welcome">
+      <h1 id="pageHeading">Overview</h1>
+      <p id="pageDescription">
+        Welcome to your Personal Skill Dashboard.
+        Track your learning, activities, projects and goals.
+      </p>
+    </div>
 
-      <button class="nav-btn" data-page="projects">
-        Projects
-      </button>
+    <section class="section" id="overview">
+      <h2 class="section-title">Overview</h2>
 
-      <button class="nav-btn" data-page="goals">
-        Goals
-      </button>
-
-      <button class="nav-btn" data-page="reports">
-        Reports
-      </button>
-    </aside>
-
-    <main>
-
-      <div class="welcome">
-        <h1 id="pageHeading">Overview</h1>
-        <p id="pageDescription">
-          Welcome to your Personal Skill Dashboard.
-          Track your learning, activities, projects and goals.
-        </p>
+      <div class="cards">
+        <div class="card">
+          <h3>Learning Items</h3>
+          <div class="number">—</div>
+          <div class="description">Learning progress</div>
+        </div>
+        <div class="card">
+          <h3>Daily Activities</h3>
+          <div class="number">—</div>
+          <div class="description">Recorded activities</div>
+        </div>
+        <div class="card">
+          <h3>Projects</h3>
+          <div class="number">—</div>
+          <div class="description">Project progress</div>
+        </div>
+        <div class="card">
+          <h3>Goals</h3>
+          <div class="number">—</div>
+          <div class="description">Personal and career goals</div>
+        </div>
       </div>
 
-      <section class="section active" id="overview">
+      <div class="panel">
+        <h3>Recent Activities</h3>
+        <p class="empty">Your recent activities will appear here.</p>
+      </div>
+    </section>
 
-        <h2 class="section-title">Overview</h2>
+    <section class="section active" id="learning">
+      <h2 class="section-title">Learning</h2>
 
-        <div class="cards">
+      <div class="panel">
+        <h3 id="formHeading">Add New Learning</h3>
 
-          <div class="card">
-            <h3>Learning Items</h3>
-            <div class="number">—</div>
-            <div class="description">Learning progress</div>
+        <form id="learningForm" class="learning-form">
+
+          <div class="field full">
+            <label for="learningTitle">Title *</label>
+            <input id="learningTitle" type="text" required
+              maxlength="200" placeholder="যেমন: HTML ও CSS শেখা">
           </div>
 
-          <div class="card">
-            <h3>Daily Activities</h3>
-            <div class="number">—</div>
-            <div class="description">Recorded activities</div>
+          <div class="field full">
+            <label for="learningDescription">Description</label>
+            <textarea id="learningDescription"
+              placeholder="এই বিষয়টি সম্পর্কে সংক্ষিপ্ত বিবরণ"></textarea>
           </div>
 
-          <div class="card">
-            <h3>Projects</h3>
-            <div class="number">—</div>
-            <div class="description">Project progress</div>
+          <div class="field">
+            <label for="learningStatus">Status</label>
+            <select id="learningStatus">
+              <option value="Not Started">Not Started</option>
+              <option value="In Progress">In Progress</option>
+              <option value="Completed">Completed</option>
+              <option value="On Hold">On Hold</option>
+            </select>
           </div>
 
-          <div class="card">
-            <h3>Goals</h3>
-            <div class="number">—</div>
-            <div class="description">Personal and career goals</div>
+          <div class="field">
+            <label for="learningProgress">Progress (%)</label>
+            <input id="learningProgress" type="number"
+              min="0" max="100" value="0">
           </div>
 
+          <div class="field">
+            <label for="learningStart">Start Date</label>
+            <input id="learningStart" type="date">
+          </div>
+
+          <div class="field">
+            <label for="learningTarget">Target Date</label>
+            <input id="learningTarget" type="date">
+          </div>
+
+          <div class="field full">
+            <label for="learningNotes">Notes</label>
+            <textarea id="learningNotes"
+              placeholder="নিজের নোট বা অতিরিক্ত তথ্য"></textarea>
+          </div>
+
+          <div class="form-actions">
+            <button class="primary-btn" id="saveLearningButton"
+              type="submit">Save Learning</button>
+            <button class="secondary-btn" id="cancelEditButton"
+              type="button" hidden>Cancel Edit</button>
+          </div>
+
+        </form>
+
+        <p class="message" id="learningMessage" role="status"></p>
+      </div>
+
+      <div class="panel">
+        <h3>My Learning Items</h3>
+        <div id="learningList" class="learning-list">
+          <p class="empty">Loading learning items...</p>
         </div>
+      </div>
+    </section>
 
-        <div class="panel">
-          <h3>Recent Activities</h3>
-          <p class="empty">
-            Your recent activities will appear here
-            after the database is connected.
-          </p>
-        </div>
+    <section class="section" id="activities">
+      <h2 class="section-title">Daily Activities</h2>
+      <div class="panel">
+        <h3>My Daily Activities</h3>
+        <p class="empty">Daily tasks and study time will appear here.</p>
+      </div>
+    </section>
 
-      </section>
+    <section class="section" id="projects">
+      <h2 class="section-title">Projects</h2>
+      <div class="panel">
+        <h3>My Projects</h3>
+        <p class="empty">Projects, deadlines and progress will appear here.</p>
+      </div>
+    </section>
 
-      <section class="section" id="learning">
-        <h2 class="section-title">Learning</h2>
-        <div class="panel">
-          <h3>My Learning</h3>
-          <p class="empty">
-            Learning items, progress and notes will appear here.
-          </p>
-        </div>
-      </section>
+    <section class="section" id="goals">
+      <h2 class="section-title">Goals</h2>
+      <div class="panel">
+        <h3>My Goals</h3>
+        <p class="empty">Personal and career goals will appear here.</p>
+      </div>
+    </section>
 
-      <section class="section" id="activities">
-        <h2 class="section-title">Daily Activities</h2>
-        <div class="panel">
-          <h3>My Daily Activities</h3>
-          <p class="empty">
-            Daily tasks and study time will appear here.
-          </p>
-        </div>
-      </section>
+    <section class="section" id="reports">
+      <h2 class="section-title">Reports</h2>
+      <div class="panel">
+        <h3>My Reports</h3>
+        <p class="empty">
+          Learning, activities, projects and goals reports
+          will appear here after database integration.
+        </p>
+      </div>
+    </section>
 
-      <section class="section" id="projects">
-        <h2 class="section-title">Projects</h2>
-        <div class="panel">
-          <h3>My Projects</h3>
-          <p class="empty">
-            Projects, deadlines and progress will appear here.
-          </p>
-        </div>
-      </section>
+    <p class="status" id="status">Verifying Admin access...</p>
 
-      <section class="section" id="goals">
-        <h2 class="section-title">Goals</h2>
-        <div class="panel">
-          <h3>My Goals</h3>
-          <p class="empty">
-            Personal and career goals will appear here.
-          </p>
-        </div>
-      </section>
+  </main>
+</div>
 
-      <section class="section" id="reports">
-        <h2 class="section-title">Reports</h2>
-        <div class="panel">
-          <h3>My Reports</h3>
-          <p class="empty">
-            Learning, activities, projects and goals reports
-            will appear here after database integration.
-          </p>
-        </div>
-      </section>
+<script>
+  const SUPABASE_URL =
+    "https://rtevxoywkcvbprafkhxr.supabase.co";
 
-      <p class="status" id="status">Verifying Admin access...</p>
+  const SUPABASE_KEY =
+    "sb_publishable_EuPBlIzVy4ztbWnml3KEag_WinN7S5a";
 
-    </main>
-  </div>
+  const supabaseClient = supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+  );
 
-  <script>
-    const SUPABASE_URL =
-      "https://rtevxoywkcvbprafkhxr.supabase.co";
+  const status = document.getElementById("status");
+  const logoutButton = document.getElementById("logoutButton");
+  const dashboard = document.getElementById("dashboard");
 
-    const SUPABASE_KEY =
-      "sb_publishable_EuPBlIzVy4ztbWnml3KEag_WinN7S5a";
+  const learningForm = document.getElementById("learningForm");
+  const learningList = document.getElementById("learningList");
+  const learningMessage = document.getElementById("learningMessage");
 
-    const supabaseClient = supabase.createClient(
-      SUPABASE_URL,
-      SUPABASE_KEY
-    );
+  let editingLearningId = null;
 
-    const status = document.getElementById("status");
-    const logoutButton = document.getElementById("logoutButton");
-    const dashboard = document.getElementById("dashboard");
+  async function checkAdminAccess() {
+    try {
+      const { data: sessionData, error: sessionError } =
+        await supabaseClient.auth.getSession();
 
-    async function checkAdminAccess() {
-      try {
-        const { data: sessionData, error: sessionError } =
-          await supabaseClient.auth.getSession();
+      if (sessionError) throw sessionError;
 
-        if (sessionError) throw sessionError;
+      const session = sessionData.session;
 
-        const session = sessionData.session;
-
-        if (!session) {
-          window.location.replace("login.html");
-          return;
-        }
-
-        const { data: roleData, error: roleError } =
-          await supabaseClient
-            .from("user_roles")
-            .select("role")
-            .eq("user_id", session.user.id)
-            .single();
-
-        if (roleError || !roleData || roleData.role !== "admin") {
-          await supabaseClient.auth.signOut();
-          window.location.replace("login.html");
-          return;
-        }
-
-        dashboard.hidden = false;
-        logoutButton.hidden = false;
-        status.textContent = "Admin access verified.";
-
-      } catch (error) {
-        status.textContent =
-          "Access verification failed: " + error.message;
+      if (!session) {
+        window.location.replace("login.html");
+        return;
       }
+
+      const { data: roleData, error: roleError } =
+        await supabaseClient
+          .from("user_roles")
+          .select("role")
+          .eq("user_id", session.user.id)
+          .single();
+
+      if (roleError || !roleData || roleData.role !== "admin") {
+        await supabaseClient.auth.signOut();
+        window.location.replace("login.html");
+        return;
+      }
+
+      dashboard.hidden = false;
+      logoutButton.hidden = false;
+      status.textContent = "Admin access verified.";
+
+      await loadLearningItems();
+
+    } catch (error) {
+      status.textContent =
+        "Access verification failed: " + error.message;
+    }
+  }
+
+  const pageInfo = {
+    learning: {
+      title: "Learning",
+      description: "Manage your learning topics and progress."
+    },
+    activities: {
+      title: "Daily Activities",
+      description: "Track your daily work and study time."
+    },
+    projects: {
+      title: "Projects",
+      description: "Manage your projects and progress."
+    },
+    goals: {
+      title: "Goals",
+      description: "Track your personal and career goals."
+    },
+    reports: {
+      title: "Reports",
+      description: "Review your learning and development reports."
+    }
+  };
+
+  document.querySelectorAll(".nav-btn").forEach(button => {
+    button.addEventListener("click", () => {
+      const page = button.dataset.page;
+
+      document.querySelectorAll(".nav-btn").forEach(item => {
+        item.classList.remove("active");
+      });
+
+      button.classList.add("active");
+
+      document.querySelectorAll(".section").forEach(section => {
+        section.classList.remove("active");
+      });
+
+      document.getElementById(page).classList.add("active");
+
+      document.getElementById("pageHeading").textContent =
+        pageInfo[page].title;
+
+      document.getElementById("pageDescription").textContent =
+        pageInfo[page].description;
+    });
+  });
+
+  function showLearningMessage(message, isError = false) {
+    learningMessage.textContent = message;
+    learningMessage.style.color = isError ? "#D66B6B" : "#49A982";
+  }
+
+  function addTextElement(parent, tag, className, value) {
+    const element = document.createElement(tag);
+    if (className) element.className = className;
+    element.textContent = value || "";
+    parent.appendChild(element);
+    return element;
+  }
+
+  async function loadLearningItems() {
+    learningList.replaceChildren();
+    addTextElement(learningList, "p", "empty", "Loading...");
+
+    const { data, error } = await supabaseClient
+      .from("learning_items")
+      .select("*")
+      .order("created_at", { ascending: false });
+
+    if (error) {
+      learningList.replaceChildren();
+      addTextElement(
+        learningList, "p", "message",
+        "Could not load learning items: " + error.message
+      );
+      return;
     }
 
-    const pageInfo = {
-      learning: {
-        title: "Learning",
-        description: "Manage your learning topics and progress."
-      },
-      activities: {
-        title: "Daily Activities",
-        description: "Track your daily work and study time."
-      },
-      projects: {
-        title: "Projects",
-        description: "Manage your projects and progress."
-      },
-      goals: {
-        title: "Goals",
-        description: "Track your personal and career goals."
-      },
-      reports: {
-        title: "Reports",
-        description: "Review your learning and development reports."
+    learningList.replaceChildren();
+
+    if (!data || data.length === 0) {
+      addTextElement(
+        learningList, "p", "empty",
+        "এখনো কোনো Learning item যোগ করা হয়নি।"
+      );
+      return;
+    }
+
+    data.forEach(item => {
+      const card = document.createElement("div");
+      card.className = "learning-item";
+
+      addTextElement(card, "h3", "", item.title);
+
+      if (item.description) {
+        addTextElement(
+          card, "p", "item-description", item.description
+        );
       }
+
+      addTextElement(
+        card, "div", "item-meta",
+        "Status: " + (item.status || "Not Started") +
+        " | Progress: " + (item.progress ?? 0) + "%"
+      );
+
+      const track = document.createElement("div");
+      track.className = "progress-track";
+
+      const fill = document.createElement("div");
+      fill.className = "progress-fill";
+      fill.style.width = (item.progress ?? 0) + "%";
+
+      track.appendChild(fill);
+      card.appendChild(track);
+
+      const dates = [];
+      if (item.start_date) dates.push("Start: " + item.start_date);
+      if (item.target_date) dates.push("Target: " + item.target_date);
+
+      if (dates.length) {
+        addTextElement(card, "div", "item-meta", dates.join(" | "));
+      }
+
+      if (item.notes) {
+        addTextElement(card, "p", "item-notes", "Notes: " + item.notes);
+      }
+
+      const actions = document.createElement("div");
+      actions.className = "item-actions";
+
+      const editButton = document.createElement("button");
+      editButton.className = "edit-btn";
+      editButton.textContent = "Edit";
+      editButton.addEventListener("click", () => editLearning(item));
+
+      const deleteButton = document.createElement("button");
+      deleteButton.className = "delete-btn";
+      deleteButton.textContent = "Delete";
+      deleteButton.addEventListener("click", () => deleteLearning(item.id));
+
+      actions.append(editButton, deleteButton);
+      card.appendChild(actions);
+      learningList.appendChild(card);
+    });
+  }
+
+  learningForm.addEventListener("submit", async event => {
+    event.preventDefault();
+
+    const title = document.getElementById("learningTitle").value.trim();
+    const progress = Number(
+      document.getElementById("learningProgress").value
+    );
+
+    if (!title) {
+      showLearningMessage("Title লিখতে হবে।", true);
+      return;
+    }
+
+    if (!Number.isInteger(progress) || progress < 0 || progress > 100) {
+      showLearningMessage("Progress 0 থেকে 100-এর মধ্যে দিতে হবে।", true);
+      return;
+    }
+
+    const startDate = document.getElementById("learningStart").value;
+    const targetDate = document.getElementById("learningTarget").value;
+
+    if (startDate && targetDate && targetDate < startDate) {
+      showLearningMessage(
+        "Target Date, Start Date-এর আগে হতে পারবে না।", true
+      );
+      return;
+    }
+
+    const learningData = {
+      title: title,
+      description: document.getElementById("learningDescription").value.trim(),
+      status: document.getElementById("learningStatus").value,
+      progress: progress,
+      start_date: startDate || null,
+      target_date: targetDate || null,
+      notes: document.getElementById("learningNotes").value.trim(),
+      updated_at: new Date().toISOString()
     };
 
-    document.querySelectorAll(".nav-btn").forEach(button => {
-      button.addEventListener("click", () => {
-        const page = button.dataset.page;
+    const saveButton = document.getElementById("saveLearningButton");
+    saveButton.disabled = true;
+    showLearningMessage("Saving...");
 
-        document.querySelectorAll(".nav-btn").forEach(item => {
-          item.classList.remove("active");
-        });
+    try {
+      let result;
 
-        button.classList.add("active");
+      if (editingLearningId) {
+        result = await supabaseClient
+          .from("learning_items")
+          .update(learningData)
+          .eq("id", editingLearningId);
+      } else {
+        result = await supabaseClient
+          .from("learning_items")
+          .insert(learningData);
+      }
 
-        document.querySelectorAll(".section").forEach(section => {
-          section.classList.remove("active");
-        });
+      if (result.error) throw result.error;
 
-        document.getElementById(page).classList.add("active");
+      showLearningMessage(
+        editingLearningId
+          ? "Learning item updated successfully."
+          : "Learning item added successfully."
+      );
 
-        document.getElementById("pageHeading").textContent =
-          pageInfo[page].title;
+      resetLearningForm();
+      await loadLearningItems();
 
-        document.getElementById("pageDescription").textContent =
-          pageInfo[page].description;
-      });
-    });
+    } catch (error) {
+      showLearningMessage("Save failed: " + error.message, true);
+    } finally {
+      saveButton.disabled = false;
+    }
+  });
 
-    logoutButton.addEventListener("click", async () => {
-      logoutButton.disabled = true;
-      await supabaseClient.auth.signOut();
-      window.location.replace("login.html");
-    });
+  function editLearning(item) {
+    editingLearningId = item.id;
 
-    checkAdminAccess();
-  </script>
+    document.getElementById("learningTitle").value = item.title || "";
+    document.getElementById("learningDescription").value =
+      item.description || "";
+    document.getElementById("learningStatus").value =
+      item.status || "Not Started";
+    document.getElementById("learningProgress").value =
+      item.progress ?? 0;
+    document.getElementById("learningStart").value =
+      item.start_date || "";
+    document.getElementById("learningTarget").value =
+      item.target_date || "";
+    document.getElementById("learningNotes").value = item.notes || "";
+
+    document.getElementById("formHeading").textContent =
+      "Edit Learning";
+
+    document.getElementById("saveLearningButton").textContent =
+      "Update Learning";
+
+    document.getElementById("cancelEditButton").hidden = false;
+
+    showLearningMessage("Editing: " + item.title);
+
+    learningForm.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+
+  function resetLearningForm() {
+    learningForm.reset();
+    editingLearningId = null;
+
+    document.getElementById("learningProgress").value = 0;
+
+    document.getElementById("formHeading").textContent =
+      "Add New Learning";
+
+    document.getElementById("saveLearningButton").textContent =
+      "Save Learning";
+
+    document.getElementById("cancelEditButton").hidden = true;
+  }
+
+  document.getElementById("cancelEditButton").addEventListener(
+    "click", () => {
+      resetLearningForm();
+      showLearningMessage("Edit cancelled.");
+    }
+  );
+
+  async function deleteLearning(id) {
+    if (!confirm("এই Learning item-টি কি মুছে ফেলতে চাস?")) {
+      return;
+    }
+
+    try {
+      const { error } = await supabaseClient
+        .from("learning_items")
+        .delete()
+        .eq("id", id);
+
+      if (error) throw error;
+
+      showLearningMessage("Learning item deleted successfully.");
+      await loadLearningItems();
+
+    } catch (error) {
+      showLearningMessage("Delete failed: " + error.message, true);
+    }
+  }
+
+  logoutButton.addEventListener("click", async () => {
+    logoutButton.disabled = true;
+    await supabaseClient.auth.signOut();
+    window.location.replace("login.html");
+  });
+
+  checkAdminAccess();
+</script>
 
 </body>
 </html>

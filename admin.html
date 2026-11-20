@@ -986,8 +986,67 @@ goalForm.addEventListener("submit", async (event) => {
     showGoalMessage("Could not save goal: " + error.message, true);
   }
 });
-  
-function showProjectMessage(message, isError = false) {
+  function editGoal(item) {
+  editingGoalId = item.id;
+
+  document.getElementById("goalTitle").value = item.title || "";
+  document.getElementById("goalDescription").value = item.description || "";
+  document.getElementById("goalType").value = item.goal_type || "Short-term";
+  document.getElementById("goalPriority").value = item.priority || "Medium";
+  document.getElementById("goalStartDate").value = item.start_date || "";
+  document.getElementById("goalDeadline").value = item.deadline || "";
+  document.getElementById("goalStatus").value = item.status || "Planned";
+  document.getElementById("goalProgress").value = item.progress ?? 0;
+  document.getElementById("goalAchievementNotes").value = item.achievement_notes || "";
+
+  document.getElementById("goalFormHeading").textContent = "Edit Goal";
+  document.getElementById("saveGoalButton").textContent = "Update Goal";
+  document.getElementById("cancelGoalEditButton").hidden = false;
+
+  showGoalMessage("Editing: " + item.title);
+  goalForm.scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+function resetGoalForm() {
+  goalForm.reset();
+  editingGoalId = null;
+
+  document.getElementById("goalFormHeading").textContent = "Add New Goal";
+  document.getElementById("saveGoalButton").textContent = "Save Goal";
+  document.getElementById("goalProgress").value = 0;
+  document.getElementById("cancelGoalEditButton").hidden = true;
+
+  showGoalMessage("");
+}
+
+document.getElementById("cancelGoalEditButton")
+  .addEventListener("click", resetGoalForm);
+
+  async function deleteGoal(id) {
+  const confirmed = confirm("তুই কি এই Goal-টি Delete করতে চাস?");
+
+  if (!confirmed) return;
+
+  try {
+    const { error } = await supabaseClient
+      .from("goals")
+      .delete()
+      .eq("id", id);
+
+    if (error) throw error;
+
+    if (editingGoalId === id) {
+      resetGoalForm();
+    }
+
+    showGoalMessage("Goal deleted successfully.");
+    await loadGoals();
+
+  } catch (error) {
+    showGoalMessage("Could not delete goal: " + error.message, true);
+  }
+}
+  function showProjectMessage(message, isError = false) {
   projectMessage.textContent = message;
   projectMessage.style.color = isError ? "#D66B6B" : "#49A982";
 }

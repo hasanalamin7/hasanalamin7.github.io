@@ -808,46 +808,36 @@
         card.appendChild(category);
         card.appendChild(amount);
         card.appendChild(date);
-                card.appendChild(notes);
+        card.appendChild(notes);
 
-                // ADMIN-ONLY EDIT AND DELETE BUTTONS
+        // EDIT BUTTON
 
-        if (document.body.dataset.role === "admin") {
+        const editButton = document.createElement("button");
 
-          const editButton = document.createElement("button");
+        editButton.type = "button";
+        editButton.className = "edit-button";
+        editButton.textContent = "Edit";
+        editButton.dataset.id = record.id;
 
-          editButton.className = "edit-button";
-          editButton.textContent = "Edit";
+        // DELETE BUTTON
 
-          editButton.addEventListener("click", function() {
-            editLearningRecord(record.id);
-          });
+        const deleteButton = document.createElement("button");
 
-          const deleteButton = document.createElement("button");
+        deleteButton.type = "button";
+        deleteButton.className = "delete-button";
+        deleteButton.textContent = "Delete";
+        deleteButton.dataset.id = record.id;
 
-          deleteButton.className = "delete-button";
-          deleteButton.textContent = "Delete";
-
-          deleteButton.addEventListener("click", function() {
-            deleteLearningRecord(record.id);
-          });
-
-          const actions = document.createElement("div");
-          actions.className = "record-actions";
-
-          actions.appendChild(editButton);
-          actions.appendChild(deleteButton);
-
-          card.appendChild(actions);
-        }
-
-        
+        card.appendChild(editButton);
+        card.appendChild(deleteButton);
 
         financeRecordsContainer.appendChild(card);
 
       });
 
     }
+
+        
     // EDIT AND DELETE TRANSACTIONS
 
     financeRecordsContainer.addEventListener("click", function(event) {

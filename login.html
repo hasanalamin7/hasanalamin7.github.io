@@ -188,23 +188,19 @@
 if (!roleData) {
   throw new Error("No role record found.");
 }
+if (
+  roleData.role === "admin" ||
+  roleData.role === "observer"
+) {
+  message.style.color = "#49A982";
+  message.textContent = "Login successful!";
 
-        if (roleData.role === "admin") {
-          message.style.color = "#49A982";
-          message.textContent = "Welcome, Admin!";
+  window.location.href = "dashboard.html";
 
-          window.location.href = "admin.html";
-
-        } else if (roleData.role === "observer") {
-          message.style.color = "#49A982";
-          message.textContent = "Welcome, Observer!";
-
-          window.location.href = "observer.html";
-
-        } else {
-          throw new Error("Unauthorized account role.");
-        }
-
+} else {
+  throw new Error("Unauthorized account role.");
+}
+        
       } catch (error) {
         await supabaseClient.auth.signOut();
 

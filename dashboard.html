@@ -1,1 +1,202 @@
 
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HASAN ALAMIN — Personal Management Dashboard</title>
+
+  <style>
+    :root {
+      --background: #101B19;
+      --green: #49A982;
+      --gold: #D6B978;
+      --card: #1C302A;
+      --white: #FFFFFF;
+      --muted: #AAB8B1;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: var(--background);
+      color: var(--white);
+      font-family: Arial, sans-serif;
+      min-height: 100vh;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1100px;
+      margin: auto;
+      padding: 24px 18px;
+    }
+
+    header {
+      border-bottom: 1px solid #30443C;
+      padding-bottom: 20px;
+      margin-bottom: 28px;
+    }
+
+    .brand {
+      color: var(--gold);
+      font-size: 23px;
+      font-weight: bold;
+      letter-spacing: 1px;
+    }
+
+    .subtitle {
+      color: var(--muted);
+      font-size: 13px;
+      margin-top: 7px;
+    }
+
+    .welcome {
+      color: var(--white);
+      font-size: 19px;
+      margin-bottom: 24px;
+    }
+
+    .welcome span {
+      color: var(--green);
+    }
+
+    .section-title {
+      font-size: 17px;
+      color: var(--gold);
+      margin-bottom: 15px;
+    }
+
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+      margin-bottom: 30px;
+    }
+
+    .summary-card {
+      background: var(--card);
+      border-radius: 12px;
+      padding: 19px 15px;
+      border: 1px solid #2B443A;
+    }
+
+    .summary-label {
+      color: var(--muted);
+      font-size: 13px;
+      margin-bottom: 13px;
+    }
+
+    .summary-value {
+      color: var(--green);
+      font-size: 25px;
+      font-weight: bold;
+    }
+
+    .content-card {
+      background: var(--card);
+      border: 1px solid #2B443A;
+      border-radius: 12px;
+      padding: 19px;
+      margin-bottom: 18px;
+      min-height: 100px;
+    }
+
+    .empty-message {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .bottom-nav {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      margin-top: 28px;
+      padding: 15px 5px;
+      border-top: 1px solid #30443C;
+    }
+
+    .nav-item {
+      text-align: center;
+      color: var(--muted);
+      font-size: 12px;
+      padding: 10px 2px;
+    }
+
+    .nav-item.active {
+      color: var(--gold);
+    }
+
+    @media (min-width: 700px) {
+      .summary-grid {
+        grid-template-columns: repeat(4, 1fr);
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="container">
+
+    <header>
+      <div class="brand">HASAN ALAMIN</div>
+      <div class="subtitle">Personal Management Dashboard</div>
+    </header>
+
+    <h2 class="welcome">
+      Welcome back, <span>Hasan Alamin!</span>
+    </h2>
+
+    <h3 class="section-title">Overview</h3>
+
+    <section class="summary-grid">
+
+      <div class="summary-card">
+        <p class="summary-label">Learning Sessions</p>
+        <p class="summary-value">0</p>
+      </div>
+
+      <div class="summary-card">
+        <p class="summary-label">Study Time</p>
+        <p class="summary-value">0h 0m</p>
+      </div>
+
+      <div class="summary-card">
+        <p class="summary-label">Total Income</p>
+        <p class="summary-value">0.00</p>
+      </div>
+
+      <div class="summary-card">
+        <p class="summary-label">Total Expense</p>
+        <p class="summary-value">0.00</p>
+      </div>
+
+    </section>
+
+    <h3 class="section-title">Recent Learning</h3>
+
+    <section class="content-card">
+      <p class="empty-message">No learning records yet.</p>
+    </section>
+
+    <h3 class="section-title">Recent Transactions</h3>
+
+    <section class="content-card">
+      <p class="empty-message">No transactions yet.</p>
+    </section>
+
+    <nav class="bottom-nav">
+      <div class="nav-item active">Overview</div>
+      <div class="nav-item">Learning</div>
+      <div class="nav-item">Finance</div>
+      <div class="nav-item">Reports</div>
+    </nav>
+
+  </main>
+</body>
+</html>

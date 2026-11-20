@@ -655,7 +655,7 @@
     // FINANCE TRANSACTION SAVE AND DISPLAY
 
     let transactionRecords = [];
-
+    let editingTransactionId = null;
     let activeTransactionFilter = "All";
 
     const transactionForm =
@@ -671,8 +671,8 @@
 
       event.preventDefault();
 
-      const record = {
-        id: Date.now(),
+            const record = {
+        id: editingTransactionId || Date.now(),
         type: document.getElementById("transactionType").value,
         amount: Number(document.getElementById("transactionAmount").value),
         category: document.getElementById("transactionCategory").value,
@@ -680,16 +680,43 @@
         notes: document.getElementById("transactionNotes").value.trim()
       };
 
-      transactionRecords.unshift(record);
+      if (editingTransactionId) {
 
+        const index = transactionRecords.findIndex(
+          item => item.id === editingTransactionId
+        );
+
+        if (index !== -1) {
+          transactionRecords[index] = record;
+        }
+
+      } else {
+
+        transactionRecords.unshift(record);
+
+      }
+      const wasEditing = Boolean(editingTransactionId);
       transactionForm.reset();
+           editingTransactionId = null;
 
+      document.getElementById("transactionFormTitle").textContent =
+        "Add Transaction";
+
+      transactionForm.querySelector(".save-button").textContent =
+        "Save Transaction";
+
+      document.getElementById("cancelTransactionEdit").style.display =
+        "none";
       transactionCategory.innerHTML =
         '<option value="">Select Category</option>';
 
       displayTransactions();
 
-      alert("Transaction saved successfully!");
+            alert(
+        wasEditing
+          ? "Transaction updated successfully!"
+          : "Transaction saved successfully!"
+      );
 
     });
 
@@ -751,15 +778,122 @@
         card.appendChild(category);
         card.appendChild(amount);
         card.appendChild(date);
-        card.appendChild(notes);
+                card.appendChild(notes);
+
+        // EDIT BUTTON
+        const editButton = document.createElement("button");
+        editButton.type = "button";
+        editButton.className = "edit-button";
+        editButton.textContent = "Edit";
+        editButton.dataset.id = record.id;
+
+        // DELETE BUTTON
+        const deleteButton = document.createElement("button");
+        deleteButton.type = "button";
+        deleteButton.className = "delete-button";
+        deleteButton.textContent = "Delete";
+        deleteButton.dataset.id = record.id;
+
+        card.appendChild(editButton);
+        card.appendChild(deleteButton);
 
         financeRecordsContainer.appendChild(card);
 
       });
 
     }
+    // EDIT AND DELETE TRANSACTIONS
 
+    financeRecordsContainer.addEventListener("click", function(event) {
 
+      const recordId = Number(event.target.dataset.id);
+
+      if (!recordId) return;
+
+      // EDIT TRANSACTION
+      if (event.target.textContent === "Edit") {
+
+        const record = transactionRecords.find(
+          item => item.id === recordId
+        );
+
+        if (!record) return;
+
+        document.getElementById("transactionType").value =
+          record.type;
+
+        transactionType.dispatchEvent(new Event("change"));
+
+        transactionCategory.value = record.category;
+
+        document.getElementById("transactionAmount").value =
+          record.amount;
+
+        document.getElementById("transactionDate").value =
+          record.date;
+
+        document.getElementById("transactionNotes").value =
+          record.notes;
+
+        editingTransactionId = recordId;
+
+        document.getElementById("transactionFormTitle").textContent =
+          "Edit Transaction";
+
+        transactionForm.querySelector(".save-button").textContent =
+          "Update Transaction";
+
+        document.getElementById("cancelTransactionEdit").style.display =
+          "block";
+
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth"
+        });
+
+      }
+
+      // DELETE TRANSACTION
+      if (event.target.textContent === "Delete") {
+
+        const confirmDelete = confirm(
+          "Are you sure you want to delete this transaction?"
+        );
+
+        if (!confirmDelete) return;
+
+        transactionRecords = transactionRecords.filter(
+          item => item.id !== recordId
+        );
+
+        displayTransactions();
+
+        alert("Transaction deleted successfully!");
+
+      }
+
+    });
+           // CANCEL TRANSACTION EDIT
+
+    document.getElementById("cancelTransactionEdit")
+      .addEventListener("click", function() {
+
+        transactionForm.reset();
+
+        editingTransactionId = null;
+
+        transactionCategory.innerHTML =
+          '<option value="">Select Category</option>';
+
+        document.getElementById("transactionFormTitle").textContent =
+          "Add Transaction";
+
+        transactionForm.querySelector(".save-button").textContent =
+          "Save Transaction";
+
+        this.style.display = "none";
+
+      });
     // TRANSACTION FILTERS
 
     document.getElementById("allTransactions")

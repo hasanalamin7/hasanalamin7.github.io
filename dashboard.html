@@ -1125,7 +1125,7 @@
     // EDIT LEARNING RECORD
 
     function editLearningRecord(id) {
-
+      if (document.body.dataset.role !== "admin") return;
       const record = learningRecords.find(
         item => item.id === id
       );

@@ -810,19 +810,36 @@
         card.appendChild(date);
                 card.appendChild(notes);
 
-        // EDIT BUTTON
-        const editButton = document.createElement("button");
-        editButton.type = "button";
-        editButton.className = "edit-button";
-        editButton.textContent = "Edit";
-        editButton.dataset.id = record.id;
+                // ADMIN-ONLY EDIT AND DELETE BUTTONS
 
-        // DELETE BUTTON
-        const deleteButton = document.createElement("button");
-        deleteButton.type = "button";
-        deleteButton.className = "delete-button";
-        deleteButton.textContent = "Delete";
-        deleteButton.dataset.id = record.id;
+        if (document.body.dataset.role === "admin") {
+
+          const editButton = document.createElement("button");
+
+          editButton.className = "edit-button";
+          editButton.textContent = "Edit";
+
+          editButton.addEventListener("click", function() {
+            editLearningRecord(record.id);
+          });
+
+          const deleteButton = document.createElement("button");
+
+          deleteButton.className = "delete-button";
+          deleteButton.textContent = "Delete";
+
+          deleteButton.addEventListener("click", function() {
+            deleteLearningRecord(record.id);
+          });
+
+          const actions = document.createElement("div");
+          actions.className = "record-actions";
+
+          actions.appendChild(editButton);
+          actions.appendChild(deleteButton);
+
+          card.appendChild(actions);
+        }
 
         card.appendChild(editButton);
         card.appendChild(deleteButton);

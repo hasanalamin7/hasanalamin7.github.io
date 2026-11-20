@@ -291,9 +291,9 @@
       <div class="subtitle">Personal Management Dashboard</div>
     </header>
 
-    <h2 class="welcome">
-      Welcome back, <span>Hasan Alamin!</span>
-    </h2>
+    <h2 class="welcome" id="welcomeMessage">
+  Welcome back, <span>Hasan Alamin!</span>
+</h2>
 
     <!-- OVERVIEW PAGE -->
     <section id="overviewPage" class="page active">
@@ -1203,7 +1203,16 @@
         window.location.replace("login.html");
         return;
       }
+      const welcomeMessage =
+        document.getElementById("welcomeMessage");
 
+      if (roleData.role === "admin") {
+        welcomeMessage.innerHTML =
+          'Welcome back, <span>Hasan Alamin!</span>';
+      } else {
+        welcomeMessage.innerHTML =
+          'Welcome, <span>Nahida Sultana!</span>';
+      }
       document.body.style.display = "block";
     }
 

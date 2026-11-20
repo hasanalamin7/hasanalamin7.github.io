@@ -795,6 +795,132 @@ const projectMessage = document.getElementById("projectMessage");
 let editingProjectId = null;
 
 
+function showGoalMessage(message, isError = false) {
+  goalMessage.textContent = message;
+  goalMessage.style.color = isError ? "#D66B6B" : "#49A982";
+}
+
+async function loadGoals() {
+  goalList.replaceChildren();
+  addTextElement(goalList, "p", "empty", "Loading goals...");
+
+  try {
+    const { data, error } = await supabaseClient
+      .from("goals")
+      .select("*")
+      .order("created_at", { ascending: false });
+
+    if (error) throw error;
+
+    goalList.replaceChildren();
+
+    if (!data || data.length === 0) {
+      addTextElement(
+        goalList,
+        "p",
+        "empty",
+        "এখনো কোনো Goal যোগ করা হয়নি।"
+      );
+      return;
+    }
+
+    data.forEach(item => {
+      const card = document.createElement("div");
+      card.className = "learning-item";
+
+      addTextElement(card, "h3", "", item.title);
+
+      if (item.description) {
+        addTextElement(
+          card, "p", "item-description", item.description
+        );
+      }
+
+      addTextElement(
+        card,
+        "div",
+        "item-meta",
+        "Type: " + (item.goal_type || "Not specified") +
+        " | Priority: " + (item.priority || "Medium") +
+        " | Status: " + (item.status || "Planned")
+      );
+
+      addTextElement(
+        card,
+        "div",
+        "item-meta",
+        "Progress: " + (item.progress ?? 0) + "%"
+      );
+
+      const track = document.createElement("div");
+      track.className = "progress-track";
+
+      const fill = document.createElement("div");
+      fill.className = "progress-fill";
+      fill.style.width = (item.progress ?? 0) + "%";
+
+      track.appendChild(fill);
+      card.appendChild(track);
+
+      const dates = [];
+
+      if (item.start_date) {
+        dates.push("Start: " + item.start_date);
+      }
+
+      if (item.deadline) {
+        dates.push("Deadline: " + item.deadline);
+      }
+
+      if (dates.length) {
+        addTextElement(
+          card, "div", "item-meta", dates.join(" | ")
+        );
+      }
+
+      if (item.achievement_notes) {
+        addTextElement(
+          card,
+          "p",
+          "item-notes",
+          "Achievement Notes: " + item.achievement_notes
+        );
+      }
+
+      const actions = document.createElement("div");
+      actions.className = "item-actions";
+
+      const editButton = document.createElement("button");
+      editButton.className = "edit-btn";
+      editButton.textContent = "Edit";
+      editButton.addEventListener("click", () => editGoal(item));
+
+      const deleteButton = document.createElement("button");
+      deleteButton.className = "delete-btn";
+      deleteButton.textContent = "Delete";
+      deleteButton.addEventListener(
+        "click",
+        () => deleteGoal(item.id)
+      );
+
+      actions.append(editButton, deleteButton);
+      card.appendChild(actions);
+
+      goalList.appendChild(card);
+    });
+
+  } catch (error) {
+    goalList.replaceChildren();
+
+    addTextElement(
+      goalList,
+      "p",
+      "message",
+      "Could not load goals: " + error.message
+    );
+  }
+}
+
 function showProjectMessage(message, isError = false) {
   projectMessage.textContent = message;
   projectMessage.style.color = isError ? "#D66B6B" : "#49A982";

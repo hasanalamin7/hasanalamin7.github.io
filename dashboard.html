@@ -573,10 +573,25 @@
 
     </nav>
 
-  </main>
+    </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <script>
+     // SUPABASE CONNECTION
 
+    const SUPABASE_URL = "https://rtevxoywkcvbprafkhxr.supabase.co";
+    const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_EuPBlIzVy4ztbWnml3KEag_WinN7S5a";
+
+    const { createClient } = supabase;
+
+    const supabaseClient = createClient(
+      SUPABASE_URL,
+      SUPABASE_PUBLISHABLE_KEY
+    );
+
+
+    // PAGE NAVIGATION
     // PAGE NAVIGATION
 
     function showPage(pageName) {

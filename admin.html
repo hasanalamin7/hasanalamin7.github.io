@@ -1011,6 +1011,12 @@ async function deleteProject(id) {
       await loadLearningItems();
       await loadActivities();
       await loadProjects();
+      
+const lastSection =
+  localStorage.getItem("dashboardLastSection") || "learning";
+
+showSection(lastSection, false);
+
     } catch (error) {
       status.textContent =
         "Access verification failed: " + error.message;
@@ -1040,29 +1046,37 @@ async function deleteProject(id) {
     }
   };
 
+  
+function showSection(page, save = true) {
+  if (!pageInfo[page]) {
+    page = "learning";
+  }
+
   document.querySelectorAll(".nav-btn").forEach(button => {
-    button.addEventListener("click", () => {
-      const page = button.dataset.page;
-
-      document.querySelectorAll(".nav-btn").forEach(item => {
-        item.classList.remove("active");
-      });
-
-      button.classList.add("active");
-
-      document.querySelectorAll(".section").forEach(section => {
-        section.classList.remove("active");
-      });
-
-      document.getElementById(page).classList.add("active");
-
-      document.getElementById("pageHeading").textContent =
-        pageInfo[page].title;
-
-      document.getElementById("pageDescription").textContent =
-        pageInfo[page].description;
-    });
+    button.classList.toggle("active", button.dataset.page === page);
   });
+
+  document.querySelectorAll(".section").forEach(section => {
+    section.classList.toggle("active", section.id === page);
+  });
+
+  document.getElementById("pageHeading").textContent =
+    pageInfo[page].title;
+
+  document.getElementById("pageDescription").textContent =
+    pageInfo[page].description;
+
+  if (save) {
+    localStorage.setItem("dashboardLastSection", page);
+  }
+}
+
+document.querySelectorAll(".nav-btn").forEach(button => {
+  button.addEventListener("click", () => {
+    showSection(button.dataset.page);
+  });
+});
+
 
   activityForm.addEventListener("submit", async event => {
     event.preventDefault();

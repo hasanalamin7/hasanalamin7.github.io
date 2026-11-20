@@ -1232,6 +1232,22 @@
     }
 
     checkAuthentication();
+      // LOGOUT SYSTEM
+
+    document.getElementById("logoutButton")
+      .addEventListener("click", async function() {
+
+        const { error } =
+          await supabaseClient.auth.signOut();
+
+        if (error) {
+          alert("Logout failed: " + error.message);
+          return;
+        }
+
+        window.location.replace("login.html");
+
+      });
   </script>
 
 </body>

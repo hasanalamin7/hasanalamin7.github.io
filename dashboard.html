@@ -283,7 +283,7 @@
   </style>
 </head>
 
-<body>
+  <body style="display:none;">
   <main class="container">
 
     <header>
@@ -1170,7 +1170,44 @@
       displayLearningRecords();
 
     }
+    // AUTHENTICATION & ROLE PROTECTION
 
+    async function checkAuthentication() {
+
+      const { data: { session }, error } =
+        await supabaseClient.auth.getSession();
+
+      if (error || !session) {
+        window.location.replace("login.html");
+        return;
+      }
+
+      const { data: roleData, error: roleError } =
+        await supabaseClient
+          .from("user_roles")
+          .select("role")
+          .eq("user_id", session.user.id)
+          .single();
+
+      if (roleError || !roleData) {
+        await supabaseClient.auth.signOut();
+        window.location.replace("login.html");
+        return;
+      }
+
+      if (
+        roleData.role !== "admin" &&
+        roleData.role !== "observer"
+      ) {
+        await supabaseClient.auth.signOut();
+        window.location.replace("login.html");
+        return;
+      }
+
+      document.body.style.display = "block";
+    }
+
+    checkAuthentication();
   </script>
 
 </body>

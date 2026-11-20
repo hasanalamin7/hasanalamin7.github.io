@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -182,8 +183,16 @@
       cursor: pointer;
     }
 
-    .save-button:active {
-      opacity: 0.8;
+    .cancel-button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 10px;
+      border: 1px solid #64766D;
+      border-radius: 8px;
+      background: transparent;
+      color: var(--muted);
+      font-size: 14px;
+      cursor: pointer;
     }
 
     .learning-record {
@@ -220,14 +229,30 @@
       white-space: pre-wrap;
     }
 
-    .delete-button {
+    .record-actions {
+      display: flex;
+      gap: 10px;
       margin-top: 14px;
-      padding: 8px 13px;
-      border: 1px solid #A65F5F;
+    }
+
+    .edit-button,
+    .delete-button {
+      flex: 1;
+      padding: 9px 13px;
       border-radius: 6px;
       background: transparent;
-      color: #E18A8A;
       cursor: pointer;
+      font-size: 13px;
+    }
+
+    .edit-button {
+      border: 1px solid var(--green);
+      color: var(--green);
+    }
+
+    .delete-button {
+      border: 1px solid #A65F5F;
+      color: #E18A8A;
     }
 
     .bottom-nav {
@@ -325,7 +350,9 @@
 
       <div class="form-card">
 
-        <h3 class="section-title">Add Learning Record</h3>
+        <h3 class="section-title" id="formTitle">
+          Add Learning Record
+        </h3>
 
         <form id="learningForm">
 
@@ -361,8 +388,18 @@
             ></textarea>
           </div>
 
-          <button type="submit" class="save-button">
+          <button type="submit" class="save-button" id="submitButton">
             Save Learning Record
+          </button>
+
+          <button
+            type="button"
+            class="cancel-button"
+            id="cancelEditButton"
+            style="display:none;"
+            onclick="cancelEdit()"
+          >
+            Cancel Edit
           </button>
 
         </form>
@@ -444,6 +481,7 @@
   </main>
 
   <script>
+
     // PAGE NAVIGATION
 
     function showPage(pageName) {
@@ -472,12 +510,13 @@
 
 
     // TEMPORARY LEARNING RECORDS
-    // These records are kept only while this page remains open.
 
     let learningRecords = [];
 
+    let editingRecordId = null;
 
-    // SAVE LEARNING RECORD
+
+    // FORM SUBMIT: SAVE OR UPDATE
 
     document.getElementById("learningForm")
       .addEventListener("submit", function(event) {
@@ -496,21 +535,43 @@
         const notes =
           document.getElementById("learningNotes").value.trim();
 
-        const record = {
-          id: Date.now(),
-          category: category,
-          topic: topic,
-          date: date,
-          notes: notes
-        };
 
-        learningRecords.unshift(record);
+        if (editingRecordId !== null) {
+
+          const record = learningRecords.find(
+            item => item.id === editingRecordId
+          );
+
+          if (!record) return;
+
+          record.category = category;
+          record.topic = topic;
+          record.date = date;
+          record.notes = notes;
+
+          alert("Learning record updated successfully!");
+
+          cancelEdit();
+
+        } else {
+
+          const record = {
+            id: Date.now(),
+            category: category,
+            topic: topic,
+            date: date,
+            notes: notes
+          };
+
+          learningRecords.unshift(record);
+
+          this.reset();
+
+          alert("Learning record added successfully!");
+
+        }
 
         displayLearningRecords();
-
-        this.reset();
-
-        alert("Learning record added successfully!");
 
       });
 
@@ -559,7 +620,23 @@
         notes.className = "record-notes";
         notes.textContent = record.notes || "No notes added.";
 
+
+        // EDIT BUTTON
+
+        const editButton = document.createElement("button");
+
+        editButton.className = "edit-button";
+        editButton.textContent = "Edit";
+
+        editButton.addEventListener("click", function() {
+          editLearningRecord(record.id);
+        });
+
+
+        // DELETE BUTTON
+
         const deleteButton = document.createElement("button");
+
         deleteButton.className = "delete-button";
         deleteButton.textContent = "Delete";
 
@@ -567,15 +644,81 @@
           deleteLearningRecord(record.id);
         });
 
+
+        const actions = document.createElement("div");
+        actions.className = "record-actions";
+
+        actions.appendChild(editButton);
+        actions.appendChild(deleteButton);
+
         card.appendChild(category);
         card.appendChild(topic);
         card.appendChild(date);
         card.appendChild(notes);
-        card.appendChild(deleteButton);
+        card.appendChild(actions);
 
         container.appendChild(card);
 
       });
+
+    }
+
+
+    // EDIT LEARNING RECORD
+
+    function editLearningRecord(id) {
+
+      const record = learningRecords.find(
+        item => item.id === id
+      );
+
+      if (!record) return;
+
+      editingRecordId = id;
+
+      document.getElementById("skillCategory").value =
+        record.category;
+
+      document.getElementById("learningTopic").value =
+        record.topic;
+
+      document.getElementById("learningDate").value =
+        record.date;
+
+      document.getElementById("learningNotes").value =
+        record.notes;
+
+      document.getElementById("formTitle").textContent =
+        "Edit Learning Record";
+
+      document.getElementById("submitButton").textContent =
+        "Update Learning Record";
+
+      document.getElementById("cancelEditButton").style.display =
+        "block";
+
+      document.getElementById("learningForm")
+        .scrollIntoView({ behavior: "smooth" });
+
+    }
+
+
+    // CANCEL EDIT
+
+    function cancelEdit() {
+
+      editingRecordId = null;
+
+      document.getElementById("learningForm").reset();
+
+      document.getElementById("formTitle").textContent =
+        "Add Learning Record";
+
+      document.getElementById("submitButton").textContent =
+        "Save Learning Record";
+
+      document.getElementById("cancelEditButton").style.display =
+        "none";
 
     }
 
@@ -589,6 +732,10 @@
       );
 
       if (!confirmed) return;
+
+      if (editingRecordId === id) {
+        cancelEdit();
+      }
 
       learningRecords = learningRecords.filter(
         record => record.id !== id

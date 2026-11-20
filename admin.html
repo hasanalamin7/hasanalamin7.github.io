@@ -697,11 +697,287 @@ const projectMessage = document.getElementById("projectMessage");
 
 let editingProjectId = null;
 
+
 function showProjectMessage(message, isError = false) {
   projectMessage.textContent = message;
   projectMessage.style.color = isError ? "#D66B6B" : "#49A982";
 }
-  async function checkAdminAccess() {
+
+async function loadProjects() {
+  projectList.replaceChildren();
+  addTextElement(projectList, "p", "empty", "Loading projects...");
+
+  try {
+    const { data, error } = await supabaseClient
+      .from("projects")
+      .select("*")
+      .order("created_at", { ascending: false });
+
+    if (error) throw error;
+
+    projectList.replaceChildren();
+
+    if (!data || data.length === 0) {
+      addTextElement(
+        projectList,
+        "p",
+        "empty",
+        "এখনো কোনো Project যোগ করা হয়নি।"
+      );
+      return;
+    }
+
+    data.forEach(item => {
+      const card = document.createElement("div");
+      card.className = "learning-item";
+
+      addTextElement(card, "h3", "", item.name);
+
+      if (item.description) {
+        addTextElement(
+          card,
+          "p",
+          "item-description",
+          item.description
+        );
+      }
+
+      addTextElement(
+        card,
+        "div",
+        "item-meta",
+        "Status: " + (item.status || "Not Started") +
+        " | Progress: " + (item.progress ?? 0) + "%"
+      );
+
+      const track = document.createElement("div");
+      track.className = "progress-track";
+
+      const fill = document.createElement("div");
+      fill.className = "progress-fill";
+      fill.style.width = (item.progress ?? 0) + "%";
+
+      track.appendChild(fill);
+      card.appendChild(track);
+
+      if (item.deadline) {
+        addTextElement(
+          card,
+          "div",
+          "item-meta",
+          "Deadline: " + item.deadline
+        );
+      }
+
+      if (item.github_url || item.live_url) {
+        const links = document.createElement("div");
+        links.className = "item-meta";
+
+        if (item.github_url) {
+          const github = document.createElement("a");
+          github.href = item.github_url;
+          github.textContent = "GitHub";
+          github.target = "_blank";
+          github.rel = "noopener noreferrer";
+          github.style.color = "#49A982";
+          github.style.marginRight = "15px";
+          links.appendChild(github);
+        }
+
+        if (item.live_url) {
+          const live = document.createElement("a");
+          live.href = item.live_url;
+          live.textContent = "Live Website";
+          live.target = "_blank";
+          live.rel = "noopener noreferrer";
+          live.style.color = "#D6B978";
+          links.appendChild(live);
+        }
+
+        card.appendChild(links);
+      }
+
+      const actions = document.createElement("div");
+      actions.className = "item-actions";
+
+      const editButton = document.createElement("button");
+      editButton.className = "edit-btn";
+      editButton.textContent = "Edit";
+      editButton.addEventListener("click", () => editProject(item));
+
+      const deleteButton = document.createElement("button");
+      deleteButton.className = "delete-btn";
+      deleteButton.textContent = "Delete";
+      deleteButton.addEventListener(
+        "click",
+        () => deleteProject(item.id)
+      );
+
+      actions.append(editButton, deleteButton);
+      card.appendChild(actions);
+
+      projectList.appendChild(card);
+    });
+
+  } catch (error) {
+    projectList.replaceChildren();
+
+    addTextElement(
+      projectList,
+      "p",
+      "message",
+      "Could not load projects: " + error.message
+    );
+  }
+}
+
+projectForm.addEventListener("submit", async event => {
+  event.preventDefault();
+
+  const name = document.getElementById("projectName").value.trim();
+
+  const progress = Number(
+    document.getElementById("projectProgress").value
+  );
+
+  if (!name) {
+    showProjectMessage("Project Name লিখতে হবে।", true);
+    return;
+  }
+
+  if (!Number.isInteger(progress) || progress < 0 || progress > 100) {
+    showProjectMessage(
+      "Progress 0 থেকে 100-এর মধ্যে হতে হবে।",
+      true
+    );
+    return;
+  }
+
+  const projectData = {
+    name: name,
+    description: document.getElementById("projectDescription").value.trim(),
+    status: document.getElementById("projectStatus").value,
+    progress: progress,
+    deadline: document.getElementById("projectDeadline").value || null,
+    github_url: document.getElementById("projectGithub").value.trim(),
+    live_url: document.getElementById("projectLiveUrl").value.trim(),
+    updated_at: new Date().toISOString()
+  };
+
+  const saveButton = document.getElementById("saveProjectButton");
+  saveButton.disabled = true;
+
+  showProjectMessage("Saving project...");
+
+  try {
+    let result;
+
+    if (editingProjectId !== null) {
+      result = await supabaseClient
+        .from("projects")
+        .update(projectData)
+        .eq("id", editingProjectId);
+    } else {
+      result = await supabaseClient
+        .from("projects")
+        .insert(projectData);
+    }
+
+    if (result.error) throw result.error;
+
+    showProjectMessage(
+      editingProjectId !== null
+        ? "Project updated successfully!"
+        : "Project added successfully!"
+    );
+
+    resetProjectForm();
+    await loadProjects();
+
+  } catch (error) {
+    showProjectMessage("Save failed: " + error.message, true);
+  } finally {
+    saveButton.disabled = false;
+  }
+});
+
+function editProject(item) {
+  editingProjectId = item.id;
+
+  document.getElementById("projectName").value = item.name || "";
+  document.getElementById("projectDescription").value =
+    item.description || "";
+  document.getElementById("projectStatus").value =
+    item.status || "Not Started";
+  document.getElementById("projectProgress").value =
+    item.progress ?? 0;
+  document.getElementById("projectDeadline").value =
+    item.deadline || "";
+  document.getElementById("projectGithub").value =
+    item.github_url || "";
+  document.getElementById("projectLiveUrl").value =
+    item.live_url || "";
+
+  document.getElementById("projectFormHeading").textContent =
+    "Edit Project";
+
+  document.getElementById("saveProjectButton").textContent =
+    "Update Project";
+
+  document.getElementById("cancelProjectEditButton").hidden = false;
+
+  showProjectMessage("Editing: " + item.name);
+
+  projectForm.scrollIntoView({
+    behavior: "smooth",
+    block: "start"
+  });
+}
+
+function resetProjectForm() {
+  projectForm.reset();
+  editingProjectId = null;
+
+  document.getElementById("projectProgress").value = 0;
+
+  document.getElementById("projectFormHeading").textContent =
+    "Add New Project";
+
+  document.getElementById("saveProjectButton").textContent =
+    "Save Project";
+
+  document.getElementById("cancelProjectEditButton").hidden = true;
+}
+
+document.getElementById("cancelProjectEditButton").addEventListener(
+  "click",
+  () => {
+    resetProjectForm();
+    showProjectMessage("Edit cancelled.");
+  }
+);
+
+async function deleteProject(id) {
+  if (!confirm("এই Project-টি কি মুছে ফেলতে চাস?")) {
+    return;
+  }
+
+  try {
+    const { error } = await supabaseClient
+      .from("projects")
+      .delete()
+      .eq("id", id);
+
+    if (error) throw error;
+
+    showProjectMessage("Project deleted successfully!");
+    await loadProjects();
+
+  } catch (error) {
+    showProjectMessage("Delete failed: " + error.message, true);
+  }
+}
+ async function checkAdminAccess() {
     try {
       const { data: sessionData, error: sessionError } =
         await supabaseClient.auth.getSession();
@@ -734,6 +1010,7 @@ function showProjectMessage(message, isError = false) {
 
       await loadLearningItems();
       await loadActivities();
+      await loadProjects();
     } catch (error) {
       status.textContent =
         "Access verification failed: " + error.message;

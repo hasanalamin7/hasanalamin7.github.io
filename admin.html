@@ -920,7 +920,73 @@ async function loadGoals() {
     );
   }
 }
+goalForm.addEventListener("submit", async (event) => {
+  event.preventDefault();
 
+  const title = document.getElementById("goalTitle").value.trim();
+  const progress = Number(document.getElementById("goalProgress").value);
+
+  const startDate = document.getElementById("goalStartDate").value || null;
+  const deadline = document.getElementById("goalDeadline").value || null;
+
+  if (!title) {
+    showGoalMessage("Goal Title is required.", true);
+    return;
+  }
+
+  if (!Number.isInteger(progress) || progress < 0 || progress > 100) {
+    showGoalMessage("Progress অবশ্যই 0 থেকে 100-এর মধ্যে হতে হবে।", true);
+    return;
+  }
+
+  if (startDate && deadline && deadline < startDate) {
+    showGoalMessage("Deadline, Start Date-এর আগে হতে পারবে না।", true);
+    return;
+  }
+
+  const goalData = {
+    title,
+    description: document.getElementById("goalDescription").value.trim(),
+    goal_type: document.getElementById("goalType").value,
+    priority: document.getElementById("goalPriority").value,
+    start_date: startDate,
+    deadline,
+    status: document.getElementById("goalStatus").value,
+    progress,
+    achievement_notes: document.getElementById("goalAchievementNotes").value.trim(),
+    updated_at: new Date().toISOString()
+  };
+
+  try {
+    let result;
+
+    if (editingGoalId !== null) {
+      result = await supabaseClient
+        .from("goals")
+        .update(goalData)
+        .eq("id", editingGoalId);
+    } else {
+      result = await supabaseClient
+        .from("goals")
+        .insert([goalData]);
+    }
+
+    if (result.error) throw result.error;
+
+    showGoalMessage(
+      editingGoalId !== null
+        ? "Goal updated successfully."
+        : "Goal saved successfully."
+    );
+
+    resetGoalForm();
+    await loadGoals();
+
+  } catch (error) {
+    showGoalMessage("Could not save goal: " + error.message, true);
+  }
+});
+  
 function showProjectMessage(message, isError = false) {
   projectMessage.textContent = message;
   projectMessage.style.color = isError ? "#D66B6B" : "#49A982";

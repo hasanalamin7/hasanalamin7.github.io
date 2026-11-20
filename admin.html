@@ -538,15 +538,110 @@
     </div>
   </div>
 </section>
-    <section class="section" id="projects">
-      <h2 class="section-title">Projects</h2>
-      <div class="panel">
-        <h3>My Projects</h3>
-        <p class="empty">Projects, deadlines and progress will appear here.</p>
-      </div>
-    </section>
+    
 
-    <section class="section" id="goals">
+<section class="section" id="projects">
+  <h2 class="section-title">Projects</h2>
+
+  <div class="panel">
+    <h3 id="projectFormHeading">Add New Project</h3>
+
+    <form id="projectForm" class="learning-form">
+
+      <div class="field full">
+        <label for="projectName">Project Name *</label>
+        <input
+          id="projectName"
+          type="text"
+          required
+          maxlength="200"
+          placeholder="যেমন: Hasan Alamin Personal Website">
+      </div>
+
+      <div class="field full">
+        <label for="projectDescription">Description</label>
+        <textarea
+          id="projectDescription"
+          placeholder="Project সম্পর্কে বিস্তারিত">
+        </textarea>
+      </div>
+
+      <div class="field">
+        <label for="projectStatus">Status</label>
+        <select id="projectStatus">
+          <option value="Not Started">Not Started</option>
+          <option value="In Progress">In Progress</option>
+          <option value="Completed">Completed</option>
+          <option value="On Hold">On Hold</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label for="projectProgress">Progress (%)</label>
+        <input
+          id="projectProgress"
+          type="number"
+          min="0"
+          max="100"
+          value="0">
+      </div>
+
+      <div class="field">
+        <label for="projectDeadline">Deadline</label>
+        <input id="projectDeadline" type="date">
+      </div>
+
+      <div class="field full">
+        <label for="projectGithub">GitHub URL</label>
+        <input
+          id="projectGithub"
+          type="url"
+          placeholder="https://github.com/username/project">
+      </div>
+
+      <div class="field full">
+        <label for="projectLiveUrl">Live Website URL</label>
+        <input
+          id="projectLiveUrl"
+          type="url"
+          placeholder="https://example.com">
+      </div>
+
+      <div class="form-actions">
+        <button
+          class="primary-btn"
+          id="saveProjectButton"
+          type="submit">
+          Save Project
+        </button>
+
+        <button
+          class="secondary-btn"
+          id="cancelProjectEditButton"
+          type="button"
+          hidden>
+          Cancel Edit
+        </button>
+      </div>
+
+    </form>
+
+    <p
+      class="message"
+      id="projectMessage"
+      role="status">
+    </p>
+  </div>
+
+  <div class="panel">
+    <h3>My Projects</h3>
+
+    <div id="projectList" class="learning-list">
+      <p class="empty">Loading projects...</p>
+    </div>
+  </div>
+</section>
+ <section class="section" id="goals">
       <h2 class="section-title">Goals</h2>
       <div class="panel">
         <h3>My Goals</h3>

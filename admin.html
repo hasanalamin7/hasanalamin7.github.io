@@ -1004,19 +1004,20 @@ async function deleteProject(id) {
         return;
       }
 
-      dashboard.hidden = false;
-      logoutButton.hidden = false;
-      status.textContent = "Admin access verified.";
+dashboard.hidden = false;
+logoutButton.hidden = false;
+status.textContent = "Admin access verified.";
 
-      await loadLearningItems();
-      await loadActivities();
-      await loadProjects();
-      
 const lastSection =
   localStorage.getItem("dashboardLastSection") || "learning";
 
 showSection(lastSection, false);
 
+await loadLearningItems();
+await loadActivities();
+await loadProjects();
+
+      
     } catch (error) {
       status.textContent =
         "Access verification failed: " + error.message;

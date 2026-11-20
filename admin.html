@@ -641,13 +641,105 @@
     </div>
   </div>
 </section>
- <section class="section" id="goals">
-      <h2 class="section-title">Goals</h2>
-      <div class="panel">
-        <h3>My Goals</h3>
-        <p class="empty">Personal and career goals will appear here.</p>
+ 
+
+<section class="section" id="goals">
+  <h2 class="section-title">Goals</h2>
+
+  <div class="panel">
+    <h3 id="goalFormHeading">Add New Goal</h3>
+
+    <form id="goalForm" class="learning-form">
+
+      <div class="field full">
+        <label for="goalTitle">Goal Title *</label>
+        <input id="goalTitle" type="text" required
+          maxlength="200" placeholder="যেমন: Become a Full Stack Developer">
       </div>
-    </section>
+
+      <div class="field full">
+        <label for="goalDescription">Description</label>
+        <textarea id="goalDescription"
+          placeholder="Goal সম্পর্কে বিস্তারিত"></textarea>
+      </div>
+
+      <div class="field">
+        <label for="goalType">Goal Type</label>
+        <select id="goalType">
+          <option value="Short-term">Short-term</option>
+          <option value="Long-term">Long-term</option>
+          <option value="Monthly">Monthly</option>
+          <option value="Yearly">Yearly</option>
+          <option value="Career">Career</option>
+          <option value="Skill">Skill</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label for="goalPriority">Priority</label>
+        <select id="goalPriority">
+          <option value="Low">Low</option>
+          <option value="Medium" selected>Medium</option>
+          <option value="High">High</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label for="goalStartDate">Start Date</label>
+        <input id="goalStartDate" type="date">
+      </div>
+
+      <div class="field">
+        <label for="goalDeadline">Deadline</label>
+        <input id="goalDeadline" type="date">
+      </div>
+
+      <div class="field">
+        <label for="goalStatus">Status</label>
+        <select id="goalStatus">
+          <option value="Planned">Planned</option>
+          <option value="In Progress">In Progress</option>
+          <option value="Completed">Completed</option>
+          <option value="On Hold">On Hold</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label for="goalProgress">Progress (%)</label>
+        <input id="goalProgress" type="number"
+          min="0" max="100" value="0">
+      </div>
+
+      <div class="field full">
+        <label for="goalAchievementNotes">Achievement Notes</label>
+        <textarea id="goalAchievementNotes"
+          placeholder="Goal অর্জনের অগ্রগতি ও অর্জনের বিবরণ"></textarea>
+      </div>
+
+      <div class="form-actions">
+        <button class="primary-btn" id="saveGoalButton" type="submit">
+          Save Goal
+        </button>
+
+        <button class="secondary-btn" id="cancelGoalEditButton"
+          type="button" hidden>
+          Cancel Edit
+        </button>
+      </div>
+
+    </form>
+
+    <p class="message" id="goalMessage" role="status"></p>
+  </div>
+
+  <div class="panel">
+    <h3>My Goals</h3>
+
+    <div id="goalList" class="learning-list">
+      <p class="empty">Loading goals...</p>
+    </div>
+  </div>
+</section>
 
     <section class="section" id="reports">
       <h2 class="section-title">Reports</h2>

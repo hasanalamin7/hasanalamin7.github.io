@@ -690,7 +690,17 @@
   const learningMessage = document.getElementById("learningMessage");
 
   let editingLearningId = null;
+  
+const projectForm = document.getElementById("projectForm");
+const projectList = document.getElementById("projectList");
+const projectMessage = document.getElementById("projectMessage");
 
+let editingProjectId = null;
+
+function showProjectMessage(message, isError = false) {
+  projectMessage.textContent = message;
+  projectMessage.style.color = isError ? "#D66B6B" : "#49A982";
+}
   async function checkAdminAccess() {
     try {
       const { data: sessionData, error: sessionError } =

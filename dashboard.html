@@ -367,7 +367,7 @@
       
       <h3 class="section-title">Learning</h3>
 
-      <div class="form-card">
+      <div class="form-card" id="learningFormCard">
 
         <h3 class="section-title" id="formTitle">
           Add Learning Record
@@ -1218,9 +1218,15 @@
         window.location.replace("login.html");
         return;
       }
-      const welcomeMessage =
-        document.getElementById("welcomeMessage");
+            // OBSERVER PERMISSIONS
 
+      if (roleData.role === "observer") {
+        document.getElementById("learningFormCard")
+          .style.display = "none";
+      }
+            document.body.dataset.role = roleData.role;
+const welcomeMessage =
+        document.getElementById("welcomeMessage");
       if (roleData.role === "admin") {
         welcomeMessage.innerHTML =
           'Welcome back, <span>Hasan Alamin!</span>';

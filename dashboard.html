@@ -980,71 +980,97 @@
 
       });
 
-    // TEMPORARY LEARNING RECORDS
+
+  
+        
+    // SUPABASE LEARNING RECORDS
 
     let learningRecords = [];
-
     let editingRecordId = null;
 
-
-    // FORM SUBMIT: SAVE OR UPDATE
-
-    document.getElementById("learningForm")
-      .addEventListener("submit", function(event) {
-
-        event.preventDefault();
-
-        const category =
-          document.getElementById("skillCategory").value;
-
-        const topic =
-          document.getElementById("learningTopic").value.trim();
-
-        const date =
-          document.getElementById("learningDate").value;
-
-        const notes =
-          document.getElementById("learningNotes").value.trim();
+    const learningForm =
+      document.getElementById("learningForm");
 
 
-        if (editingRecordId !== null) {
+    // LOAD LEARNING RECORDS
 
-          const record = learningRecords.find(
-            item => item.id === editingRecordId
-          );
+    async function loadLearningRecords() {
 
-          if (!record) return;
+      const { data, error } = await supabaseClient
+        .from("learning_records")
+        .select("*")
+        .order("learning_date", { ascending: false })
+        .order("created_at", { ascending: false });
 
-          record.category = category;
-          record.topic = topic;
-          record.date = date;
-          record.notes = notes;
+      if (error) {
+        console.error("Learning load error:", error);
+        alert("Could not load Learning Records: " + error.message);
+        return;
+      }
 
-          alert("Learning record updated successfully!");
+      learningRecords = data || [];
 
-          cancelEdit();
+      displayLearningRecords();
+    }
 
-        } else {
 
-          const record = {
-            id: Date.now(),
-            category: category,
-            topic: topic,
-            date: date,
-            notes: notes
-          };
+    // SAVE OR UPDATE LEARNING RECORDS
 
-          learningRecords.unshift(record);
+    learningForm.addEventListener("submit", async function(event) {
 
-          this.reset();
+      event.preventDefault();
 
-          alert("Learning record added successfully!");
+      if (document.body.dataset.role !== "admin") {
+        alert("You do not have permission to save Learning Records.");
+        return;
+      }
 
-        }
+      const payload = {
+        category: document.getElementById("skillCategory").value,
+        topic: document.getElementById("learningTopic").value.trim(),
+        learning_date: document.getElementById("learningDate").value,
+        notes: document.getElementById("learningNotes").value.trim()
+      };
 
-        displayLearningRecords();
+      let error;
 
-      });
+      if (editingRecordId !== null) {
+
+        const result = await supabaseClient
+          .from("learning_records")
+          .update(payload)
+          .eq("id", editingRecordId);
+
+        error = result.error;
+
+      } else {
+
+        const result = await supabaseClient
+          .from("learning_records")
+          .insert(payload);
+
+        error = result.error;
+
+      }
+
+      if (error) {
+        alert("Learning save failed: " + error.message);
+        return;
+      }
+
+      const wasEditing = editingRecordId !== null;
+
+      cancelEdit();
+
+      await loadLearningRecords();
+
+      alert(
+        wasEditing
+          ? "Learning record updated successfully!"
+          : "Learning record added successfully!"
+      );
+
+    });
 
 
     // DISPLAY LEARNING RECORDS
@@ -1072,7 +1098,6 @@
       learningRecords.forEach(record => {
 
         const card = document.createElement("div");
-
         card.className = "learning-record";
 
         const category = document.createElement("p");
@@ -1085,30 +1110,27 @@
 
         const date = document.createElement("p");
         date.className = "record-date";
-        date.textContent = record.date;
+        date.textContent = record.learning_date;
 
         const notes = document.createElement("p");
         notes.className = "record-notes";
         notes.textContent = record.notes || "No notes added.";
 
-
-        
-
-
-        
-
         card.appendChild(category);
         card.appendChild(topic);
         card.appendChild(date);
         card.appendChild(notes);
-        
 
-        // ADMIN-ONLY EDIT AND DELETE BUTTONS
+
+        // ADMIN-ONLY EDIT AND DELETE
 
         if (document.body.dataset.role === "admin") {
 
-          const editButton = document.createElement("button");
+          const actions = document.createElement("div");
+          actions.className = "record-actions";
 
+          const editButton = document.createElement("button");
+          editButton.type = "button";
           editButton.className = "edit-button";
           editButton.textContent = "Edit";
 
@@ -1117,16 +1139,13 @@
           });
 
           const deleteButton = document.createElement("button");
-
+          deleteButton.type = "button";
           deleteButton.className = "delete-button";
           deleteButton.textContent = "Delete";
 
           deleteButton.addEventListener("click", function() {
             deleteLearningRecord(record.id);
           });
-
-          const actions = document.createElement("div");
-          actions.className = "record-actions";
 
           actions.appendChild(editButton);
           actions.appendChild(deleteButton);
@@ -1144,7 +1163,9 @@
     // EDIT LEARNING RECORD
 
     function editLearningRecord(id) {
+
       if (document.body.dataset.role !== "admin") return;
+
       const record = learningRecords.find(
         item => item.id === id
       );
@@ -1160,10 +1181,10 @@
         record.topic;
 
       document.getElementById("learningDate").value =
-        record.date;
+        record.learning_date;
 
       document.getElementById("learningNotes").value =
-        record.notes;
+        record.notes || "";
 
       document.getElementById("formTitle").textContent =
         "Edit Learning Record";
@@ -1186,7 +1207,7 @@
 
       editingRecordId = null;
 
-      document.getElementById("learningForm").reset();
+      learningForm.reset();
 
       document.getElementById("formTitle").textContent =
         "Add Learning Record";
@@ -1202,25 +1223,40 @@
 
     // DELETE LEARNING RECORD
 
-    function deleteLearningRecord(id) {
+    async function deleteLearningRecord(id) {
+
       if (document.body.dataset.role !== "admin") return;
+
       const confirmed = confirm(
         "Are you sure you want to delete this record?"
       );
 
       if (!confirmed) return;
 
+      const { error } = await supabaseClient
+        .from("learning_records")
+        .delete()
+        .eq("id", id);
+
+      if (error) {
+        alert("Learning delete failed: " + error.message);
+        return;
+      }
+
       if (editingRecordId === id) {
         cancelEdit();
       }
 
-      learningRecords = learningRecords.filter(
-        record => record.id !== id
-      );
+      await loadLearningRecords();
 
-      displayLearningRecords();
+      alert("Learning record deleted successfully!");
 
     }
+
+
+        
+
+    
     // AUTHENTICATION & ROLE PROTECTION
 
     async function checkAuthentication() {

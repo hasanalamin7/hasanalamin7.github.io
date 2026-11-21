@@ -74,7 +74,8 @@ button:hover {
 
 
 
-/* ===== GLASS MENU ===== */
+
+/* ===== PREMIUM GLASS MENU ===== */
 
 #siteMenu {
   box-sizing: border-box;
@@ -83,23 +84,19 @@ button:hover {
   margin: 20px 0 16px;
   padding: 12px;
 
-  border: 1px solid rgba(105, 195, 155, 0.65);
+  border: 1px solid rgba(105, 195, 155, 0.45);
   border-radius: 10px;
 
-  background: linear-gradient(
-    135deg,
-    rgba(73, 169, 130, 0.22),
-    rgba(34, 75, 60, 0.82) 50%,
-    rgba(16, 27, 25, 0.92)
-  );
+  /* Transparent Glass */
+  background: rgba(16, 27, 25, 0.58);
 
   backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
 
   box-shadow:
-    inset 0 1px 2px rgba(255, 255, 255, 0.12),
-    inset 0 0 20px rgba(73, 169, 130, 0.08),
-    0 8px 25px rgba(0, 0, 0, 0.25);
+    inset 0 1px 1px rgba(255, 255, 255, 0.08),
+    inset 0 0 14px rgba(255, 255, 255, 0.025),
+    0 8px 24px rgba(0, 0, 0, 0.18);
 
   text-align: left;
 }
@@ -110,11 +107,11 @@ button:hover {
 
 #siteMenu a {
   display: block;
-  color: #49A982;
+  color: #C7B2F2;
   text-decoration: none;
   margin: 0;
   padding: 12px 8px;
-  border-bottom: 1px solid rgba(73, 169, 130, 0.3);
+  border-bottom: 1px solid rgba(73, 169, 130, 0.22);
   font-size: 16px;
   text-align: left;
   transition: color 0.3s ease, background-color 0.3s ease;
@@ -156,11 +153,12 @@ button:hover {
 #siteMenu a:hover,
 #siteMenu a:focus {
   color: #D6B978;
-  background-color: rgba(73, 169, 130, 0.12);
+  background-color: rgba(214, 185, 120, 0.09);
   outline: none;
 }
 
 /* ===== WELCOME ===== */
+
 
 
 

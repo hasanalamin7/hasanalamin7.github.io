@@ -642,7 +642,7 @@
     const transactionCategory =
       document.getElementById("transactionCategory");
 
-    const incomeCategories = [
+    const hasanIncomeCategories = [
       "Food Delivery",
       "Web Development",
       "Forex",
@@ -650,19 +650,41 @@
       "Others"
     ];
 
-    const expenseCategories = [
+    const hasanExpenseCategories = [
       "Family",
       "Nahida",
       "Personal",
       "Others"
     ];
 
+    const nahidaIncomeCategories = [
+      "From Husband",
+      "Others"
+    ];
+
+    const nahidaExpenseCategories = [
+      "For Araf",
+      "For Anveer",
+      "Vehicle Rent",
+      "Others"
+    ];
+
     transactionType.addEventListener("change", function() {
 
-      const categories =
-        this.value === "Income"
-          ? incomeCategories
-          : expenseCategories;
+      const isNahida =
+        document.body.dataset.role === "observer";
+
+      let categories;
+
+      if (isNahida) {
+        categories = this.value === "Income"
+          ? nahidaIncomeCategories
+          : nahidaExpenseCategories;
+      } else {
+        categories = this.value === "Income"
+          ? hasanIncomeCategories
+          : hasanExpenseCategories;
+      }
 
       transactionCategory.innerHTML =
         '<option value="">Select Category</option>';
@@ -681,6 +703,8 @@
       });
 
     });
+
+
   
     // FINANCE TRANSACTION SAVE AND DISPLAY
 

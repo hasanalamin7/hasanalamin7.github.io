@@ -73,44 +73,27 @@ button:hover {
 }
 
 
-/* ===== GLASS SIDEBAR ===== */
+/* ===== MENU ===== */
 
 #siteMenu {
   box-sizing: border-box;
-  position: fixed;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  width: min(320px, 86vw);
+  width: 250px;
   max-width: 100%;
-  margin: 0;
-  padding: 28px 18px;
-  overflow-y: auto;
-  z-index: 1001;
+  margin: 20px 0 16px;
+  padding: 12px;
+  border: 1px solid #49A982;
+  border-radius: 10px;
 
-  background: rgba(16, 27, 25, 0.84);
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
-
-  border-right: 1px solid rgba(73, 169, 130, 0.28);
-  box-shadow: 12px 0 40px rgba(0, 0, 0, 0.35);
+  /* Glass Effect */
+  background: rgba(16, 27, 25, 0.65);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
 
   text-align: left;
 }
 
 #siteMenu[style*="display: block"] {
-  animation: sidebarSlideIn 0.35s ease both;
-}
-
-@keyframes sidebarSlideIn {
-  from {
-    opacity: 0;
-    transform: translateX(-100%);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
+  animation: menuFadeIn 0.45s ease both;
 }
 
 #siteMenu a {
@@ -118,26 +101,36 @@ button:hover {
   color: #49A982;
   text-decoration: none;
   margin: 0;
-  padding: 15px 12px;
-  border-bottom: 1px solid rgba(73, 169, 130, 0.18);
+  padding: 12px 8px;
+  border-bottom: 1px solid rgba(73, 169, 130, 0.3);
   font-size: 16px;
   text-align: left;
-  border-radius: 8px;
-  transition: color 0.25s ease, background 0.25s ease;
+  transition: color 0.3s ease, background-color 0.3s ease;
+  animation: menuFadeIn 0.45s ease both;
 }
 
 #siteMenu a:last-child {
   border-bottom: none;
 }
 
+#siteMenu a:nth-child(1) { animation-delay: 0.05s; }
+#siteMenu a:nth-child(2) { animation-delay: 0.12s; }
+#siteMenu a:nth-child(3) { animation-delay: 0.19s; }
+#siteMenu a:nth-child(4) { animation-delay: 0.26s; }
+#siteMenu a:nth-child(5) { animation-delay: 0.33s; }
+#siteMenu a:nth-child(6) { animation-delay: 0.40s; }
+#siteMenu a:nth-child(7) { animation-delay: 0.47s; }
+
 #siteMenu a:hover,
 #siteMenu a:focus {
   color: #D6B978;
-  background: rgba(73, 169, 130, 0.12);
+  background-color: rgba(73, 169, 130, 0.12);
   outline: none;
 }
 
 /* ===== WELCOME ===== */
+
+
 
 
 #welcome {

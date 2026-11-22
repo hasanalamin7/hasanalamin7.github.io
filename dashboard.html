@@ -820,12 +820,6 @@ function showPage(pageName) {
 // HAMBURGER MENU CONTROLS
 
 const menuToggle = document.getElementById("menuToggle");
-const menuOverlay = document.getElementById("menuOverlay");
-
-function openMenu() {
-  document.body.classList.add("menu-open");
-  menuToggle.setAttribute("aria-expanded", "true");
-}
 
 function closeMenu() {
   document.body.classList.remove("menu-open");
@@ -838,19 +832,8 @@ function navigateFromMenu(pageName) {
 }
 
 menuToggle.addEventListener("click", function() {
-  if (document.body.classList.contains("menu-open")) {
-    closeMenu();
-  } else {
-    openMenu();
-  }
-});
-
-menuOverlay.addEventListener("click", closeMenu);
-
-document.addEventListener("keydown", function(event) {
-  if (event.key === "Escape") {
-    closeMenu();
-  }
+  const isOpen = document.body.classList.toggle("menu-open");
+  menuToggle.setAttribute("aria-expanded", String(isOpen));
 });
 
 

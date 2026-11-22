@@ -364,16 +364,22 @@ header {
 
 .side-menu {
   display: none;
-  position: absolute;
-  top: 100%;
-  right: 0;
+  position: fixed;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
   width: 250px;
   padding: 12px;
   background: rgba(28, 48, 42, 0.96);
   backdrop-filter: blur(15px);
   border: 1px solid rgba(214, 185, 120, 0.25);
-  border-radius: 12px;
+  border-radius: 0 12px 12px 0;
   z-index: 1000;
+}
+
+body.menu-open .side-menu {
+  display: block;
+  animation: menuFadeIn 0.3s ease;
 }
 
 body.menu-open .side-menu {

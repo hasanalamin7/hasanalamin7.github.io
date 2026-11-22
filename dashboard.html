@@ -703,14 +703,13 @@
       });
 
     });
+           
 
+    // SUPABASE FINANCE TRANSACTIONS
 
-  
-    // FINANCE TRANSACTION SAVE AND DISPLAY
-
-    let transactionRecords = [];
+    let transactions = [];
     let editingTransactionId = null;
-    let activeTransactionFilter = "All";
+    let transactionFilter = "All";
 
     const transactionForm =
       document.getElementById("transactionForm");
@@ -718,58 +717,114 @@
     const financeRecordsContainer =
       document.getElementById("financeRecords");
 
+    const transactionFormTitle =
+      document.getElementById("transactionFormTitle");
 
-    // SAVE TRANSACTION
+    const cancelTransactionEdit =
+      document.getElementById("cancelTransactionEdit");
 
-    transactionForm.addEventListener("submit", function(event) {
+
+    // LOAD TRANSACTIONS
+
+    async function loadTransactions() {
+
+      const { data: { user } } =
+        await supabaseClient.auth.getUser();
+
+      if (!user) return;
+
+      let query = supabaseClient
+        .from("finance_transactions")
+        .select("*")
+        .order("transaction_date", { ascending: false })
+        .order("created_at", { ascending: false });
+
+      // OBSERVER CAN SEE OWN RECORDS
+
+      if (document.body.dataset.role === "observer") {
+        query = query.eq("user_id", user.id);
+      }
+
+      const { data, error } = await query;
+
+      if (error) {
+        console.error("Finance load error:", error);
+        alert("Could not load Finance Records: " + error.message);
+        return;
+      }
+
+      transactions = data || [];
+
+      displayTransactions();
+    }
+
+
+    // SAVE OR UPDATE TRANSACTION
+
+    transactionForm.addEventListener("submit", async function(event) {
 
       event.preventDefault();
 
-            const record = {
-        id: editingTransactionId || Date.now(),
-        type: document.getElementById("transactionType").value,
-        amount: Number(document.getElementById("transactionAmount").value),
-        category: document.getElementById("transactionCategory").value,
-        date: document.getElementById("transactionDate").value,
-        notes: document.getElementById("transactionNotes").value.trim()
+      const { data: { user } } =
+        await supabaseClient.auth.getUser();
+
+      if (!user) return;
+
+      const payload = {
+        user_id: user.id,
+        type: transactionType.value,
+        amount: Number(
+          document.getElementById("transactionAmount").value
+        ),
+        category: transactionCategory.value,
+        transaction_date:
+          document.getElementById("transactionDate").value,
+        notes:
+          document.getElementById("transactionNotes").value.trim()
       };
 
-      if (editingTransactionId) {
+      let error;
 
-        const index = transactionRecords.findIndex(
-          item => item.id === editingTransactionId
-        );
+      if (editingTransactionId !== null) {
 
-        if (index !== -1) {
-          transactionRecords[index] = record;
+        let query = supabaseClient
+          .from("finance_transactions")
+          .update(payload)
+          .eq("id", editingTransactionId);
+
+        if (document.body.dataset.role === "observer") {
+          query = query.eq("user_id", user.id);
         }
+
+        const result = await query;
+
+        error = result.error;
 
       } else {
 
-        transactionRecords.unshift(record);
+        const result = await supabaseClient
+          .from("finance_transactions")
+          .insert(payload);
+
+        error = result.error;
 
       }
-      const wasEditing = Boolean(editingTransactionId);
-      transactionForm.reset();
-           editingTransactionId = null;
 
-      document.getElementById("transactionFormTitle").textContent =
-        "Add Transaction";
+      if (error) {
+        alert("Transaction save failed: " + error.message);
+        return;
+      }
 
-      transactionForm.querySelector(".save-button").textContent =
-        "Save Transaction";
+      const wasEditing = editingTransactionId !== null;
 
-      document.getElementById("cancelTransactionEdit").style.display =
-        "none";
-      transactionCategory.innerHTML =
-        '<option value="">Select Category</option>';
+      cancelTransactionEditForm();
 
-      displayTransactions();
+      await loadTransactions();
 
-            alert(
+      alert(
         wasEditing
           ? "Transaction updated successfully!"
-          : "Transaction saved successfully!"
+          : "Transaction added successfully!"
       );
 
     });
@@ -779,14 +834,21 @@
 
     function displayTransactions() {
 
-      const filteredRecords = transactionRecords.filter(record => {
+      const filteredTransactions = transactions.filter(record => {
 
-        return activeTransactionFilter === "All" ||
-          record.type === activeTransactionFilter;
+        if (transactionFilter === "Income") {
+          return record.type === "Income";
+        }
+
+        if (transactionFilter === "Expense") {
+          return record.type === "Expense";
+        }
+
+        return true;
 
       });
 
-      if (filteredRecords.length === 0) {
+      if (filteredTransactions.length === 0) {
 
         financeRecordsContainer.innerHTML = `
           <div class="content-card">
@@ -801,59 +863,63 @@
 
       financeRecordsContainer.innerHTML = "";
 
-      filteredRecords.forEach(record => {
+      filteredTransactions.forEach(record => {
 
         const card = document.createElement("div");
         card.className = "learning-record";
 
-        const type = document.createElement("p");
-        type.className = "record-category";
-        type.textContent = record.type;
-
         const category = document.createElement("p");
-        category.className = "record-topic";
-        category.textContent = record.category;
+        category.className = "record-category";
+        category.textContent =
+          record.type + " • " + record.category;
 
         const amount = document.createElement("p");
-        amount.className = "record-date";
+        amount.className = "record-topic";
         amount.textContent =
-          "৳ " + record.amount.toFixed(2);
+          Number(record.amount).toFixed(2) + " BDT";
 
         const date = document.createElement("p");
         date.className = "record-date";
-        date.textContent = record.date;
+        date.textContent = record.transaction_date;
 
         const notes = document.createElement("p");
         notes.className = "record-notes";
         notes.textContent =
           record.notes || "No notes added.";
 
-        card.appendChild(type);
         card.appendChild(category);
         card.appendChild(amount);
         card.appendChild(date);
         card.appendChild(notes);
 
-        // EDIT BUTTON
+
+        // EDIT AND DELETE BUTTONS
+
+        const actions = document.createElement("div");
+        actions.className = "record-actions";
 
         const editButton = document.createElement("button");
 
         editButton.type = "button";
         editButton.className = "edit-button";
         editButton.textContent = "Edit";
-        editButton.dataset.id = record.id;
-
-        // DELETE BUTTON
+        editButton.addEventListener("click", function() {
+          editTransaction(record.id);
+        });
 
         const deleteButton = document.createElement("button");
 
         deleteButton.type = "button";
         deleteButton.className = "delete-button";
         deleteButton.textContent = "Delete";
-        deleteButton.dataset.id = record.id;
+        deleteButton.addEventListener("click", function() {
+          deleteTransaction(record.id);
+        });
 
-        card.appendChild(editButton);
-        card.appendChild(deleteButton);
+        actions.appendChild(editButton);
+        actions.appendChild(deleteButton);
+
+        card.appendChild(actions);
 
         financeRecordsContainer.appendChild(card);
 
@@ -861,105 +927,128 @@
 
     }
 
-        
-    // EDIT AND DELETE TRANSACTIONS
 
-    financeRecordsContainer.addEventListener("click", function(event) {
+    // EDIT TRANSACTION
 
-      const recordId = Number(event.target.dataset.id);
+    function editTransaction(id) {
 
-      if (!recordId) return;
+      const record = transactions.find(
+        item => item.id === id
+      );
 
-      // EDIT TRANSACTION
-      if (event.target.textContent === "Edit") {
+      if (!record) return;
 
-        const record = transactionRecords.find(
-          item => item.id === recordId
-        );
+      editingTransactionId = id;
 
-        if (!record) return;
+      transactionType.value = record.type;
 
-        document.getElementById("transactionType").value =
-          record.type;
+      transactionType.dispatchEvent(
+        new Event("change")
+      );
 
-        transactionType.dispatchEvent(new Event("change"));
+      transactionCategory.value = record.category;
 
-        transactionCategory.value = record.category;
+      document.getElementById("transactionAmount").value =
+        record.amount;
 
-        document.getElementById("transactionAmount").value =
-          record.amount;
+      document.getElementById("transactionDate").value =
+        record.transaction_date;
 
-        document.getElementById("transactionDate").value =
-          record.date;
+      document.getElementById("transactionNotes").value =
+        record.notes || "";
 
-        document.getElementById("transactionNotes").value =
-          record.notes;
+      transactionFormTitle.textContent =
+        "Edit Transaction";
 
-        editingTransactionId = recordId;
+      transactionForm.querySelector(
+        'button[type="submit"]'
+      ).textContent = "Update Transaction";
 
-        document.getElementById("transactionFormTitle").textContent =
-          "Edit Transaction";
+      cancelTransactionEdit.style.display = "block";
 
-        transactionForm.querySelector(".save-button").textContent =
-          "Update Transaction";
-
-        document.getElementById("cancelTransactionEdit").style.display =
-          "block";
-
-        window.scrollTo({
-          top: 0,
-          behavior: "smooth"
-        });
-
-      }
-
-      // DELETE TRANSACTION
-      if (event.target.textContent === "Delete") {
-
-        const confirmDelete = confirm(
-          "Are you sure you want to delete this transaction?"
-        );
-
-        if (!confirmDelete) return;
-
-        transactionRecords = transactionRecords.filter(
-          item => item.id !== recordId
-        );
-
-        displayTransactions();
-
-        alert("Transaction deleted successfully!");
-
-      }
-
-    });
-           // CANCEL TRANSACTION EDIT
-
-    document.getElementById("cancelTransactionEdit")
-      .addEventListener("click", function() {
-
-        transactionForm.reset();
-
-        editingTransactionId = null;
-
-        transactionCategory.innerHTML =
-          '<option value="">Select Category</option>';
-
-        document.getElementById("transactionFormTitle").textContent =
-          "Add Transaction";
-
-        transactionForm.querySelector(".save-button").textContent =
-          "Save Transaction";
-
-        this.style.display = "none";
-
+      transactionForm.scrollIntoView({
+        behavior: "smooth"
       });
+
+    }
+
+
+    // CANCEL TRANSACTION EDIT
+
+    function cancelTransactionEditForm() {
+
+      editingTransactionId = null;
+
+      transactionForm.reset();
+
+      transactionCategory.innerHTML =
+        '<option value="">Select Category</option>';
+
+      transactionFormTitle.textContent =
+        "Add Transaction";
+
+      transactionForm.querySelector(
+        'button[type="submit"]'
+      ).textContent = "Save Transaction";
+
+      cancelTransactionEdit.style.display = "none";
+
+    }
+
+    cancelTransactionEdit.addEventListener(
+      "click",
+      cancelTransactionEditForm
+    );
+
+
+    // DELETE TRANSACTION
+
+    async function deleteTransaction(id) {
+
+      const confirmed = confirm(
+        "Are you sure you want to delete this transaction?"
+      );
+
+      if (!confirmed) return;
+
+      const { data: { user } } =
+        await supabaseClient.auth.getUser();
+
+      if (!user) return;
+
+      let query = supabaseClient
+        .from("finance_transactions")
+        .delete()
+        .eq("id", id);
+
+      if (document.body.dataset.role === "observer") {
+        query = query.eq("user_id", user.id);
+      }
+
+      const { error } = await query;
+
+      if (error) {
+        alert("Transaction delete failed: " + error.message);
+        return;
+      }
+
+      if (editingTransactionId === id) {
+        cancelTransactionEditForm();
+      }
+
+      await loadTransactions();
+
+      alert("Transaction deleted successfully!");
+
+    }
+
+
     // TRANSACTION FILTERS
 
     document.getElementById("allTransactions")
       .addEventListener("click", function() {
 
-        activeTransactionFilter = "All";
+        transactionFilter = "All";
         displayTransactions();
 
       });
@@ -967,7 +1056,7 @@
     document.getElementById("incomeTransactions")
       .addEventListener("click", function() {
 
-        activeTransactionFilter = "Income";
+        transactionFilter = "Income";
         displayTransactions();
 
       });
@@ -975,11 +1064,10 @@
     document.getElementById("expenseTransactions")
       .addEventListener("click", function() {
 
-        activeTransactionFilter = "Expense";
+        transactionFilter = "Expense";
         displayTransactions();
 
       });
-
 
   
         
@@ -995,7 +1083,7 @@
     // LOAD LEARNING RECORDS
 
     async function loadLearningRecords() {
-
+    await loadTransactions();
       const { data, error } = await supabaseClient
         .from("learning_records")
         .select("*")

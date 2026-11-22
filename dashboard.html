@@ -726,7 +726,7 @@
       document.getElementById("cancelTransactionEdit");
 
 
-    // LOAD TRANSACTIONS
+        // LOAD TRANSACTIONS
 
     async function loadTransactions() {
 
@@ -735,12 +735,10 @@
 
       if (!user) return;
 
-     
       let query = supabaseClient
         .from("finance_transactions")
         .select("*")
         .order("transaction_date", { ascending: false });
-
 
       // OBSERVER CAN SEE OWN RECORDS
 
@@ -759,7 +757,11 @@
       transactions = data || [];
 
       displayTransactions();
+
+      await updateOverview();
     }
+
+      
 
 
     // SAVE OR UPDATE TRANSACTION
@@ -887,7 +889,7 @@
         const amount = document.createElement("p");
         amount.className = "record-topic";
         amount.textContent =
-          Number(record.amount).toFixed(2) + " BDT";
+        Number(record.amount).toFixed(2) + " BDT";
 
         const date = document.createElement("p");
         date.className = "record-date";
@@ -1099,8 +1101,8 @@
 
     // LOAD LEARNING RECORDS
 
-    async function loadLearningRecords() {
-    
+        async function loadLearningRecords() {
+
       const { data, error } = await supabaseClient
         .from("learning_records")
         .select("*")
@@ -1116,6 +1118,8 @@
       learningRecords = data || [];
 
       displayLearningRecords();
+
+      await updateOverview();
     }
 
 
@@ -1263,6 +1267,218 @@
       });
 
     }
+
+// OVERVIEW UPDATE FUNCTION
+
+async function updateOverview() {
+
+  const learningCount =
+    document.getElementById("overviewLearningSessions");
+
+  const totalIncomeElement =
+    document.getElementById("overviewTotalIncome");
+
+  const totalExpenseElement =
+    document.getElementById("overviewTotalExpense");
+
+  const nahidaBalanceElement =
+    document.getElementById("overviewNahidaBalance");
+
+  const nahidaExpenseElement =
+    document.getElementById("overviewNahidaExpense");
+
+  const recentLearning =
+    document.getElementById("overviewRecentLearning");
+
+  const recentTransactions =
+    document.getElementById("overviewRecentTransactions");
+
+
+  // LEARNING SUMMARY
+
+  learningCount.textContent = learningRecords.length;
+
+
+  // CURRENT USER
+
+  const { data: { user } } =
+    await supabaseClient.auth.getUser();
+
+  if (!user) return;
+
+
+  const isAdmin =
+    document.body.dataset.role === "admin";
+
+
+  // IDENTIFY NAHIDA
+
+  let nahidaUserId = user.id;
+
+  if (isAdmin) {
+
+    const { data: nahidaRole, error } =
+      await supabaseClient
+        .from("user_roles")
+        .select("user_id")
+        .eq("role", "observer")
+        .maybeSingle();
+
+    if (error) {
+      console.error("Nahida user lookup error:", error);
+    }
+
+    nahidaUserId = nahidaRole?.user_id || null;
+
+  }
+
+
+  // SEPARATE FINANCE RECORDS
+
+  const ownTransactions = transactions.filter(
+    record => record.user_id === user.id
+  );
+
+  const nahidaTransactions = transactions.filter(
+    record => record.user_id === nahidaUserId
+  );
+
+
+  // FINANCE CALCULATION
+
+  function calculateTotal(records, type) {
+
+    return records
+      .filter(record => record.transaction_type === type)
+      .reduce((total, record) => {
+        return total + Number(record.amount);
+      }, 0);
+
+  }
+
+
+  const ownIncome =
+    calculateTotal(ownTransactions, "Income");
+
+  const ownExpense =
+    calculateTotal(ownTransactions, "Expense");
+
+  const nahidaIncome =
+    calculateTotal(nahidaTransactions, "Income");
+
+  const nahidaExpense =
+    calculateTotal(nahidaTransactions, "Expense");
+
+
+  // UPDATE SUMMARY CARDS
+
+  totalIncomeElement.textContent =
+    ownIncome.toFixed(2);
+
+  totalExpenseElement.textContent =
+    ownExpense.toFixed(2);
+
+  nahidaBalanceElement.textContent =
+    (nahidaIncome - nahidaExpense).toFixed(2);
+
+  nahidaExpenseElement.textContent =
+    nahidaExpense.toFixed(2);
+
+
+  // RECENT LEARNING
+
+  recentLearning.innerHTML = "";
+
+  const latestLearning = learningRecords.slice(0, 5);
+
+  if (latestLearning.length === 0) {
+
+    recentLearning.innerHTML =
+      '<p class="empty-message">No learning records yet.</p>';
+
+  } else {
+
+    latestLearning.forEach(record => {
+
+      const card = document.createElement("div");
+      card.className = "learning-record";
+
+      const category = document.createElement("p");
+      category.className = "record-category";
+      category.textContent = record.category;
+
+      const topic = document.createElement("p");
+      topic.className = "record-topic";
+      topic.textContent = record.topic;
+
+      const date = document.createElement("p");
+      date.className = "record-date";
+      date.textContent = record.learning_date;
+
+      const notes = document.createElement("p");
+      notes.className = "record-notes";
+      notes.textContent = record.notes || "No notes added.";
+
+      card.appendChild(category);
+      card.appendChild(topic);
+      card.appendChild(date);
+      card.appendChild(notes);
+
+      recentLearning.appendChild(card);
+
+    });
+
+  }
+
+
+  // RECENT TRANSACTIONS
+
+  recentTransactions.innerHTML = "";
+
+  const latestTransactions = transactions.slice(0, 5);
+
+  if (latestTransactions.length === 0) {
+
+    recentTransactions.innerHTML =
+      '<p class="empty-message">No transactions yet.</p>';
+
+  } else {
+
+    latestTransactions.forEach(record => {
+
+      const card = document.createElement("div");
+      card.className = "learning-record";
+
+      const category = document.createElement("p");
+      category.className = "record-category";
+      category.textContent =
+        record.transaction_type + " • " + record.category;
+
+      const amount = document.createElement("p");
+      amount.className = "record-topic";
+      amount.textContent =
+        Number(record.amount).toFixed(2) + " BDT";
+
+      const date = document.createElement("p");
+      date.className = "record-date";
+      date.textContent = record.transaction_date;
+
+      const notes = document.createElement("p");
+      notes.className = "record-notes";
+      notes.textContent = record.notes || "No notes added.";
+
+      card.appendChild(category);
+      card.appendChild(amount);
+      card.appendChild(date);
+      card.appendChild(notes);
+
+      recentTransactions.appendChild(card);
+
+    });
+
+  }
+
+}
 
 
     // EDIT LEARNING RECORD

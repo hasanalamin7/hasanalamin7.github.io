@@ -887,10 +887,12 @@
         date.className = "record-date";
         date.textContent = record.transaction_date;
 
+        
         const notes = document.createElement("p");
         notes.className = "record-notes";
         notes.textContent =
-          record.notes || "No notes added.";
+        record.notes || "No notes added.";
+
 
         card.appendChild(category);
         card.appendChild(amount);

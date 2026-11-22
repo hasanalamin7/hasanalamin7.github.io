@@ -275,6 +275,159 @@
       color: var(--gold);
     }
 
+    
+/* PREMIUM HAMBURGER MENU */
+
+.header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+}
+
+#menuToggle {
+  width: 43px;
+  height: 43px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  background: transparent;
+  border: 1px solid rgba(214, 185, 120, 0.35);
+  border-radius: 9px;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+#menuToggle span {
+  width: 21px;
+  height: 2px;
+  background: var(--gold);
+  border-radius: 3px;
+  transition: transform 0.35s ease, opacity 0.25s ease;
+}
+
+#menuToggle:hover {
+  background: rgba(214, 185, 120, 0.10);
+}
+
+body.menu-open #menuToggle span:first-child {
+  transform: translateY(8px) rotate(45deg);
+}
+
+body.menu-open #menuToggle span:nth-child(2) {
+  opacity: 0;
+}
+
+body.menu-open #menuToggle span:last-child {
+  transform: translateY(-8px) rotate(-45deg);
+}
+
+/* MENU OVERLAY */
+
+.menu-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.58);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.35s ease, visibility 0.35s ease;
+  z-index: 1000;
+}
+
+body.menu-open .menu-overlay {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* GLASS SIDEBAR */
+
+.side-menu {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: min(310px, 82vw);
+  height: 100vh;
+  height: 100dvh;
+  padding: 30px 20px;
+  display: flex;
+  flex-direction: column;
+  background: rgba(28, 48, 42, 0.96);
+  border-left: 1px solid rgba(214, 185, 120, 0.22);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  transform: translateX(105%);
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  z-index: 1001;
+}
+
+body.menu-open .side-menu {
+  transform: translateX(0);
+}
+
+.menu-brand {
+  color: var(--gold);
+  font-size: 18px;
+  font-weight: bold;
+  letter-spacing: 1px;
+  padding-bottom: 24px;
+  margin-bottom: 18px;
+  border-bottom: 1px solid #40584D;
+}
+
+.menu-item {
+  width: 100%;
+  padding: 15px 16px;
+  margin-bottom: 7px;
+  border: 1px solid transparent;
+  border-radius: 9px;
+  background: transparent;
+  color: var(--muted);
+  text-align: left;
+  font-size: 15px;
+  cursor: pointer;
+  transition: background 0.3s ease, color 0.3s ease,
+              border-color 0.3s ease, transform 0.3s ease;
+}
+
+.menu-item:hover {
+  background: rgba(73, 169, 130, 0.10);
+  color: var(--green);
+  transform: translateX(-3px);
+}
+
+.menu-item.active {
+  color: var(--gold);
+  background: rgba(73, 169, 130, 0.13);
+  border-color: rgba(73, 169, 130, 0.3);
+}
+
+.menu-spacer {
+  flex: 1;
+}
+
+.menu-divider {
+  border: 0;
+  border-top: 1px solid #40584D;
+  margin: 18px 0;
+}
+
+.menu-logout {
+  color: #D66B6B;
+  border-color: rgba(214, 107, 107, 0.18);
+}
+
+.menu-logout:hover {
+  color: #E18A8A;
+  background: rgba(214, 107, 107, 0.12);
+  border-color: rgba(214, 107, 107, 0.35);
+}
+
+body.menu-open {
+  overflow: hidden;
+}
+
     @media (min-width: 700px) {
       .summary-grid {
         grid-template-columns: repeat(4, 1fr);
@@ -342,24 +495,23 @@
 
   <main class="container" id="dashboardContent" style="display:none;">
 <header>
-  <div class="brand">HASAN ALAMIN</div>
-  <div class="subtitle">Personal Management Dashboard</div>
+  <div class="header-row">
+    <div>
+      <div class="brand">HASAN ALAMIN</div>
+      <div class="subtitle">Personal Management Dashboard</div>
+    </div>
 
-  <button
-    type="button"
-    id="logoutButton"
-    style="
-      margin-top: 15px;
-      padding: 9px 18px;
-      background: transparent;
-      color: #D6B978;
-      border: 1px solid #D6B978;
-      border-radius: 7px;
-      cursor: pointer;
-    "
-  >
-    Logout
-  </button>
+    <button
+      type="button"
+      id="menuToggle"
+      aria-label="Open menu"
+      aria-expanded="false"
+    >
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </div>
 </header>
     <h2 class="welcome" id="welcomeMessage">
   Welcome back, <span>Hasan Alamin!</span>
@@ -616,34 +768,54 @@
 
     </section>
 
-    <!-- BOTTOM NAVIGATION -->
-    <nav class="bottom-nav">
+    
+<!-- HAMBURGER MENU -->
 
-      <div class="nav-item active"
-           data-page="overview"
-           onclick="showPage('overview')">
-        Overview
-      </div>
+<div class="menu-overlay" id="menuOverlay"></div>
 
-      <div class="nav-item"
-           data-page="learning"
-           onclick="showPage('learning')">
-        Learning
-      </div>
+<nav class="side-menu" id="sideMenu">
 
-      <div class="nav-item"
-           data-page="finance"
-           onclick="showPage('finance')">
-        Finance
-      </div>
+  <div class="menu-brand">HASAN ALAMIN</div>
 
-      <div class="nav-item"
-           data-page="reports"
-           onclick="showPage('reports')">
-        Reports
-      </div>
+  <button class="menu-item active"
+          type="button"
+          data-page="overview"
+          onclick="navigateFromMenu('overview')">
+    Overview
+  </button>
 
-    </nav>
+  <button class="menu-item"
+          type="button"
+          data-page="learning"
+          onclick="navigateFromMenu('learning')">
+    Learning
+  </button>
+
+  <button class="menu-item"
+          type="button"
+          data-page="finance"
+          onclick="navigateFromMenu('finance')">
+    Finance
+  </button>
+
+  <button class="menu-item"
+          type="button"
+          data-page="reports"
+          onclick="navigateFromMenu('reports')">
+    Reports
+  </button>
+
+  <div class="menu-spacer"></div>
+
+  <hr class="menu-divider">
+
+  <button class="menu-item menu-logout"
+          type="button"
+          id="logoutButton">
+    Logout
+  </button>
+
+</nav>
 
     </main>
 

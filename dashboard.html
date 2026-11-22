@@ -346,7 +346,7 @@ body.menu-open .menu-overlay {
 .side-menu {
   position: fixed;
   top: 0;
-  right: 0;
+  left: 0;
   width: min(310px, 82vw);
   height: 100vh;
   height: 100dvh;
@@ -354,26 +354,16 @@ body.menu-open .menu-overlay {
   display: flex;
   flex-direction: column;
   background: rgba(28, 48, 42, 0.96);
-  border-left: 1px solid rgba(214, 185, 120, 0.22);
+  border-right: 1px solid rgba(214, 185, 120, 0.22);
   backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
-  transform: translateX(105%);
+  transform: translateX(-105%);
   transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
   z-index: 1001;
 }
 
 body.menu-open .side-menu {
   transform: translateX(0);
-}
-
-.menu-brand {
-  color: var(--gold);
-  font-size: 18px;
-  font-weight: bold;
-  letter-spacing: 1px;
-  padding-bottom: 24px;
-  margin-bottom: 18px;
-  border-bottom: 1px solid #40584D;
 }
 
 .menu-item {
@@ -774,8 +764,6 @@ body.menu-open {
 <div class="menu-overlay" id="menuOverlay"></div>
 
 <nav class="side-menu" id="sideMenu">
-
-  <div class="menu-brand">HASAN ALAMIN</div>
 
   <button class="menu-item active"
           type="button"

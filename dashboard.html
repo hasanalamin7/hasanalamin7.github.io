@@ -967,8 +967,10 @@
       document.getElementById("transactionDate").value =
         record.transaction_date;
 
+      
       document.getElementById("transactionNotes").value =
-        record.notes || "";
+        record.notes ?? "";
+
 
       transactionFormTitle.textContent =
         "Edit Transaction";

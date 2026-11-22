@@ -333,9 +333,14 @@
   </style>
 </head>
 
-  <body style="display:none;">
-  <main class="container">
+<body>
+  <div class="loading-screen" id="loadingScreen">
+    <div class="loading-brand">HASAN ALAMIN</div>
+    <div class="loading-spinner"></div>
+    <p class="loading-text">ড্যাশবোর্ড প্রস্তুত হচ্ছে...</p>
+  </div>
 
+  <main class="container" id="dashboardContent" style="display:none;">
 <header>
   <div class="brand">HASAN ALAMIN</div>
   <div class="subtitle">Personal Management Dashboard</div>
@@ -1680,7 +1685,8 @@ const welcomeMessage =
         welcomeMessage.innerHTML =
           'Welcome, <span>Nahida Sultana!</span>';
       }
-      document.body.style.display = "block";
+      document.getElementById("loadingScreen").style.display = "none";
+      document.getElementById("dashboardContent").style.display = "block";
     }
 
     checkAuthentication();

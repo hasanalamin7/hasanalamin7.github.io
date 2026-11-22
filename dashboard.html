@@ -1083,7 +1083,7 @@
     // LOAD LEARNING RECORDS
 
     async function loadLearningRecords() {
-    await loadTransactions();
+    
       const { data, error } = await supabaseClient
         .from("learning_records")
         .select("*")
@@ -1387,7 +1387,7 @@
             document.body.dataset.role = roleData.role;
 
 await loadLearningRecords();
-
+await loadTransactions();
 const welcomeMessage =
         document.getElementById("welcomeMessage");
       if (roleData.role === "admin") {

@@ -1297,6 +1297,9 @@
           .style.display = "none";
       }
             document.body.dataset.role = roleData.role;
+
+await loadLearningRecords();
+
 const welcomeMessage =
         document.getElementById("welcomeMessage");
       if (roleData.role === "admin") {

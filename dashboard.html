@@ -276,147 +276,88 @@
     }
 
     
-/* PREMIUM HAMBURGER MENU */
+
+header {
+  position: relative;
+}
 
 .header-row {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 15px;
 }
 
 #menuToggle {
-  width: 43px;
-  height: 43px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  background: transparent;
-  border: 1px solid rgba(214, 185, 120, 0.35);
-  border-radius: 9px;
+  background: none;
+  border: 1px solid #D6B978;
+  border-radius: 8px;
+  padding: 9px;
   cursor: pointer;
-  flex-shrink: 0;
 }
 
 #menuToggle span {
+  display: block;
   width: 21px;
   height: 2px;
-  background: var(--gold);
-  border-radius: 3px;
-  transition: transform 0.35s ease, opacity 0.25s ease;
+  margin: 5px;
+  background: #D6B978;
 }
 
-#menuToggle:hover {
-  background: rgba(214, 185, 120, 0.10);
-}
-
-body.menu-open #menuToggle span:first-child {
-  transform: translateY(8px) rotate(45deg);
-}
-
-body.menu-open #menuToggle span:nth-child(2) {
-  opacity: 0;
-}
-
-body.menu-open #menuToggle span:last-child {
-  transform: translateY(-8px) rotate(-45deg);
-}
-
-/* MENU OVERLAY */
-
-.menu-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.58);
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 0.35s ease, visibility 0.35s ease;
+.side-menu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  right: 0;
+  width: 250px;
+  padding: 12px;
+  background: rgba(28, 48, 42, 0.96);
+  backdrop-filter: blur(15px);
+  border: 1px solid rgba(214, 185, 120, 0.25);
+  border-radius: 12px;
   z-index: 1000;
 }
 
-body.menu-open .menu-overlay {
-  opacity: 1;
-  visibility: visible;
-}
-
-/* GLASS SIDEBAR */
-
-.side-menu {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: min(310px, 82vw);
-  height: 100vh;
-  height: 100dvh;
-  padding: 30px 20px;
-  display: flex;
-  flex-direction: column;
-  background: rgba(28, 48, 42, 0.96);
-  border-right: 1px solid rgba(214, 185, 120, 0.22);
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
-  transform: translateX(-105%);
-  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
-  z-index: 1001;
-}
-
 body.menu-open .side-menu {
-  transform: translateX(0);
+  display: block;
+  animation: menuFadeIn 0.3s ease;
 }
 
 .menu-item {
+  display: block;
   width: 100%;
-  padding: 15px 16px;
-  margin-bottom: 7px;
-  border: 1px solid transparent;
-  border-radius: 9px;
-  background: transparent;
-  color: var(--muted);
+  padding: 12px;
+  margin-bottom: 5px;
+  background: none;
+  border: none;
+  color: #AAB8B1;
   text-align: left;
-  font-size: 15px;
   cursor: pointer;
-  transition: background 0.3s ease, color 0.3s ease,
-              border-color 0.3s ease, transform 0.3s ease;
 }
 
-.menu-item:hover {
-  background: rgba(73, 169, 130, 0.10);
-  color: var(--green);
-  transform: translateX(-3px);
-}
-
+.menu-item:hover,
 .menu-item.active {
-  color: var(--gold);
-  background: rgba(73, 169, 130, 0.13);
-  border-color: rgba(73, 169, 130, 0.3);
-}
-
-.menu-spacer {
-  flex: 1;
+  color: #D6B978;
+  background: rgba(73, 169, 130, 0.12);
 }
 
 .menu-divider {
   border: 0;
   border-top: 1px solid #40584D;
-  margin: 18px 0;
+  margin: 12px 0;
 }
 
 .menu-logout {
   color: #D66B6B;
-  border-color: rgba(214, 107, 107, 0.18);
 }
 
-.menu-logout:hover {
-  color: #E18A8A;
-  background: rgba(214, 107, 107, 0.12);
-  border-color: rgba(214, 107, 107, 0.35);
+@keyframes menuFadeIn {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
-body.menu-open {
-  overflow: hidden;
-}
+
+
+
 
     @media (min-width: 700px) {
       .summary-grid {

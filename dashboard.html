@@ -772,6 +772,7 @@
       if (!user) return;
 
       
+      
       const payload = {
         user_id: user.id,
         transaction_type: transactionType.value,
@@ -780,8 +781,11 @@
         ),
         category: transactionCategory.value,
         transaction_date:
-          document.getElementById("transactionDate").value
+          document.getElementById("transactionDate").value,
+        notes:
+          document.getElementById("transactionNotes").value.trim()
       };
+
 
 
       let error;

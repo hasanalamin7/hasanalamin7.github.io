@@ -838,29 +838,69 @@ body.menu-open {
     // PAGE NAVIGATION
     // PAGE NAVIGATION
 
-    function showPage(pageName) {
+    
+// PAGE NAVIGATION
 
-      document.querySelectorAll(".page").forEach(page => {
-        page.classList.remove("active");
-      });
+function showPage(pageName) {
 
-      document.getElementById(pageName + "Page")
-        .classList.add("active");
+  document.querySelectorAll(".page").forEach(page => {
+    page.classList.remove("active");
+  });
 
-      document.querySelectorAll(".nav-item").forEach(item => {
-        item.classList.remove("active");
-      });
+  document.getElementById(pageName + "Page")
+    .classList.add("active");
 
-      const activeNav = document.querySelector(
-        '.nav-item[data-page="' + pageName + '"]'
-      );
+  document.querySelectorAll(".menu-item[data-page]").forEach(item => {
+    item.classList.remove("active");
+  });
 
-      if (activeNav) {
-        activeNav.classList.add("active");
-      }
+  const activeNav = document.querySelector(
+    '.menu-item[data-page="' + pageName + '"]'
+  );
 
-      window.scrollTo(0, 0);
-    }
+  if (activeNav) {
+    activeNav.classList.add("active");
+  }
+
+  window.scrollTo(0, 0);
+}
+
+
+// HAMBURGER MENU CONTROLS
+
+const menuToggle = document.getElementById("menuToggle");
+const menuOverlay = document.getElementById("menuOverlay");
+
+function openMenu() {
+  document.body.classList.add("menu-open");
+  menuToggle.setAttribute("aria-expanded", "true");
+}
+
+function closeMenu() {
+  document.body.classList.remove("menu-open");
+  menuToggle.setAttribute("aria-expanded", "false");
+}
+
+function navigateFromMenu(pageName) {
+  showPage(pageName);
+  closeMenu();
+}
+
+menuToggle.addEventListener("click", function() {
+  if (document.body.classList.contains("menu-open")) {
+    closeMenu();
+  } else {
+    openMenu();
+  }
+});
+
+menuOverlay.addEventListener("click", closeMenu);
+
+document.addEventListener("keydown", function(event) {
+  if (event.key === "Escape") {
+    closeMenu();
+  }
+});
 
 
     // FINANCE CATEGORY OPTIONS

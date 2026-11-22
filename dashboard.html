@@ -733,11 +733,12 @@
 
       if (!user) return;
 
+     
       let query = supabaseClient
         .from("finance_transactions")
         .select("*")
-        .order("transaction_date", { ascending: false })
-        .order("created_at", { ascending: false });
+        .order("transaction_date", { ascending: false });
+
 
       // OBSERVER CAN SEE OWN RECORDS
 
@@ -770,18 +771,18 @@
 
       if (!user) return;
 
+      
       const payload = {
         user_id: user.id,
-        type: transactionType.value,
+        transaction_type: transactionType.value,
         amount: Number(
           document.getElementById("transactionAmount").value
         ),
         category: transactionCategory.value,
         transaction_date:
-          document.getElementById("transactionDate").value,
-        notes:
-          document.getElementById("transactionNotes").value.trim()
+          document.getElementById("transactionDate").value
       };
+
 
       let error;
 
@@ -834,19 +835,21 @@
 
     function displayTransactions() {
 
+      
       const filteredTransactions = transactions.filter(record => {
 
         if (transactionFilter === "Income") {
-          return record.type === "Income";
+          return record.transaction_type === "Income";
         }
 
         if (transactionFilter === "Expense") {
-          return record.type === "Expense";
+          return record.transaction_type === "Expense";
         }
 
         return true;
 
       });
+
 
       if (filteredTransactions.length === 0) {
 
@@ -868,10 +871,12 @@
         const card = document.createElement("div");
         card.className = "learning-record";
 
+        
         const category = document.createElement("p");
         category.className = "record-category";
         category.textContent =
-          record.type + " • " + record.category;
+        record.transaction_type + " • " + record.category;
+
 
         const amount = document.createElement("p");
         amount.className = "record-topic";
@@ -940,7 +945,9 @@
 
       editingTransactionId = id;
 
-      transactionType.value = record.type;
+      
+      transactionType.value = record.transaction_type;
+
 
       transactionType.dispatchEvent(
         new Event("change")

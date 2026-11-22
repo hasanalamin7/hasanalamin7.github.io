@@ -158,7 +158,22 @@ button:hover {
   background-color: rgba(214, 185, 120, 0.09);
   outline: none;
 }
+/* ===== DASHBOARD MENU LINK ===== */
 
+#siteMenu a.dashboard-link {
+  color: #D6B978;
+  font-weight: bold;
+  border-top: 1px solid rgba(214, 185, 120, 0.35);
+  margin-top: 5px;
+  text-shadow: 0 0 8px rgba(214, 185, 120, 0.15);
+}
+
+#siteMenu a.dashboard-link:hover,
+#siteMenu a.dashboard-link:focus {
+  color: #F0D99B;
+  background-color: rgba(214, 185, 120, 0.12);
+  box-shadow: inset 0 0 12px rgba(214, 185, 120, 0.08);
+}
 /* ===== WELCOME ===== */
 
 
@@ -728,6 +743,8 @@ button:hover {
   <a href="#videos" onclick="openVideos(); return false;">🎬 ভিডিও</a>
   <a href="https://www.facebook.com/share/1bkNh8jX9A/" target="_blank">📚 বইয়ের পাতার গল্প</a>
   <a href="mailto:hello.hasanalamin@gmail.com">✉️ যোগাযোগ</a>
+  <a href="dashboard.html" class="dashboard-link">🔐 ব্যক্তিগত ড্যাশবোর্ড</a>
+</nav>
 </nav>
 <div id="aboutText" style="display: none;">
   <h2>আমার পরিচিতি</h2>

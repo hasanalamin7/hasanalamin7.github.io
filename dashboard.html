@@ -596,6 +596,54 @@ body.menu-open .side-menu {
   }
 }
 
+/* PREMIUM SUCCESS NOTIFICATION */
+
+.success-toast {
+  position: fixed;
+  top: 25px;
+  left: 50%;
+  transform: translateX(-50%) translateY(-20px);
+  width: calc(100% - 36px);
+  max-width: 380px;
+  padding: 17px;
+  background: #142C24;
+  border: 1px solid #49A982;
+  border-radius: 13px;
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.4);
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+}
+
+.success-toast.show {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(0);
+}
+
+.success-toast-icon {
+  color: #49A982;
+  font-size: 27px;
+  flex-shrink: 0;
+}
+
+.success-toast-title {
+  color: #D6B978;
+  font-size: 15px;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.success-toast-message {
+  color: #D5E9DE;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
 
   </style>
 </head>

@@ -1867,22 +1867,24 @@ const welcomeMessage =
     }
 
     checkAuthentication();
-      // LOGOUT SYSTEM
+      
+// LOGOUT SYSTEM
 
-    document.getElementById("logoutButton")
-      .addEventListener("click", async function() {
+document.getElementById("logoutButton")
+  .addEventListener("click", async function() {
 
-        const { error } =
-          await supabaseClient.auth.signOut();
+    const { error } =
+      await supabaseClient.auth.signOut();
 
-        if (error) {
-          alert("Logout failed: " + error.message);
-          return;
-        }
+    if (error) {
+      alert("Logout failed: " + error.message);
+      return;
+    }
 
-        window.location.replace("login.html");
+    window.location.replace("https://hasanalamin7.github.io/#home");
 
-      });
+  });
+
   </script>
 
 </body>

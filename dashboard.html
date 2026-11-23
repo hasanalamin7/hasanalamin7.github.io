@@ -1840,7 +1840,7 @@ async function updateOverview() {
         roleData.role !== "observer"
       ) {
         await supabaseClient.auth.signOut();
-        window.location.replace("login.html");
+        window.location.replace("index.html");
         return;
       }
             // OBSERVER PERMISSIONS

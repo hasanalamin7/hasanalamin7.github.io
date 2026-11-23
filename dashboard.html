@@ -1978,9 +1978,12 @@ async function updateOverview() {
         cancelEdit();
       }
 
-      await loadLearningRecords();
+            await loadLearningRecords();
 
-      alert("Learning record deleted successfully!");
+      showSuccessNotification(
+        "আলহামদুলিল্লাহ!",
+        "শেখার রেকর্ড সফলভাবে মুছে ফেলা হয়েছে।"
+      );
 
     }
 

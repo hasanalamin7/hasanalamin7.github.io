@@ -546,6 +546,37 @@ body.menu-open .side-menu {
     transform: translateY(0);
   }
 }
+    
+/* PREMIUM CARD ANIMATION */
+
+.summary-card,
+.content-card,
+.form-card,
+.learning-record {
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease,
+    border-color 0.3s ease;
+}
+
+@media (hover: hover) {
+  .summary-card:hover,
+  .content-card:hover,
+  .form-card:hover,
+  .learning-record:hover {
+    transform: translateY(-3px);
+    border-color: var(--green);
+    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.2);
+  }
+}
+
+.summary-card:active,
+.content-card:active,
+.form-card:active,
+.learning-record:active {
+  transform: scale(0.99);
+}
+
 
   </style>
 </head>

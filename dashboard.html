@@ -504,6 +504,31 @@ body.menu-open .side-menu {
   color: #D6B978;
 }
   
+/* SMOOTH MENU ANIMATION */
+
+.side-menu {
+  display: block;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+
+  transform: translateX(-18px) translateY(-50%) !important;
+
+  transition:
+    opacity 0.3s ease,
+    transform 0.3s ease,
+    visibility 0.3s ease;
+}
+
+body.menu-open .side-menu {
+  display: block;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+
+  transform: translateX(0) translateY(-50%) !important;
+}
+
   </style>
 </head>
 

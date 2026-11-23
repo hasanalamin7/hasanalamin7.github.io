@@ -1580,12 +1580,13 @@ menuToggle.addEventListener("click", function() {
 
       cancelEdit();
 
-      await loadLearningRecords();
+            await loadLearningRecords();
 
-      alert(
+      showSuccessNotification(
+        "আলহামদুলিল্লাহ!",
         wasEditing
-          ? "Learning record updated successfully!"
-          : "Learning record added successfully!"
+          ? "শেখার রেকর্ড সফলভাবে আপডেট হয়েছে।"
+          : "নতুন শেখার রেকর্ড সফলভাবে সংরক্ষণ হয়েছে।"
       );
 
     });

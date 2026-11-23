@@ -195,7 +195,9 @@ if (
   message.style.color = "#49A982";
   message.textContent = "Login successful!";
 
-  window.location.href = "dashboard.html";
+  
+window.location.replace("dashboard.html");
+
 
 } else {
   throw new Error("Unauthorized account role.");

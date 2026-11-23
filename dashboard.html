@@ -975,11 +975,27 @@ body.menu-open .side-menu {
       SUPABASE_PUBLISHABLE_KEY
     );
 
+// PREMIUM SUCCESS NOTIFICATION SYSTEM
 
-    // PAGE NAVIGATION
-    // PAGE NAVIGATION
+let notificationTimer;
 
-    
+function showSuccessNotification(title, message) {
+
+  const toast = document.getElementById("successToast");
+
+  document.getElementById("successToastTitle").textContent = title;
+
+  document.getElementById("successToastMessage").textContent = message;
+
+  clearTimeout(notificationTimer);
+
+  toast.classList.add("show");
+
+  notificationTimer = setTimeout(function() {
+    toast.classList.remove("show");
+  }, 3500);
+
+}  
 // PAGE NAVIGATION
 
 function showPage(pageName) {

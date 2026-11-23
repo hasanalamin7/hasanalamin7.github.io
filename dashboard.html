@@ -1235,12 +1235,13 @@ menuToggle.addEventListener("click", function() {
 
       cancelTransactionEditForm();
 
-      await loadTransactions();
+            await loadTransactions();
 
-      alert(
+      showSuccessNotification(
+        "আলহামদুলিল্লাহ!",
         wasEditing
-          ? "Transaction updated successfully!"
-          : "Transaction added successfully!"
+          ? "লেনদেন সফলভাবে আপডেট হয়েছে।"
+          : "নতুন লেনদেন সফলভাবে সংরক্ষণ হয়েছে।"
       );
 
     });

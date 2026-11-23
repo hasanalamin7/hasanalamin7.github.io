@@ -577,6 +577,25 @@ body.menu-open .side-menu {
   transform: scale(0.99);
 }
 
+/* PREMIUM BRAND NAME ANIMATION */
+
+.brand {
+  animation: brandGlow 3s ease-in-out infinite;
+  transition: letter-spacing 0.3s ease;
+}
+
+@keyframes brandGlow {
+  0%, 100% {
+    text-shadow: 0 0 2px rgba(214, 185, 120, 0.15);
+  }
+
+  50% {
+    text-shadow:
+      0 0 8px rgba(214, 185, 120, 0.45),
+      0 0 16px rgba(214, 185, 120, 0.2);
+  }
+}
+
 
   </style>
 </head>

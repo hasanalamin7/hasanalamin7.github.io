@@ -1302,9 +1302,12 @@ transactionAmountLabel.textContent = isNahida
         const amount = document.createElement("p");
         amount.className = "record-topic";
         
-const currency =
-  record.user_id === currentUserId ? "QAR" : "BDT";
 
+const currency =
+  record.user_id === currentUserId &&
+  document.body.dataset.role === "admin"
+    ? "QAR"
+    : "BDT";
 amount.textContent =
   Number(record.amount).toFixed(2) + " " + currency;
         const date = document.createElement("p");
@@ -1875,7 +1878,10 @@ nahidaExpenseElement.textContent =
 amount.className = "record-topic";
 
 const currency =
-  record.user_id === currentUserId ? "QAR" : "BDT";
+  record.user_id === currentUserId &&
+  document.body.dataset.role === "admin"
+    ? "QAR"
+    : "BDT";
 
 amount.textContent =
   Number(record.amount).toFixed(2) + " " + currency;

@@ -2036,7 +2036,10 @@ async function updateOverview() {
           .style.display = "none";
       }
             document.body.dataset.role = roleData.role;
-
+document.getElementById("transactionAmountLabel").textContent =
+  roleData.role === "admin"
+    ? "Amount (QAR)"
+    : "Amount (BDT)";
 await loadLearningRecords();
 await loadTransactions();
 const welcomeMessage =

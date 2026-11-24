@@ -1085,7 +1085,9 @@ menuToggle.addEventListener("click", function() {
 
       const isNahida =
         document.body.dataset.role === "observer";
-
+transactionAmountLabel.textContent = isNahida
+  ? "Amount (BDT)"
+  : "Amount (QAR)";
       let categories;
 
       if (isNahida) {

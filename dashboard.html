@@ -2007,7 +2007,7 @@ async function updateOverview() {
         window.location.replace("login.html");
         return;
       }
-
+currentUserId = session.user.id;
       const { data: roleData, error: roleError } =
         await supabaseClient
           .from("user_roles")

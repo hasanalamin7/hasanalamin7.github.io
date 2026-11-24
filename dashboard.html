@@ -1301,9 +1301,12 @@ transactionAmountLabel.textContent = isNahida
 
         const amount = document.createElement("p");
         amount.className = "record-topic";
-        amount.textContent =
-        Number(record.amount).toFixed(2) + " BDT";
+        
+const currency =
+  record.user_id === currentUserId ? "QAR" : "BDT";
 
+amount.textContent =
+  Number(record.amount).toFixed(2) + " " + currency;
         const date = document.createElement("p");
         date.className = "record-date";
         date.textContent = record.transaction_date;
@@ -1788,17 +1791,16 @@ async function updateOverview() {
   // UPDATE SUMMARY CARDS
 
   totalIncomeElement.textContent =
-    ownIncome.toFixed(2);
+  ownIncome.toFixed(2) + (isAdmin ? " QAR" : " BDT");
 
-  totalExpenseElement.textContent =
-    ownExpense.toFixed(2);
+totalExpenseElement.textContent =
+  ownExpense.toFixed(2) + (isAdmin ? " QAR" : " BDT");
 
-  nahidaBalanceElement.textContent =
-    (nahidaIncome - nahidaExpense).toFixed(2);
+nahidaBalanceElement.textContent =
+  (nahidaIncome - nahidaExpense).toFixed(2) + " BDT";
 
-  nahidaExpenseElement.textContent =
-    nahidaExpense.toFixed(2);
-
+nahidaExpenseElement.textContent =
+  nahidaExpense.toFixed(2) + " BDT";
 
   // RECENT LEARNING
 
@@ -1870,9 +1872,13 @@ async function updateOverview() {
         record.transaction_type + " • " + record.category;
 
       const amount = document.createElement("p");
-      amount.className = "record-topic";
-      amount.textContent =
-        Number(record.amount).toFixed(2) + " BDT";
+amount.className = "record-topic";
+
+const currency =
+  record.user_id === currentUserId ? "QAR" : "BDT";
+
+amount.textContent =
+  Number(record.amount).toFixed(2) + " " + currency;
 
       const date = document.createElement("p");
       date.className = "record-date";

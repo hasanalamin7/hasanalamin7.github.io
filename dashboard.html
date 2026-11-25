@@ -6,747 +6,176 @@
   <title>HASAN ALAMIN — Personal Management Dashboard</title>
 
   <style>
-    
-
-:root {
-  --background: #101B19;
-  --green: #49A982;
-  --gold: #D6B978;
-  --card: #1C302A;
-  --white: #FFFFFF;
-  --muted: #AAB8B1;
-  --border: #2B443A;
-  --input-border: #40584D;
-  --menu-background: #1C302A;
-  --toast-background: #142C24;
-  --toast-text: #D5E9DE;
-  --danger: #D66B6B;
-  --danger-text: #E18A8A;
-}
-
-/* LAVENDER & PURPLE */
-body[data-theme="lavender-purple"] {
-  --background: #211A35;
-  --green: #A78BFA;
-  --gold: #D8B4FE;
-  --card: #30264A;
-  --white: #FFFFFF;
-  --muted: #C4B8D9;
-  --border: #51416F;
-  --input-border: #655583;
-  --menu-background: #30264A;
-  --toast-background: #30264A;
-  --toast-text: #E9DDFF;
-}
-
-/* OCEAN BLUE */
-body[data-theme="ocean-blue"] {
-  --background: #102235;
-  --green: #38BDF8;
-  --gold: #67E8F9;
-  --card: #1A344C;
-  --white: #FFFFFF;
-  --muted: #B0C6D8;
-  --border: #31536D;
-  --input-border: #456A83;
-  --menu-background: #1A344C;
-  --toast-background: #17364C;
-  --toast-text: #D8F5FF;
-}
-
-/* ROSE PINK */
-body[data-theme="rose-pink"] {
-  --background: #301B27;
-  --green: #F472B6;
-  --gold: #FDA4AF;
-  --card: #452638;
-  --white: #FFFFFF;
-  --muted: #D7B8C7;
-  --border: #674052;
-  --input-border: #80536A;
-  --menu-background: #452638;
-  --toast-background: #452638;
-  --toast-text: #FFE1ED;
-}
-
-/* BLACK & GOLD */
-body[data-theme="black-gold"] {
-  --background: #111111;
-  --green: #D6B978;
-  --gold: #F0D99A;
-  --card: #222222;
-  --white: #FFFFFF;
-  --muted: #B8B8B8;
-  --border: #45403A;
-  --input-border: #625A4A;
-  --menu-background: #222222;
-  --toast-background: #242018;
-  --toast-text: #F3E8CB;
-}
-
-/* BLACK & BLUE */
-body[data-theme="black-blue"] {
-  --background: #101820;
-  --green: #38BDF8;
-  --gold: #7DD3FC;
-  --card: #1B2838;
-  --white: #FFFFFF;
-  --muted: #B0C0D0;
-  --border: #34495E;
-  --input-border: #456078;
-  --menu-background: #1B2838;
-  --toast-background: #172A3A;
-  --toast-text: #D9F2FF;
-}
-
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
+    :root {
+      --background:#101B19; --green:#49A982; --gold:#D6B978;
+      --card:#1C302A; --white:#FFFFFF; --muted:#AAB8B1;
+      --border:#2B443A; --input-border:#40584D;
+      --menu-background:#1C302A; --toast-background:#142C24;
+      --toast-text:#D5E9DE; --danger:#D66B6B;
+      --danger-text:#E18A8A; --button-text:#101B19;
+    }
+    body[data-theme="dark-green-gold"] {
+      --background:#101B19; --green:#49A982; --gold:#D6B978;
+      --card:#1C302A; --white:#FFFFFF; --muted:#AAB8B1;
+      --border:#2B443A; --input-border:#40584D;
+      --menu-background:#1C302A; --toast-background:#142C24;
+      --toast-text:#D5E9DE; --danger:#D66B6B;
+      --danger-text:#E18A8A; --button-text:#101B19;
+    }
+    body[data-theme="lavender-purple"] {
+      --background:#211A35; --green:#A78BFA; --gold:#D8B4FE;
+      --card:#30264A; --white:#FFFFFF; --muted:#C4B8D9;
+      --border:#51416F; --input-border:#655583;
+      --menu-background:#30264A; --toast-background:#30264A;
+      --toast-text:#E9DDFF; --danger:#F87171;
+      --danger-text:#FCA5A5; --button-text:#211A35;
+    }
+    body[data-theme="ocean-blue"] {
+      --background:#102235; --green:#38BDF8; --gold:#67E8F9;
+      --card:#1A344C; --white:#FFFFFF; --muted:#B0C6D8;
+      --border:#31536D; --input-border:#456A83;
+      --menu-background:#1A344C; --toast-background:#17364C;
+      --toast-text:#D8F5FF; --danger:#F87171;
+      --danger-text:#FCA5A5; --button-text:#102235;
+    }
+    body[data-theme="rose-pink"] {
+      --background:#301B27; --green:#F472B6; --gold:#FDA4AF;
+      --card:#452638; --white:#FFFFFF; --muted:#D7B8C7;
+      --border:#674052; --input-border:#80536A;
+      --menu-background:#452638; --toast-background:#452638;
+      --toast-text:#FFE1ED; --danger:#FB7185;
+      --danger-text:#FDA4AF; --button-text:#301B27;
+    }
+    body[data-theme="black-gold"] {
+      --background:#111111; --green:#D6B978; --gold:#F0D99A;
+      --card:#222222; --white:#FFFFFF; --muted:#B8B8B8;
+      --border:#45403A; --input-border:#625A4A;
+      --menu-background:#222222; --toast-background:#242018;
+      --toast-text:#F3E8CB; --danger:#E57373;
+      --danger-text:#EF9A9A; --button-text:#111111;
+    }
+    body[data-theme="black-blue"] {
+      --background:#101820; --green:#38BDF8; --gold:#7DD3FC;
+      --card:#1B2838; --white:#FFFFFF; --muted:#B0C0D0;
+      --border:#34495E; --input-border:#456078;
+      --menu-background:#1B2838; --toast-background:#172A3A;
+      --toast-text:#D9F2FF; --danger:#F87171;
+      --danger-text:#FCA5A5; --button-text:#101820;
     }
 
+    * { margin:0; padding:0; box-sizing:border-box; }
+    html, body { background:var(--background); }
     body {
-      background: var(--background);
-      color: var(--white);
-      font-family: Arial, sans-serif;
-      min-height: 100vh;
+      color:var(--white); font-family:Arial,sans-serif;
+      min-height:100vh; transition:background .25s ease,color .25s ease;
     }
-
-    .container {
-      width: 100%;
-      max-width: 1100px;
-      margin: auto;
-      padding: 24px 18px;
+    .container { width:100%; max-width:1100px; margin:auto; padding:24px 18px; }
+    header { position:relative; border-bottom:1px solid var(--border); padding-bottom:20px; margin-bottom:28px; }
+    .header-row { display:flex; align-items:center; justify-content:space-between; }
+    .brand { color:var(--gold); font-size:23px; font-weight:bold; letter-spacing:1px; animation:brandGlow 3s ease-in-out infinite; }
+    .subtitle { color:var(--muted); font-size:13px; margin-top:7px; }
+    .welcome { color:var(--white); font-size:19px; margin-bottom:24px; }
+    .welcome span { color:var(--green); }
+    .section-title { font-size:17px; color:var(--gold); margin-bottom:15px; }
+    .summary-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:14px; margin-bottom:30px; }
+    .summary-card { background:var(--card); border-radius:12px; padding:19px 15px; border:1px solid var(--border); }
+    .summary-label { color:var(--muted); font-size:13px; margin-bottom:13px; }
+    .summary-value { color:var(--green); font-size:25px; font-weight:bold; }
+    .content-card { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:19px; margin-bottom:18px; min-height:100px; }
+    .empty-message { color:var(--muted); font-size:13px; }
+    .page { display:none; }
+    .page.active { display:block; animation:pageFadeIn .35s ease both; }
+    .form-card { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:19px; margin-bottom:25px; }
+    .form-group { margin-bottom:18px; }
+    .form-group label { display:block; color:var(--muted); font-size:14px; margin-bottom:9px; }
+    .form-group input,.form-group select,.form-group textarea {
+      width:100%; padding:13px; border:1px solid var(--input-border);
+      border-radius:8px; background:var(--background); color:var(--white);
+      font-size:14px; font-family:Arial,sans-serif; outline:none;
     }
-
-    header {
-  border-bottom: 1px solid var(--border);
-      padding-bottom: 20px;
-      margin-bottom: 28px;
-    }
-
-    .brand {
-      color: var(--gold);
-      font-size: 23px;
-      font-weight: bold;
-      letter-spacing: 1px;
-    }
-
-    .subtitle {
-      color: var(--muted);
-      font-size: 13px;
-      margin-top: 7px;
-    }
-
-    .welcome {
-      color: var(--white);
-      font-size: 19px;
-      margin-bottom: 24px;
-    }
-
-    .welcome span {
-      color: var(--green);
-    }
-
-    .section-title {
-      font-size: 17px;
-      color: var(--gold);
-      margin-bottom: 15px;
-    }
-
-    .summary-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 14px;
-      margin-bottom: 30px;
-    }
-
-    .summary-card {
-      background: var(--card);
-      border-radius: 12px;
-      padding: 19px 15px;
-      border: 1px solid var(--border);
-    }
-
-    .summary-label {
-      color: var(--muted);
-      font-size: 13px;
-      margin-bottom: 13px;
-    }
-
-    .summary-value {
-      color: var(--green);
-      font-size: 25px;
-      font-weight: bold;
-    }
-
-    .content-card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 19px;
-      margin-bottom: 18px;
-      min-height: 100px;
-    }
-
-    .empty-message {
-      color: var(--muted);
-      font-size: 13px;
-    }
-
-    .page {
-      display: none;
-    }
-
-    .page.active {
-      display: block;
-    }
-
-    .back-link {
-      display: inline-block;
-      color: var(--gold);
-      margin-bottom: 22px;
-      font-size: 14px;
-      cursor: pointer;
-    }
-
-    .form-card {
-      background: var(--card);
-      border: 1px solid #2B443A;
-      border-radius: 12px;
-      padding: 19px;
-      margin-bottom: 25px;
-    }
-
-    .form-group {
-      margin-bottom: 18px;
-    }
-
-    .form-group label {
-      display: block;
-      color: var(--muted);
-      font-size: 14px;
-      margin-bottom: 9px;
-    }
-
-    .form-group input,
-    .form-group select,
-    .form-group textarea {
-      width: 100%;
-      padding: 13px;
-      border: 1px solid #40584D;
-      border-radius: 8px;
-      background: var(--background);
-      color: var(--white);
-      font-size: 14px;
-      font-family: Arial, sans-serif;
-      outline: none;
-    }
-
-    .form-group input:focus,
-    .form-group select:focus,
-    .form-group textarea:focus {
-      border-color: var(--green);
-    }
-
-    .form-group textarea {
-      min-height: 100px;
-      resize: vertical;
-    }
-
-    .save-button {
-      width: 100%;
-      padding: 14px;
-      border: none;
-      border-radius: 8px;
-      background: var(--green);
-      color: #101B19;
-      font-size: 15px;
-      font-weight: bold;
-      cursor: pointer;
-    }
-
-    .cancel-button {
-      width: 100%;
-      padding: 12px;
-      margin-top: 10px;
-      border: 1px solid #64766D;
-      border-radius: 8px;
-      background: transparent;
-      color: var(--muted);
-      font-size: 14px;
-      cursor: pointer;
-    }
-
-    .learning-record {
-      background: var(--card);
-      border: 1px solid #2B443A;
-      border-radius: 12px;
-      padding: 17px;
-      margin-bottom: 13px;
-    }
-
-    .record-category {
-      color: var(--green);
-      font-size: 12px;
-      margin-bottom: 8px;
-    }
-
-    .record-topic {
-      color: var(--white);
-      font-size: 16px;
-      font-weight: bold;
-      margin-bottom: 8px;
-    }
-
-    .record-date {
-      color: var(--gold);
-      font-size: 12px;
-      margin-bottom: 10px;
-    }
-
-    .record-notes {
-      color: var(--muted);
-      font-size: 13px;
-      line-height: 1.6;
-      white-space: pre-wrap;
-    }
-
-    .record-actions {
-      display: flex;
-      gap: 10px;
-      margin-top: 14px;
-    }
-
-    .edit-button,
-    .delete-button {
-      flex: 1;
-      padding: 9px 13px;
-      border-radius: 6px;
-      background: transparent;
-      cursor: pointer;
-      font-size: 13px;
-    }
-
-    .edit-button {
-      border: 1px solid var(--green);
-      color: var(--green);
-    }
-
-    .delete-button {
-      border: 1px solid #A65F5F;
-      color: #E18A8A;
-    }
-
-    .bottom-nav {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 8px;
-      margin-top: 28px;
-      padding: 15px 5px;
-      border-top: 1px solid #30443C;
-    }
-
-    .nav-item {
-      text-align: center;
-      color: var(--muted);
-      font-size: 12px;
-      padding: 10px 2px;
-      cursor: pointer;
-    }
-
-    .nav-item.active {
-      color: var(--gold);
-    }
-
-    
-.header-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-#menuToggle {
-  background: transparent;
-  border: 1px solid var(--gold);
-  border-radius: 8px;
-  padding: 8px;
-  color: var(--gold);
-  font-size: 22px;
-}
-
-.side-menu {
-  display: none;
-  width: 250px;
-  margin: -12px 0 22px auto;
-  padding: 12px;
-  background: rgba(28, 48, 42, .96);
-  border: 1px solid #40584D;
-  border-radius: 12px;
-  backdrop-filter: blur(15px);
-}
-
-body.menu-open .side-menu {
-  display: block;
-}
-
-.menu-item {
-  display: block;
-  width: 100%;
-  padding: 12px;
-  margin-bottom: 5px;
-  border: 0;
-  border-radius: 7px;
-  background: transparent;
-  color: var(--muted);
-  text-align: left;
-  font-size: 15px;
-}
-
-.menu-item.active,
-.menu-item:hover {
-  color: var(--gold);
-  background: rgba(73, 169, 130, .12);
-}
-
-.menu-divider {
-  border: 0;
-  border-top: 1px solid #40584D;
-  margin: 10px 0;
-}
-
-.menu-logout {
-  color: #D66B6B;
-}
-
-
-header {
-  position: relative;
-}
-
-.header-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-#menuToggle {
-  background: none;
-  border: 1px solid #D6B978;
-  border-radius: 8px;
-  padding: 9px;
-  cursor: pointer;
-}
-
-#menuToggle span {
-  display: block;
-  width: 21px;
-  height: 2px;
-  margin: 5px;
-  background: #D6B978;
-}
-
-.side-menu {
-  display: none;
-  position: fixed;
-  top: 50%;
-  left: 0;
-  transform: translateY(-50%);
-  width: 250px;
-  padding: 12px;
-  background: rgba(28, 48, 42, 0.96);
-  backdrop-filter: blur(15px);
-  border: 1px solid rgba(214, 185, 120, 0.25);
-  border-radius: 0 12px 12px 0;
-  z-index: 1000;
-}
-
-body.menu-open .side-menu {
-  display: block;
-  animation: menuFadeIn 0.3s ease;
-}
-
-body.menu-open .side-menu {
-  display: block;
-  
-}
-
-.menu-item {
-  display: block;
-  width: 100%;
-  padding: 12px;
-  margin-bottom: 5px;
-  background: none;
-  border: none;
-  color: #AAB8B1;
-  text-align: left;
-  cursor: pointer;
-}
-
-.menu-item:hover,
-.menu-item.active {
-  color: #D6B978;
-  background: rgba(73, 169, 130, 0.12);
-}
-
-.menu-divider {
-  border: 0;
-  border-top: 1px solid #40584D;
-  margin: 12px 0;
-}
-
-.menu-logout {
-  color: #D66B6B;
-}
-
-@keyframes menuFadeIn {
-  from { opacity: 0; transform: translateY(-8px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-
-
-
-
-    @media (min-width: 700px) {
-      .summary-grid {
-        grid-template-columns: repeat(4, 1fr);
-      }
-    }
-
-    /* PREMIUM LOADING SCREEN */
-
-    html {
-      background: #101B19;
-    }
-
-    .loading-screen {
-      position: fixed;
-      inset: 0;
-      background: #101B19;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      z-index: 9999;
-    }
-
-    .loading-brand {
-      color: #D6B978;
-      font-size: 22px;
-      font-weight: bold;
-      letter-spacing: 2px;
-      margin-bottom: 25px;
-    }
-
-    .loading-spinner {
-      width: 38px;
-      height: 38px;
-      border: 3px solid #30443C;
-      border-top: 3px solid #49A982;
-      border-right: 3px solid #D6B978;
-      border-radius: 50%;
-      animation: dashboardSpin 1s linear infinite;
-    }
-
-    .loading-text {
-      color: #AAB8B1;
-      font-size: 13px;
-      margin-top: 20px;
-      letter-spacing: 0.5px;
-    }
-
-    @keyframes dashboardSpin {
-      to {
-        transform: rotate(360deg);
-      }
-    }
-
+    .form-group input:focus,.form-group select:focus,.form-group textarea:focus { border-color:var(--green); }
+    .form-group textarea { min-height:100px; resize:vertical; }
+    .save-button { width:100%; padding:14px; border:0; border-radius:8px; background:var(--green); color:var(--button-text); font-size:15px; font-weight:bold; cursor:pointer; }
+    .cancel-button { width:100%; padding:12px; margin-top:10px; border:1px solid var(--input-border); border-radius:8px; background:transparent; color:var(--muted); font-size:14px; cursor:pointer; }
+    .learning-record { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:17px; margin-bottom:13px; }
+    .record-category { color:var(--green); font-size:12px; margin-bottom:8px; }
+    .record-topic { color:var(--white); font-size:16px; font-weight:bold; margin-bottom:8px; }
+    .record-date { color:var(--gold); font-size:12px; margin-bottom:10px; }
+    .record-notes { color:var(--muted); font-size:13px; line-height:1.6; white-space:pre-wrap; }
+    .record-actions { display:flex; gap:10px; margin-top:14px; }
+    .edit-button,.delete-button { flex:1; padding:9px 13px; border-radius:6px; background:transparent; cursor:pointer; font-size:13px; }
+    .edit-button { border:1px solid var(--green); color:var(--green); }
+    .delete-button { border:1px solid var(--danger); color:var(--danger-text); }
+    #menuToggle { background:transparent; border:1px solid var(--gold); border-radius:8px; padding:9px; cursor:pointer; }
+    #menuToggle span { display:block; width:21px; height:2px; margin:5px; background:var(--gold); }
     .side-menu {
-  transform: translateY(-50%) !important;
-  animation: none !important;
-}
-
-body.menu-open .side-menu {
-  transform: translateY(-50%) !important;
-  animation: none !important;
-}
-  /* MENU FINAL DESIGN */
-
-.side-menu {
-  top: 47% !important;
-}
-
-.menu-item:not(.menu-logout) {
-  color: #C8A2C8;
-  border-bottom: 1px solid rgba(214, 185, 120, 0.65);
-  border-radius: 0;
-}
-
-.menu-item.active,
-.menu-item:hover {
-  color: #D6B978;
-}
-  
-/* SMOOTH MENU ANIMATION */
-
-.side-menu {
-  display: block;
-  opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
-
-  transform: translateX(-18px) translateY(-50%) !important;
-
-  transition:
-    opacity 0.3s ease,
-    transform 0.3s ease,
-    visibility 0.3s ease;
-}
-
-body.menu-open .side-menu {
-  display: block;
-  opacity: 1;
-  visibility: visible;
-  pointer-events: auto;
-
-  transform: translateX(0) translateY(-50%) !important;
-}
-
-/* DASHBOARD PAGE TRANSITION */
-
-.page.active {
-  animation: pageFadeIn 0.35s ease both;
-}
-
-@keyframes pageFadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(12px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-    
-/* PREMIUM CARD ANIMATION */
-
-.summary-card,
-.content-card,
-.form-card,
-.learning-record {
-  transition:
-    transform 0.3s ease,
-    box-shadow 0.3s ease,
-    border-color 0.3s ease;
-}
-
-@media (hover: hover) {
-  .summary-card:hover,
-  .content-card:hover,
-  .form-card:hover,
-  .learning-record:hover {
-    transform: translateY(-3px);
-    border-color: var(--green);
-    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.2);
-  }
-}
-
-.summary-card:active,
-.content-card:active,
-.form-card:active,
-.learning-record:active {
-  transform: scale(0.99);
-}
-
-/* PREMIUM BRAND NAME ANIMATION */
-
-.brand {
-  animation: brandGlow 3s ease-in-out infinite;
-  transition: letter-spacing 0.3s ease;
-}
-
-@keyframes brandGlow {
-  0%, 100% {
-    text-shadow: 0 0 2px rgba(214, 185, 120, 0.15);
-  }
-
-  50% {
-    text-shadow:
-      0 0 8px rgba(214, 185, 120, 0.45),
-      0 0 16px rgba(214, 185, 120, 0.2);
-  }
-}
-
-/* PREMIUM SUCCESS NOTIFICATION */
-
-.success-toast {
-  position: fixed;
-  top: 25px;
-  left: 50%;
-  transform: translateX(-50%) translateY(-20px);
-  width: calc(100% - 36px);
-  max-width: 380px;
-  padding: 17px;
-  background: #142C24;
-  border: 1px solid #49A982;
-  border-radius: 13px;
-  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.4);
-  z-index: 10000;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  opacity: 0;
-  visibility: hidden;
-  transition: all 0.3s ease;
-}
-
-.success-toast.show {
-  opacity: 1;
-  visibility: visible;
-  transform: translateX(-50%) translateY(0);
-}
-
-.success-toast-icon {
-  color: #49A982;
-  font-size: 27px;
-  flex-shrink: 0;
-}
-
-.success-toast-title {
-  color: #D6B978;
-  font-size: 15px;
-  font-weight: bold;
-  margin-bottom: 5px;
-}
-
-.success-toast-message {
-  color: #D5E9DE;
-  font-size: 13px;
-  line-height: 1.5;
-}
-
-
+      position:fixed; top:47%; left:0; width:250px; padding:12px;
+      background:var(--menu-background); border:1px solid var(--border);
+      border-radius:0 12px 12px 0; backdrop-filter:blur(15px); z-index:1000;
+      opacity:0; visibility:hidden; pointer-events:none;
+      transform:translateX(-18px) translateY(-50%);
+      transition:opacity .3s ease,transform .3s ease,visibility .3s ease;
+    }
+    body.menu-open .side-menu { opacity:1; visibility:visible; pointer-events:auto; transform:translateX(0) translateY(-50%); }
+    .menu-item { display:block; width:100%; padding:12px; margin-bottom:5px; border:0; border-bottom:1px solid var(--border); border-radius:0; background:transparent; color:var(--muted); text-align:left; font-size:15px; cursor:pointer; }
+    .menu-item.active,.menu-item:hover { color:var(--gold); background:var(--background); }
+    .menu-divider { border:0; border-top:1px solid var(--border); margin:12px 0; }
+    .menu-logout { color:var(--danger); border-bottom:0; }
+    .loading-screen { position:fixed; inset:0; background:var(--background); display:flex; flex-direction:column; align-items:center; justify-content:center; z-index:9999; }
+    .loading-brand { color:var(--gold); font-size:22px; font-weight:bold; letter-spacing:2px; margin-bottom:25px; }
+    .loading-spinner { width:38px; height:38px; border:3px solid var(--border); border-top:3px solid var(--green); border-right:3px solid var(--gold); border-radius:50%; animation:dashboardSpin 1s linear infinite; }
+    .loading-text { color:var(--muted); font-size:13px; margin-top:20px; letter-spacing:.5px; }
+    .success-toast {
+      position:fixed; top:25px; left:50%; transform:translateX(-50%) translateY(-20px);
+      width:calc(100% - 36px); max-width:380px; padding:17px;
+      background:var(--toast-background); border:1px solid var(--green);
+      border-radius:13px; box-shadow:0 8px 28px rgba(0,0,0,.4);
+      z-index:10000; display:flex; align-items:center; gap:12px;
+      opacity:0; visibility:hidden; transition:all .3s ease;
+    }
+    .success-toast.show { opacity:1; visibility:visible; transform:translateX(-50%) translateY(0); }
+    .success-toast-icon { color:var(--green); font-size:27px; flex-shrink:0; }
+    .success-toast-title { color:var(--gold); font-size:15px; font-weight:bold; margin-bottom:5px; }
+    .success-toast-message { color:var(--toast-text); font-size:13px; line-height:1.5; }
+    .theme-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; }
+    .theme-option {
+      display:flex; align-items:center; gap:10px; width:100%; padding:12px;
+      border:1px solid var(--border); border-radius:10px; background:var(--background);
+      color:var(--white); text-align:left; cursor:pointer;
+      transition:border-color .2s ease,transform .2s ease;
+    }
+    .theme-option:active { transform:scale(.98); }
+    .theme-option.active { border:2px solid var(--green); }
+    .theme-option:disabled { opacity:.6; cursor:wait; }
+    .theme-swatch { display:flex; flex-shrink:0; width:34px; height:34px; overflow:hidden; border-radius:50%; border:1px solid rgba(255,255,255,.25); }
+    .theme-swatch span { flex:1; }
+    .theme-name { font-size:13px; line-height:1.4; }
+    .theme-status { color:var(--muted); font-size:12px; margin-top:12px; line-height:1.5; }
+    .summary-card,.content-card,.form-card,.learning-record { transition:transform .3s ease,box-shadow .3s ease,border-color .3s ease; }
+    @media (hover:hover) {
+      .summary-card:hover,.content-card:hover,.form-card:hover,.learning-record:hover {
+        transform:translateY(-3px); border-color:var(--green); box-shadow:0 8px 22px rgba(0,0,0,.2);
+      }
+    }
+    @keyframes dashboardSpin { to { transform:rotate(360deg); } }
+    @keyframes pageFadeIn { from { opacity:0; transform:translateY(12px); } to { opacity:1; transform:translateY(0); } }
+    @keyframes brandGlow {
+      0%,100% { text-shadow:0 0 2px rgba(214,185,120,.15); }
+      50% { text-shadow:0 0 8px rgba(214,185,120,.35); }
+    }
+    @media (min-width:700px) {
+      .summary-grid { grid-template-columns:repeat(4,1fr); }
+      .theme-grid { grid-template-columns:repeat(3,minmax(0,1fr)); }
+    }
   </style>
 </head>
 
-
 <body>
-
-  <!-- SUCCESS NOTIFICATION -->
   <div class="success-toast" id="successToast">
     <div class="success-toast-icon">✓</div>
-
     <div>
-      <div class="success-toast-title" id="successToastTitle">
-        আলহামদুলিল্লাহ!
-      </div>
-
-      <div class="success-toast-message" id="successToastMessage">
-        আপনার কাজটি সফলভাবে সম্পন্ন হয়েছে।
-      </div>
+      <div class="success-toast-title" id="successToastTitle">আলহামদুলিল্লাহ!</div>
+      <div class="success-toast-message" id="successToastMessage">আপনার কাজটি সফলভাবে সম্পন্ন হয়েছে।</div>
     </div>
   </div>
 
@@ -756,98 +185,75 @@ body.menu-open .side-menu {
     <p class="loading-text">ড্যাশবোর্ড প্রস্তুত হচ্ছে...</p>
   </div>
 
-
   <main class="container" id="dashboardContent" style="display:none;">
-<header>
-  <div class="header-row">
-    <div>
-      <div class="brand">HASAN ALAMIN</div>
-      <div class="subtitle">Personal Management Dashboard</div>
-    </div>
+    <header>
+      <div class="header-row">
+        <div>
+          <div class="brand">HASAN ALAMIN</div>
+          <div class="subtitle">Personal Management Dashboard</div>
+        </div>
+        <button type="button" id="menuToggle" aria-label="Open menu" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </header>
 
-    <button
-      type="button"
-      id="menuToggle"
-      aria-label="Open menu"
-      aria-expanded="false"
-    >
-      <span></span>
-      <span></span>
-      <span></span>
-    </button>
-  </div>
-</header>
-    <h2 class="welcome" id="welcomeMessage">
-  Welcome back, <span>Hasan Alamin!</span>
-</h2>
+    <h2 class="welcome" id="welcomeMessage">Welcome back, <span>Hasan Alamin!</span></h2>
 
- 
-<!-- OVERVIEW PAGE -->
-<section id="overviewPage" class="page active">
+    <section id="overviewPage" class="page active">
+      <h3 class="section-title">Overview</h3>
+      <div class="summary-grid">
+        <div class="summary-card"><p class="summary-label">Learning Sessions</p><p class="summary-value" id="overviewLearningSessions">0</p></div>
+        <div class="summary-card"><p class="summary-label">Study Time</p><p class="summary-value" id="overviewStudyTime">0h 0m</p></div>
+        <div class="summary-card"><p class="summary-label">Total Income</p><p class="summary-value" id="overviewTotalIncome">0.00</p></div>
+        <div class="summary-card"><p class="summary-label">Total Expense</p><p class="summary-value" id="overviewTotalExpense">0.00</p></div>
+        <div class="summary-card"><p class="summary-label">Nahida Balance</p><p class="summary-value" id="overviewNahidaBalance">0.00</p></div>
+        <div class="summary-card"><p class="summary-label">Nahida Expense</p><p class="summary-value" id="overviewNahidaExpense">0.00</p></div>
+      </div>
 
-  <h3 class="section-title">Overview</h3>
+      <h3 class="section-title">Appearance &amp; Themes</h3>
+      <div class="content-card">
+        <p class="summary-label">Choose your preferred dashboard theme</p>
+        <div class="theme-grid" id="themeGrid">
+          <button type="button" class="theme-option" data-theme-choice="dark-green-gold">
+            <span class="theme-swatch"><span style="background:#101B19"></span><span style="background:#49A982"></span><span style="background:#D6B978"></span></span>
+            <span class="theme-name">Dark Green &amp; Gold</span>
+          </button>
+          <button type="button" class="theme-option" data-theme-choice="lavender-purple">
+            <span class="theme-swatch"><span style="background:#211A35"></span><span style="background:#A78BFA"></span><span style="background:#D8B4FE"></span></span>
+            <span class="theme-name">Lavender &amp; Purple</span>
+          </button>
+          <button type="button" class="theme-option" data-theme-choice="ocean-blue">
+            <span class="theme-swatch"><span style="background:#102235"></span><span style="background:#38BDF8"></span><span style="background:#67E8F9"></span></span>
+            <span class="theme-name">Ocean Blue</span>
+          </button>
+          <button type="button" class="theme-option" data-theme-choice="rose-pink">
+            <span class="theme-swatch"><span style="background:#301B27"></span><span style="background:#F472B6"></span><span style="background:#FDA4AF"></span></span>
+            <span class="theme-name">Rose Pink</span>
+          </button>
+          <button type="button" class="theme-option" data-theme-choice="black-gold">
+            <span class="theme-swatch"><span style="background:#111111"></span><span style="background:#D6B978"></span><span style="background:#F0D99A"></span></span>
+            <span class="theme-name">Black &amp; Gold</span>
+          </button>
+          <button type="button" class="theme-option" data-theme-choice="black-blue">
+            <span class="theme-swatch"><span style="background:#101820"></span><span style="background:#38BDF8"></span><span style="background:#7DD3FC"></span></span>
+            <span class="theme-name">Black &amp; Blue</span>
+          </button>
+        </div>
+        <p class="theme-status" id="themeStatus">Your selected theme will be saved to your account.</p>
+      </div>
 
-  <div class="summary-grid">
+      <h3 class="section-title">Recent Learning</h3>
+      <div class="content-card" id="overviewRecentLearning"><p class="empty-message">No learning records yet.</p></div>
+      <h3 class="section-title">Recent Transactions</h3>
+      <div class="content-card" id="overviewRecentTransactions"><p class="empty-message">No transactions yet.</p></div>
+    </section>
 
-    <div class="summary-card">
-      <p class="summary-label">Learning Sessions</p>
-      <p class="summary-value" id="overviewLearningSessions">0</p>
-    </div>
-
-    <div class="summary-card">
-      <p class="summary-label">Study Time</p>
-      <p class="summary-value" id="overviewStudyTime">0h 0m</p>
-    </div>
-
-    <div class="summary-card">
-      <p class="summary-label">Total Income</p>
-      <p class="summary-value" id="overviewTotalIncome">0.00</p>
-    </div>
-
-    <div class="summary-card">
-      <p class="summary-label">Total Expense</p>
-      <p class="summary-value" id="overviewTotalExpense">0.00</p>
-    </div>
-
-    <div class="summary-card">
-      <p class="summary-label">Nahida Balance</p>
-      <p class="summary-value" id="overviewNahidaBalance">0.00</p>
-    </div>
-
-    <div class="summary-card">
-      <p class="summary-label">Nahida Expense</p>
-      <p class="summary-value" id="overviewNahidaExpense">0.00</p>
-    </div>
-
-  </div>
-
-  <h3 class="section-title">Recent Learning</h3>
-
-  <div class="content-card" id="overviewRecentLearning">
-    <p class="empty-message">No learning records yet.</p>
-  </div>
-
-  <h3 class="section-title">Recent Transactions</h3>
-
-  <div class="content-card" id="overviewRecentTransactions">
-    <p class="empty-message">No transactions yet.</p>
-  </div>
-
-</section>
-
-    <!-- LEARNING PAGE -->
     <section id="learningPage" class="page">
-      
       <h3 class="section-title">Learning</h3>
-
       <div class="form-card" id="learningFormCard">
-
-        <h3 class="section-title" id="formTitle">
-          Add Learning Record
-        </h3>
-
+        <h3 class="section-title" id="formTitle">Add Learning Record</h3>
         <form id="learningForm">
-
           <div class="form-group">
             <label for="skillCategory">Skill Category</label>
             <select id="skillCategory" required>
@@ -856,395 +262,262 @@ body.menu-open .side-menu {
               <option value="Forex">Forex</option>
             </select>
           </div>
-
           <div class="form-group">
             <label for="learningTopic">Learning Topic</label>
-            <input
-              type="text"
-              id="learningTopic"
-              placeholder="What did you learn?"
-              required
-            >
+            <input type="text" id="learningTopic" placeholder="What did you learn?" required>
           </div>
-
           <div class="form-group">
             <label for="learningDate">Learning Date</label>
             <input type="date" id="learningDate" required>
           </div>
-
           <div class="form-group">
             <label for="learningNotes">Notes</label>
-            <textarea
-              id="learningNotes"
-              placeholder="Write your learning notes..."
-            ></textarea>
+            <textarea id="learningNotes" placeholder="Write your learning notes..."></textarea>
           </div>
-
-          <button type="submit" class="save-button" id="submitButton">
-            Save Learning Record
-          </button>
-
-          <button
-            type="button"
-            class="cancel-button"
-            id="cancelEditButton"
-            style="display:none;"
-            onclick="cancelEdit()"
-          >
-            Cancel Edit
-          </button>
-
+          <button type="submit" class="save-button" id="submitButton">Save Learning Record</button>
+          <button type="button" class="cancel-button" id="cancelEditButton" style="display:none;" onclick="cancelEdit()">Cancel Edit</button>
         </form>
       </div>
-
       <h3 class="section-title">Learning Records</h3>
-
-      <div id="learningRecords">
-        <div class="content-card">
-          <p class="empty-message">No learning records yet.</p>
-        </div>
-      </div>
-
+      <div id="learningRecords"><div class="content-card"><p class="empty-message">No learning records yet.</p></div></div>
     </section>
 
-    <!-- FINANCE PAGE -->
-    
-
-    <!-- FINANCE PAGE -->
     <section id="financePage" class="page">
-
       <h3 class="section-title">Finance</h3>
-
       <div class="form-card">
-
-        <h3 class="section-title" id="transactionFormTitle">
-          Add Transaction
-        </h3>
-
+        <h3 class="section-title" id="transactionFormTitle">Add Transaction</h3>
         <form id="transactionForm">
-
           <div class="form-group">
             <label for="transactionType">Transaction Type</label>
             <select id="transactionType" required>
-              <option value="">Select Type</option>
-              <option value="Income">Income</option>
-              <option value="Expense">Expense</option>
+              <option value="">Select Type</option><option value="Income">Income</option><option value="Expense">Expense</option>
             </select>
           </div>
-
           <div class="form-group">
-            <label for="transactionAmount" id="transactionAmountLabel">
-             Amount </label>
-            <input
-              type="number"
-              id="transactionAmount"
-              min="0.01"
-              step="0.01"
-              placeholder="Enter amount"
-              required
-            >
+            <label for="transactionAmount" id="transactionAmountLabel">Amount</label>
+            <input type="number" id="transactionAmount" min="0.01" step="0.01" placeholder="Enter amount" required>
           </div>
-
           <div class="form-group">
             <label for="transactionCategory">Category</label>
-            <select id="transactionCategory" required>
-              <option value="">Select Category</option>
-            </select>
+            <select id="transactionCategory" required><option value="">Select Category</option></select>
           </div>
-
           <div class="form-group">
             <label for="transactionDate">Date</label>
             <input type="date" id="transactionDate" required>
           </div>
-
           <div class="form-group">
             <label for="transactionNotes">Notes (Optional)</label>
-            <textarea
-              id="transactionNotes"
-              placeholder="Write notes..."
-            ></textarea>
+            <textarea id="transactionNotes" placeholder="Write notes..."></textarea>
           </div>
-
-          <button type="submit" class="save-button">
-            Save Transaction
-          </button>
-
-          <button
-            type="button"
-            class="cancel-button"
-            id="cancelTransactionEdit"
-            style="display:none;"
-          >
-            Cancel Edit
-          </button>
-
+          <button type="submit" class="save-button">Save Transaction</button>
+          <button type="button" class="cancel-button" id="cancelTransactionEdit" style="display:none;">Cancel Edit</button>
         </form>
-
       </div>
-   
       <div class="record-actions">
-        <button
-          type="button"
-          class="edit-button"
-          id="allTransactions"
-        >
-          All
-        </button>
-
-        <button
-          type="button"
-          class="edit-button"
-          id="incomeTransactions"
-        >
-          Income
-        </button>
-
-        <button
-          type="button"
-          class="edit-button"
-          id="expenseTransactions"
-        >
-          Expense
-        </button>
+        <button type="button" class="edit-button" id="allTransactions">All</button>
+        <button type="button" class="edit-button" id="incomeTransactions">Income</button>
+        <button type="button" class="edit-button" id="expenseTransactions">Expense</button>
       </div>
-
-      <div id="financeRecords">
-        <div class="content-card">
-          <p class="empty-message">
-            No transactions yet.
-          </p>
-        </div>
-      </div>
-
+      <div id="financeRecords"><div class="content-card"><p class="empty-message">No transactions yet.</p></div></div>
     </section>
 
-    <!-- REPORTS PAGE -->
     <section id="reportsPage" class="page">
-
-      
-
       <h3 class="section-title">Reports</h3>
-
-      <div class="content-card">
-        <p class="empty-message">
-          Reports section will be developed later.
-        </p>
-      </div>
-
+      <div class="content-card"><p class="empty-message">Reports section will be developed later.</p></div>
     </section>
 
-
-<nav class="side-menu" id="sideMenu">
-<button class="menu-item" data-page="overview" onclick="navigateFromMenu('overview')">Overview</button>
-  <button class="menu-item" data-page="learning" onclick="navigateFromMenu('learning')">Learning</button>
-  <button class="menu-item" data-page="finance" onclick="navigateFromMenu('finance')">Finance</button>
-  <button class="menu-item" data-page="reports" onclick="navigateFromMenu('reports')">Reports</button>
-  <hr class="menu-divider">
-  <button class="menu-item menu-logout" id="logoutButton">Logout</button>
-</nav>
-
-    </main>
+    <nav class="side-menu" id="sideMenu">
+      <button class="menu-item" data-page="overview" onclick="navigateFromMenu('overview')">Overview</button>
+      <button class="menu-item" data-page="learning" onclick="navigateFromMenu('learning')">Learning</button>
+      <button class="menu-item" data-page="finance" onclick="navigateFromMenu('finance')">Finance</button>
+      <button class="menu-item" data-page="reports" onclick="navigateFromMenu('reports')">Reports</button>
+      <hr class="menu-divider">
+      <button class="menu-item menu-logout" id="logoutButton">Logout</button>
+    </nav>
+  </main>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
   <script>
-     // SUPABASE CONNECTION
-
+    // SUPABASE CONNECTION
     const SUPABASE_URL = "https://rtevxoywkcvbprafkhxr.supabase.co";
     const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_EuPBlIzVy4ztbWnml3KEag_WinN7S5a";
-
     const { createClient } = supabase;
+    const supabaseClient = createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
 
-    const supabaseClient = createClient(
-      SUPABASE_URL,
-      SUPABASE_PUBLISHABLE_KEY
-    );
+    // THEME SYSTEM: preferences are stored separately in each signed-in account's user metadata.
+    const AVAILABLE_THEMES = [
+      "dark-green-gold",
+      "lavender-purple",
+      "ocean-blue",
+      "rose-pink",
+      "black-gold",
+      "black-blue"
+    ];
 
-// PREMIUM SUCCESS NOTIFICATION SYSTEM
+    let currentUserId = null;
+    let notificationTimer;
 
-let notificationTimer;
+    function applyTheme(themeName) {
+      const safeTheme = AVAILABLE_THEMES.includes(themeName)
+        ? themeName
+        : "dark-green-gold";
 
-function showSuccessNotification(title, message) {
+      document.body.dataset.theme = safeTheme;
 
-  const toast = document.getElementById("successToast");
+      document.querySelectorAll("[data-theme-choice]").forEach(button => {
+        const selected = button.dataset.themeChoice === safeTheme;
+        button.classList.toggle("active", selected);
+        button.setAttribute("aria-pressed", String(selected));
+      });
 
-  document.getElementById("successToastTitle").textContent = title;
+      return safeTheme;
+    }
 
-  document.getElementById("successToastMessage").textContent = message;
+    async function loadAccountTheme(user) {
+      const savedTheme = user?.user_metadata?.dashboard_theme;
+      applyTheme(savedTheme || "dark-green-gold");
+      document.getElementById("themeStatus").textContent =
+        "Your theme preference is saved separately to your account.";
+    }
 
-  clearTimeout(notificationTimer);
+    async function saveAccountTheme(themeName, clickedButton) {
+      if (!AVAILABLE_THEMES.includes(themeName)) return;
 
-  toast.classList.add("show");
+      const status = document.getElementById("themeStatus");
+      const buttons = document.querySelectorAll("[data-theme-choice]");
 
-  notificationTimer = setTimeout(function() {
-    toast.classList.remove("show");
-  }, 3500);
+      buttons.forEach(button => button.disabled = true);
+      status.textContent = "Saving your theme...";
 
-}  
-// PAGE NAVIGATION
+      try {
+        const { data: { user }, error: userError } =
+          await supabaseClient.auth.getUser();
 
-function showPage(pageName) {
+        if (userError || !user) {
+          throw userError || new Error("Your session has expired. Please log in again.");
+        }
 
-  document.querySelectorAll(".page").forEach(page => {
-    page.classList.remove("active");
-  });
+        const updatedMetadata = {
+          ...(user.user_metadata || {}),
+          dashboard_theme: themeName
+        };
 
-  document.getElementById(pageName + "Page")
-    .classList.add("active");
+        const { error } = await supabaseClient.auth.updateUser({
+          data: updatedMetadata
+        });
 
-  document.querySelectorAll(".menu-item[data-page]").forEach(item => {
-    item.classList.remove("active");
-  });
+        if (error) throw error;
 
-  const activeNav = document.querySelector(
-    '.menu-item[data-page="' + pageName + '"]'
-  );
+        applyTheme(themeName);
+        status.textContent = "Theme saved successfully to your account.";
+      } catch (error) {
+        status.textContent = "Could not save theme: " + error.message;
+        alert("Theme save failed: " + error.message);
+      } finally {
+        buttons.forEach(button => button.disabled = false);
+      }
+    }
 
-  if (activeNav) {
-    activeNav.classList.add("active");
-  }
+    document.getElementById("themeGrid").addEventListener("click", function(event) {
+      const button = event.target.closest("[data-theme-choice]");
+      if (!button || button.disabled) return;
+      saveAccountTheme(button.dataset.themeChoice, button);
+    });
 
-  window.scrollTo(0, 0);
-}
+    // PREMIUM SUCCESS NOTIFICATION
+    function showSuccessNotification(title, message) {
+      const toast = document.getElementById("successToast");
+      document.getElementById("successToastTitle").textContent = title;
+      document.getElementById("successToastMessage").textContent = message;
+      clearTimeout(notificationTimer);
+      toast.classList.add("show");
+      notificationTimer = setTimeout(() => toast.classList.remove("show"), 3500);
+    }
 
+    // PAGE NAVIGATION
+    function showPage(pageName) {
+      document.querySelectorAll(".page").forEach(page => page.classList.remove("active"));
+      const targetPage = document.getElementById(pageName + "Page");
+      if (!targetPage) return;
+      targetPage.classList.add("active");
 
-// HAMBURGER MENU CONTROLS
+      document.querySelectorAll(".menu-item[data-page]").forEach(item => item.classList.remove("active"));
+      const activeNav = document.querySelector('.menu-item[data-page="' + pageName + '"]');
+      if (activeNav) activeNav.classList.add("active");
+      window.scrollTo(0, 0);
+    }
 
-const menuToggle = document.getElementById("menuToggle");
+    // HAMBURGER MENU
+    const menuToggle = document.getElementById("menuToggle");
 
-function closeMenu() {
-  document.body.classList.remove("menu-open");
-  menuToggle.setAttribute("aria-expanded", "false");
-}
+    function closeMenu() {
+      document.body.classList.remove("menu-open");
+      menuToggle.setAttribute("aria-expanded", "false");
+    }
 
-function navigateFromMenu(pageName) {
-  showPage(pageName);
-  closeMenu();
-}
+    function navigateFromMenu(pageName) {
+      showPage(pageName);
+      closeMenu();
+    }
 
-menuToggle.addEventListener("click", function() {
-  const isOpen = document.body.classList.toggle("menu-open");
-  menuToggle.setAttribute("aria-expanded", String(isOpen));
-});
-
+    menuToggle.addEventListener("click", function() {
+      const isOpen = document.body.classList.toggle("menu-open");
+      menuToggle.setAttribute("aria-expanded", String(isOpen));
+    });
 
     // FINANCE CATEGORY OPTIONS
+    const transactionType = document.getElementById("transactionType");
+    const transactionAmountLabel = document.getElementById("transactionAmountLabel");
+    const transactionCategory = document.getElementById("transactionCategory");
 
-    const transactionType =
-      document.getElementById("transactionType");
-    
-  const transactionAmountLabel =
-  document.getElementById("transactionAmountLabel");
-    const transactionCategory =
-      document.getElementById("transactionCategory");
-
-    const hasanIncomeCategories = [
-      "Food Delivery",
-      "Web Development",
-      "Forex",
-      "Business",
-      "Others"
-    ];
-
-    const hasanExpenseCategories = [
-      "Family",
-      "Nahida",
-      "Personal",
-      "Others"
-    ];
-
-    const nahidaIncomeCategories = [
-      "From Husband",
-      "Others"
-    ];
-
-    const nahidaExpenseCategories = [
-  "For Araf",
-  "For Anveer",
-  "Vehicle Rent",
-  "Personal",
-  "Others"
-];
+    const hasanIncomeCategories = ["Food Delivery", "Web Development", "Forex", "Business", "Others"];
+    const hasanExpenseCategories = ["Family", "Nahida", "Personal", "Others"];
+    const nahidaIncomeCategories = ["From Husband", "Others"];
+    const nahidaExpenseCategories = ["For Araf", "For Anveer", "Vehicle Rent", "Personal", "Others"];
 
     transactionType.addEventListener("change", function() {
+      const isNahida = document.body.dataset.role === "observer";
+      transactionAmountLabel.textContent = isNahida ? "Amount (BDT)" : "Amount (QAR)";
 
-      const isNahida =
-        document.body.dataset.role === "observer";
-transactionAmountLabel.textContent = isNahida
-  ? "Amount (BDT)"
-  : "Amount (QAR)";
       let categories;
-
       if (isNahida) {
-        categories = this.value === "Income"
-          ? nahidaIncomeCategories
-          : nahidaExpenseCategories;
+        categories = this.value === "Income" ? nahidaIncomeCategories : nahidaExpenseCategories;
       } else {
-        categories = this.value === "Income"
-          ? hasanIncomeCategories
-          : hasanExpenseCategories;
+        categories = this.value === "Income" ? hasanIncomeCategories : hasanExpenseCategories;
       }
 
-      transactionCategory.innerHTML =
-        '<option value="">Select Category</option>';
-
+      transactionCategory.innerHTML = '<option value="">Select Category</option>';
       if (!this.value) return;
 
       categories.forEach(category => {
-
         const option = document.createElement("option");
-
         option.value = category;
         option.textContent = category;
-
         transactionCategory.appendChild(option);
-
       });
-
     });
-           
 
     // SUPABASE FINANCE TRANSACTIONS
-
     let transactions = [];
     let editingTransactionId = null;
     let transactionFilter = "All";
-    let currentUserId = null;
-    const transactionForm =
-      document.getElementById("transactionForm");
-
-    const financeRecordsContainer =
-      document.getElementById("financeRecords");
-
-    const transactionFormTitle =
-      document.getElementById("transactionFormTitle");
-
-    const cancelTransactionEdit =
-      document.getElementById("cancelTransactionEdit");
-
-
-        // LOAD TRANSACTIONS
+    const transactionForm = document.getElementById("transactionForm");
+    const financeRecordsContainer = document.getElementById("financeRecords");
+    const transactionFormTitle = document.getElementById("transactionFormTitle");
+    const cancelTransactionEdit = document.getElementById("cancelTransactionEdit");
 
     async function loadTransactions() {
-
-      const { data: { user } } =
-        await supabaseClient.auth.getUser();
-
+      const { data: { user } } = await supabaseClient.auth.getUser();
       if (!user) return;
 
-      let query = supabaseClient
-        .from("finance_transactions")
-        .select("*")
-        .order("transaction_date", { ascending: false });
-
-      // OBSERVER CAN SEE OWN RECORDS
+      let query = supabaseClient.from("finance_transactions")
+        .select("*").order("transaction_date", { ascending: false });
 
       if (document.body.dataset.role === "observer") {
         query = query.eq("user_id", user.id);
       }
 
       const { data, error } = await query;
-
       if (error) {
         console.error("Finance load error:", error);
         alert("Could not load Finance Records: " + error.message);
@@ -1252,68 +525,38 @@ transactionAmountLabel.textContent = isNahida
       }
 
       transactions = data || [];
-
       displayTransactions();
-
       await updateOverview();
     }
 
-      
-
-
-    // SAVE OR UPDATE TRANSACTION
-
     transactionForm.addEventListener("submit", async function(event) {
-
       event.preventDefault();
 
-      const { data: { user } } =
-        await supabaseClient.auth.getUser();
-
+      const { data: { user } } = await supabaseClient.auth.getUser();
       if (!user) return;
 
-      
-      
       const payload = {
         user_id: user.id,
         transaction_type: transactionType.value,
-        amount: Number(
-          document.getElementById("transactionAmount").value
-        ),
+        amount: Number(document.getElementById("transactionAmount").value),
         category: transactionCategory.value,
-        transaction_date:
-          document.getElementById("transactionDate").value,
-        notes:
-          document.getElementById("transactionNotes").value.trim()
+        transaction_date: document.getElementById("transactionDate").value,
+        notes: document.getElementById("transactionNotes").value.trim()
       };
 
-
-
       let error;
-
       if (editingTransactionId !== null) {
-
-        let query = supabaseClient
-          .from("finance_transactions")
-          .update(payload)
-          .eq("id", editingTransactionId);
+        let query = supabaseClient.from("finance_transactions")
+          .update(payload).eq("id", editingTransactionId);
 
         if (document.body.dataset.role === "observer") {
           query = query.eq("user_id", user.id);
         }
-
         const result = await query;
-
         error = result.error;
-
       } else {
-
-        const result = await supabaseClient
-          .from("finance_transactions")
-          .insert(payload);
-
+        const result = await supabaseClient.from("finance_transactions").insert(payload);
         error = result.error;
-
       }
 
       if (error) {
@@ -1322,294 +565,142 @@ transactionAmountLabel.textContent = isNahida
       }
 
       const wasEditing = editingTransactionId !== null;
-
       cancelTransactionEditForm();
-
-            await loadTransactions();
+      await loadTransactions();
 
       showSuccessNotification(
         "আলহামদুলিল্লাহ!",
-        wasEditing
-          ? "লেনদেন সফলভাবে আপডেট হয়েছে।"
-          : "নতুন লেনদেন সফলভাবে সংরক্ষণ হয়েছে।"
+        wasEditing ? "লেনদেন সফলভাবে আপডেট হয়েছে।" : "নতুন লেনদেন সফলভাবে সংরক্ষণ হয়েছে।"
       );
-
     });
 
-
-    // DISPLAY TRANSACTIONS
-
     function displayTransactions() {
-
-      
       const filteredTransactions = transactions.filter(record => {
-
-        if (transactionFilter === "Income") {
-          return record.transaction_type === "Income";
-        }
-
-        if (transactionFilter === "Expense") {
-          return record.transaction_type === "Expense";
-        }
-
+        if (transactionFilter === "Income") return record.transaction_type === "Income";
+        if (transactionFilter === "Expense") return record.transaction_type === "Expense";
         return true;
-
       });
 
-
       if (filteredTransactions.length === 0) {
-
-        financeRecordsContainer.innerHTML = `
-          <div class="content-card">
-            <p class="empty-message">
-              No transactions yet.
-            </p>
-          </div>
-        `;
-
+        financeRecordsContainer.innerHTML = '<div class="content-card"><p class="empty-message">No transactions yet.</p></div>';
         return;
       }
 
       financeRecordsContainer.innerHTML = "";
-
       filteredTransactions.forEach(record => {
-
         const card = document.createElement("div");
         card.className = "learning-record";
 
-        
         const category = document.createElement("p");
         category.className = "record-category";
-        category.textContent =
-        record.transaction_type + " • " + record.category;
-
+        category.textContent = record.transaction_type + " • " + record.category;
 
         const amount = document.createElement("p");
         amount.className = "record-topic";
-        
+        const currency = record.user_id === currentUserId && document.body.dataset.role === "admin" ? "QAR" : "BDT";
+        amount.textContent = Number(record.amount).toFixed(2) + " " + currency;
 
-const currency =
-  record.user_id === currentUserId &&
-  document.body.dataset.role === "admin"
-    ? "QAR"
-    : "BDT";
-amount.textContent =
-  Number(record.amount).toFixed(2) + " " + currency;
         const date = document.createElement("p");
         date.className = "record-date";
         date.textContent = record.transaction_date;
 
-        
         const notes = document.createElement("p");
         notes.className = "record-notes";
-        notes.textContent =
-        record.notes || "No notes added.";
+        notes.textContent = record.notes || "No notes added.";
 
-
-        card.appendChild(category);
-        card.appendChild(amount);
-        card.appendChild(date);
-        card.appendChild(notes);
-
-
-        // EDIT AND DELETE BUTTONS
+        card.append(category, amount, date, notes);
 
         const actions = document.createElement("div");
         actions.className = "record-actions";
 
         const editButton = document.createElement("button");
-
         editButton.type = "button";
         editButton.className = "edit-button";
         editButton.textContent = "Edit";
-        editButton.addEventListener("click", function() {
-          editTransaction(record.id);
-        });
+        editButton.addEventListener("click", () => editTransaction(record.id));
 
         const deleteButton = document.createElement("button");
-
         deleteButton.type = "button";
         deleteButton.className = "delete-button";
         deleteButton.textContent = "Delete";
-        deleteButton.addEventListener("click", function() {
-          deleteTransaction(record.id);
-        });
+        deleteButton.addEventListener("click", () => deleteTransaction(record.id));
 
-        actions.appendChild(editButton);
-        actions.appendChild(deleteButton);
-
+        actions.append(editButton, deleteButton);
         card.appendChild(actions);
-
         financeRecordsContainer.appendChild(card);
-
       });
-
     }
 
-
-    // EDIT TRANSACTION
-
     function editTransaction(id) {
-
-      const record = transactions.find(
-        item => item.id === id
-      );
-
+      const record = transactions.find(item => item.id === id);
       if (!record) return;
 
       editingTransactionId = id;
-
-      
       transactionType.value = record.transaction_type;
-
-
-      transactionType.dispatchEvent(
-        new Event("change")
-      );
-
+      transactionType.dispatchEvent(new Event("change"));
       transactionCategory.value = record.category;
+      document.getElementById("transactionAmount").value = record.amount;
+      document.getElementById("transactionDate").value = record.transaction_date;
+      document.getElementById("transactionNotes").value = record.notes ?? "";
 
-      document.getElementById("transactionAmount").value =
-        record.amount;
-
-      document.getElementById("transactionDate").value =
-        record.transaction_date;
-
-      
-      document.getElementById("transactionNotes").value =
-        record.notes ?? "";
-
-
-      transactionFormTitle.textContent =
-        "Edit Transaction";
-
-      transactionForm.querySelector(
-        'button[type="submit"]'
-      ).textContent = "Update Transaction";
-
+      transactionFormTitle.textContent = "Edit Transaction";
+      transactionForm.querySelector('button[type="submit"]').textContent = "Update Transaction";
       cancelTransactionEdit.style.display = "block";
-
-      transactionForm.scrollIntoView({
-        behavior: "smooth"
-      });
-
+      transactionForm.scrollIntoView({ behavior: "smooth" });
     }
-
-
-    // CANCEL TRANSACTION EDIT
 
     function cancelTransactionEditForm() {
-
       editingTransactionId = null;
-
       transactionForm.reset();
-
-      transactionCategory.innerHTML =
-        '<option value="">Select Category</option>';
-
-      transactionFormTitle.textContent =
-        "Add Transaction";
-
-      transactionForm.querySelector(
-        'button[type="submit"]'
-      ).textContent = "Save Transaction";
-
+      transactionCategory.innerHTML = '<option value="">Select Category</option>';
+      transactionFormTitle.textContent = "Add Transaction";
+      transactionForm.querySelector('button[type="submit"]').textContent = "Save Transaction";
       cancelTransactionEdit.style.display = "none";
-
     }
 
-    cancelTransactionEdit.addEventListener(
-      "click",
-      cancelTransactionEditForm
-    );
-
-
-    // DELETE TRANSACTION
+    cancelTransactionEdit.addEventListener("click", cancelTransactionEditForm);
 
     async function deleteTransaction(id) {
-
-      const confirmed = confirm(
-        "Are you sure you want to delete this transaction?"
-      );
-
+      const confirmed = confirm("Are you sure you want to delete this transaction?");
       if (!confirmed) return;
 
-      const { data: { user } } =
-        await supabaseClient.auth.getUser();
-
+      const { data: { user } } = await supabaseClient.auth.getUser();
       if (!user) return;
 
-      let query = supabaseClient
-        .from("finance_transactions")
-        .delete()
-        .eq("id", id);
-
-      if (document.body.dataset.role === "observer") {
-        query = query.eq("user_id", user.id);
-      }
+      let query = supabaseClient.from("finance_transactions").delete().eq("id", id);
+      if (document.body.dataset.role === "observer") query = query.eq("user_id", user.id);
 
       const { error } = await query;
-
       if (error) {
         alert("Transaction delete failed: " + error.message);
         return;
       }
 
-      if (editingTransactionId === id) {
-        cancelTransactionEditForm();
-      }
-
+      if (editingTransactionId === id) cancelTransactionEditForm();
       await loadTransactions();
-
-      showSuccessNotification(
-        "আলহামদুলিল্লাহ!",
-        "লেনদেন সফলভাবে মুছে ফেলা হয়েছে।"
-      );
-
+      showSuccessNotification("আলহামদুলিল্লাহ!", "লেনদেন সফলভাবে মুছে ফেলা হয়েছে।");
     }
-    // TRANSACTION FILTERS
 
-    document.getElementById("allTransactions")
-      .addEventListener("click", function() {
+    document.getElementById("allTransactions").addEventListener("click", function() {
+      transactionFilter = "All";
+      displayTransactions();
+    });
+    document.getElementById("incomeTransactions").addEventListener("click", function() {
+      transactionFilter = "Income";
+      displayTransactions();
+    });
+    document.getElementById("expenseTransactions").addEventListener("click", function() {
+      transactionFilter = "Expense";
+      displayTransactions();
+    });
 
-        transactionFilter = "All";
-        displayTransactions();
-
-      });
-
-    document.getElementById("incomeTransactions")
-      .addEventListener("click", function() {
-
-        transactionFilter = "Income";
-        displayTransactions();
-
-      });
-
-    document.getElementById("expenseTransactions")
-      .addEventListener("click", function() {
-
-        transactionFilter = "Expense";
-        displayTransactions();
-
-      });
-
-  
-        
     // SUPABASE LEARNING RECORDS
-
     let learningRecords = [];
     let editingRecordId = null;
+    const learningForm = document.getElementById("learningForm");
 
-    const learningForm =
-      document.getElementById("learningForm");
-
-
-    // LOAD LEARNING RECORDS
-
-        async function loadLearningRecords() {
-
-      const { data, error } = await supabaseClient
-        .from("learning_records")
+    async function loadLearningRecords() {
+      const { data, error } = await supabaseClient.from("learning_records")
         .select("*")
         .order("learning_date", { ascending: false })
         .order("created_at", { ascending: false });
@@ -1621,17 +712,11 @@ amount.textContent =
       }
 
       learningRecords = data || [];
-
       displayLearningRecords();
-
       await updateOverview();
     }
 
-
-    // SAVE OR UPDATE LEARNING RECORDS
-
     learningForm.addEventListener("submit", async function(event) {
-
       event.preventDefault();
 
       if (document.body.dataset.role !== "admin") {
@@ -1647,24 +732,13 @@ amount.textContent =
       };
 
       let error;
-
       if (editingRecordId !== null) {
-
-        const result = await supabaseClient
-          .from("learning_records")
-          .update(payload)
-          .eq("id", editingRecordId);
-
+        const result = await supabaseClient.from("learning_records")
+          .update(payload).eq("id", editingRecordId);
         error = result.error;
-
       } else {
-
-        const result = await supabaseClient
-          .from("learning_records")
-          .insert(payload);
-
+        const result = await supabaseClient.from("learning_records").insert(payload);
         error = result.error;
-
       }
 
       if (error) {
@@ -1673,45 +747,25 @@ amount.textContent =
       }
 
       const wasEditing = editingRecordId !== null;
-
       cancelEdit();
-
-            await loadLearningRecords();
+      await loadLearningRecords();
 
       showSuccessNotification(
         "আলহামদুলিল্লাহ!",
-        wasEditing
-          ? "শেখার রেকর্ড সফলভাবে আপডেট হয়েছে।"
-          : "নতুন শেখার রেকর্ড সফলভাবে সংরক্ষণ হয়েছে।"
+        wasEditing ? "শেখার রেকর্ড সফলভাবে আপডেট হয়েছে।" : "নতুন শেখার রেকর্ড সফলভাবে সংরক্ষণ হয়েছে।"
       );
-
     });
 
-
-    // DISPLAY LEARNING RECORDS
-
     function displayLearningRecords() {
-
-      const container =
-        document.getElementById("learningRecords");
+      const container = document.getElementById("learningRecords");
 
       if (learningRecords.length === 0) {
-
-        container.innerHTML = `
-          <div class="content-card">
-            <p class="empty-message">
-              No learning records yet.
-            </p>
-          </div>
-        `;
-
+        container.innerHTML = '<div class="content-card"><p class="empty-message">No learning records yet.</p></div>';
         return;
       }
 
       container.innerHTML = "";
-
       learningRecords.forEach(record => {
-
         const card = document.createElement("div");
         card.className = "learning-record";
 
@@ -1731,16 +785,9 @@ amount.textContent =
         notes.className = "record-notes";
         notes.textContent = record.notes || "No notes added.";
 
-        card.appendChild(category);
-        card.appendChild(topic);
-        card.appendChild(date);
-        card.appendChild(notes);
-
-
-        // ADMIN-ONLY EDIT AND DELETE
+        card.append(category, topic, date, notes);
 
         if (document.body.dataset.role === "admin") {
-
           const actions = document.createElement("div");
           actions.className = "record-actions";
 
@@ -1748,369 +795,185 @@ amount.textContent =
           editButton.type = "button";
           editButton.className = "edit-button";
           editButton.textContent = "Edit";
-
-          editButton.addEventListener("click", function() {
-            editLearningRecord(record.id);
-          });
+          editButton.addEventListener("click", () => editLearningRecord(record.id));
 
           const deleteButton = document.createElement("button");
           deleteButton.type = "button";
           deleteButton.className = "delete-button";
           deleteButton.textContent = "Delete";
+          deleteButton.addEventListener("click", () => deleteLearningRecord(record.id));
 
-          deleteButton.addEventListener("click", function() {
-            deleteLearningRecord(record.id);
-          });
-
-          actions.appendChild(editButton);
-          actions.appendChild(deleteButton);
-
+          actions.append(editButton, deleteButton);
           card.appendChild(actions);
         }
 
         container.appendChild(card);
-
       });
-
     }
 
-// OVERVIEW UPDATE FUNCTION
+    // OVERVIEW UPDATE
+    async function updateOverview() {
+      const learningCount = document.getElementById("overviewLearningSessions");
+      const totalIncomeElement = document.getElementById("overviewTotalIncome");
+      const totalExpenseElement = document.getElementById("overviewTotalExpense");
+      const nahidaBalanceElement = document.getElementById("overviewNahidaBalance");
+      const nahidaExpenseElement = document.getElementById("overviewNahidaExpense");
+      const recentLearning = document.getElementById("overviewRecentLearning");
+      const recentTransactions = document.getElementById("overviewRecentTransactions");
 
-async function updateOverview() {
+      learningCount.textContent = learningRecords.length;
 
-  const learningCount =
-    document.getElementById("overviewLearningSessions");
+      const { data: { user } } = await supabaseClient.auth.getUser();
+      if (!user) return;
 
-  const totalIncomeElement =
-    document.getElementById("overviewTotalIncome");
+      const isAdmin = document.body.dataset.role === "admin";
+      let nahidaUserId = user.id;
 
-  const totalExpenseElement =
-    document.getElementById("overviewTotalExpense");
+      if (isAdmin) {
+        const { data: nahidaRole, error } = await supabaseClient.from("user_roles")
+          .select("user_id").eq("role", "observer").maybeSingle();
+        if (error) console.error("Nahida user lookup error:", error);
+        nahidaUserId = nahidaRole?.user_id || null;
+      }
 
-  const nahidaBalanceElement =
-    document.getElementById("overviewNahidaBalance");
+      const ownTransactions = transactions.filter(record => record.user_id === user.id);
+      const nahidaTransactions = transactions.filter(record => record.user_id === nahidaUserId);
 
-  const nahidaExpenseElement =
-    document.getElementById("overviewNahidaExpense");
+      function calculateTotal(records, type) {
+        return records.filter(record => record.transaction_type === type)
+          .reduce((total, record) => total + Number(record.amount), 0);
+      }
 
-  const recentLearning =
-    document.getElementById("overviewRecentLearning");
+      const ownIncome = calculateTotal(ownTransactions, "Income");
+      const ownExpense = calculateTotal(ownTransactions, "Expense");
+      const nahidaIncome = calculateTotal(nahidaTransactions, "Income");
+      const nahidaExpense = calculateTotal(nahidaTransactions, "Expense");
 
-  const recentTransactions =
-    document.getElementById("overviewRecentTransactions");
+      totalIncomeElement.textContent = ownIncome.toFixed(2) + (isAdmin ? " QAR" : " BDT");
+      totalExpenseElement.textContent = ownExpense.toFixed(2) + (isAdmin ? " QAR" : " BDT");
+      nahidaBalanceElement.textContent = (nahidaIncome - nahidaExpense).toFixed(2) + " BDT";
+      nahidaExpenseElement.textContent = nahidaExpense.toFixed(2) + " BDT";
 
+      recentLearning.innerHTML = "";
+      const latestLearning = learningRecords.slice(0, 5);
 
-  // LEARNING SUMMARY
+      if (latestLearning.length === 0) {
+        recentLearning.innerHTML = '<p class="empty-message">No learning records yet.</p>';
+      } else {
+        latestLearning.forEach(record => {
+          const card = document.createElement("div");
+          card.className = "learning-record";
 
-  learningCount.textContent = learningRecords.length;
+          const category = document.createElement("p");
+          category.className = "record-category";
+          category.textContent = record.category;
 
+          const topic = document.createElement("p");
+          topic.className = "record-topic";
+          topic.textContent = record.topic;
 
-  // CURRENT USER
+          const date = document.createElement("p");
+          date.className = "record-date";
+          date.textContent = record.learning_date;
 
-  const { data: { user } } =
-    await supabaseClient.auth.getUser();
+          const notes = document.createElement("p");
+          notes.className = "record-notes";
+          notes.textContent = record.notes || "No notes added.";
 
-  if (!user) return;
+          card.append(category, topic, date, notes);
+          recentLearning.appendChild(card);
+        });
+      }
 
+      recentTransactions.innerHTML = "";
+      const latestTransactions = transactions.slice(0, 5);
 
-  const isAdmin =
-    document.body.dataset.role === "admin";
+      if (latestTransactions.length === 0) {
+        recentTransactions.innerHTML = '<p class="empty-message">No transactions yet.</p>';
+      } else {
+        latestTransactions.forEach(record => {
+          const card = document.createElement("div");
+          card.className = "learning-record";
 
+          const category = document.createElement("p");
+          category.className = "record-category";
+          category.textContent = record.transaction_type + " • " + record.category;
 
-  // IDENTIFY NAHIDA
+          const amount = document.createElement("p");
+          amount.className = "record-topic";
+          const currency = record.user_id === currentUserId && document.body.dataset.role === "admin" ? "QAR" : "BDT";
+          amount.textContent = Number(record.amount).toFixed(2) + " " + currency;
 
-  let nahidaUserId = user.id;
+          const date = document.createElement("p");
+          date.className = "record-date";
+          date.textContent = record.transaction_date;
 
-  if (isAdmin) {
+          const notes = document.createElement("p");
+          notes.className = "record-notes";
+          notes.textContent = record.notes || "No notes added.";
 
-    const { data: nahidaRole, error } =
-      await supabaseClient
-        .from("user_roles")
-        .select("user_id")
-        .eq("role", "observer")
-        .maybeSingle();
-
-    if (error) {
-      console.error("Nahida user lookup error:", error);
+          card.append(category, amount, date, notes);
+          recentTransactions.appendChild(card);
+        });
+      }
     }
-
-    nahidaUserId = nahidaRole?.user_id || null;
-
-  }
-
-
-  // SEPARATE FINANCE RECORDS
-
-  const ownTransactions = transactions.filter(
-    record => record.user_id === user.id
-  );
-
-  const nahidaTransactions = transactions.filter(
-    record => record.user_id === nahidaUserId
-  );
-
-
-  // FINANCE CALCULATION
-
-  function calculateTotal(records, type) {
-
-    return records
-      .filter(record => record.transaction_type === type)
-      .reduce((total, record) => {
-        return total + Number(record.amount);
-      }, 0);
-
-  }
-
-
-  const ownIncome =
-    calculateTotal(ownTransactions, "Income");
-
-  const ownExpense =
-    calculateTotal(ownTransactions, "Expense");
-
-  const nahidaIncome =
-    calculateTotal(nahidaTransactions, "Income");
-
-  const nahidaExpense =
-    calculateTotal(nahidaTransactions, "Expense");
-
-
-  // UPDATE SUMMARY CARDS
-
-  totalIncomeElement.textContent =
-  ownIncome.toFixed(2) + (isAdmin ? " QAR" : " BDT");
-
-totalExpenseElement.textContent =
-  ownExpense.toFixed(2) + (isAdmin ? " QAR" : " BDT");
-
-nahidaBalanceElement.textContent =
-  (nahidaIncome - nahidaExpense).toFixed(2) + " BDT";
-
-nahidaExpenseElement.textContent =
-  nahidaExpense.toFixed(2) + " BDT";
-
-  // RECENT LEARNING
-
-  recentLearning.innerHTML = "";
-
-  const latestLearning = learningRecords.slice(0, 5);
-
-  if (latestLearning.length === 0) {
-
-    recentLearning.innerHTML =
-      '<p class="empty-message">No learning records yet.</p>';
-
-  } else {
-
-    latestLearning.forEach(record => {
-
-      const card = document.createElement("div");
-      card.className = "learning-record";
-
-      const category = document.createElement("p");
-      category.className = "record-category";
-      category.textContent = record.category;
-
-      const topic = document.createElement("p");
-      topic.className = "record-topic";
-      topic.textContent = record.topic;
-
-      const date = document.createElement("p");
-      date.className = "record-date";
-      date.textContent = record.learning_date;
-
-      const notes = document.createElement("p");
-      notes.className = "record-notes";
-      notes.textContent = record.notes || "No notes added.";
-
-      card.appendChild(category);
-      card.appendChild(topic);
-      card.appendChild(date);
-      card.appendChild(notes);
-
-      recentLearning.appendChild(card);
-
-    });
-
-  }
-
-
-  // RECENT TRANSACTIONS
-
-  recentTransactions.innerHTML = "";
-
-  const latestTransactions = transactions.slice(0, 5);
-
-  if (latestTransactions.length === 0) {
-
-    recentTransactions.innerHTML =
-      '<p class="empty-message">No transactions yet.</p>';
-
-  } else {
-
-    latestTransactions.forEach(record => {
-
-      const card = document.createElement("div");
-      card.className = "learning-record";
-
-      const category = document.createElement("p");
-      category.className = "record-category";
-      category.textContent =
-        record.transaction_type + " • " + record.category;
-
-      const amount = document.createElement("p");
-amount.className = "record-topic";
-
-const currency =
-  record.user_id === currentUserId &&
-  document.body.dataset.role === "admin"
-    ? "QAR"
-    : "BDT";
-
-amount.textContent =
-  Number(record.amount).toFixed(2) + " " + currency;
-
-      const date = document.createElement("p");
-      date.className = "record-date";
-      date.textContent = record.transaction_date;
-
-      const notes = document.createElement("p");
-      notes.className = "record-notes";
-      notes.textContent = record.notes || "No notes added.";
-
-      card.appendChild(category);
-      card.appendChild(amount);
-      card.appendChild(date);
-      card.appendChild(notes);
-
-      recentTransactions.appendChild(card);
-
-    });
-
-  }
-
-}
-
 
     // EDIT LEARNING RECORD
-
     function editLearningRecord(id) {
-
       if (document.body.dataset.role !== "admin") return;
 
-      const record = learningRecords.find(
-        item => item.id === id
-      );
-
+      const record = learningRecords.find(item => item.id === id);
       if (!record) return;
 
       editingRecordId = id;
-
-      document.getElementById("skillCategory").value =
-        record.category;
-
-      document.getElementById("learningTopic").value =
-        record.topic;
-
-      document.getElementById("learningDate").value =
-        record.learning_date;
-
-      document.getElementById("learningNotes").value =
-        record.notes || "";
-
-      document.getElementById("formTitle").textContent =
-        "Edit Learning Record";
-
-      document.getElementById("submitButton").textContent =
-        "Update Learning Record";
-
-      document.getElementById("cancelEditButton").style.display =
-        "block";
-
-      document.getElementById("learningForm")
-        .scrollIntoView({ behavior: "smooth" });
-
+      document.getElementById("skillCategory").value = record.category;
+      document.getElementById("learningTopic").value = record.topic;
+      document.getElementById("learningDate").value = record.learning_date;
+      document.getElementById("learningNotes").value = record.notes || "";
+      document.getElementById("formTitle").textContent = "Edit Learning Record";
+      document.getElementById("submitButton").textContent = "Update Learning Record";
+      document.getElementById("cancelEditButton").style.display = "block";
+      learningForm.scrollIntoView({ behavior: "smooth" });
     }
-
-
-    // CANCEL EDIT
 
     function cancelEdit() {
-
       editingRecordId = null;
-
       learningForm.reset();
-
-      document.getElementById("formTitle").textContent =
-        "Add Learning Record";
-
-      document.getElementById("submitButton").textContent =
-        "Save Learning Record";
-
-      document.getElementById("cancelEditButton").style.display =
-        "none";
-
+      document.getElementById("formTitle").textContent = "Add Learning Record";
+      document.getElementById("submitButton").textContent = "Save Learning Record";
+      document.getElementById("cancelEditButton").style.display = "none";
     }
 
-
-    // DELETE LEARNING RECORD
-
     async function deleteLearningRecord(id) {
-
       if (document.body.dataset.role !== "admin") return;
 
-      const confirmed = confirm(
-        "Are you sure you want to delete this record?"
-      );
-
+      const confirmed = confirm("Are you sure you want to delete this record?");
       if (!confirmed) return;
 
-      const { error } = await supabaseClient
-        .from("learning_records")
-        .delete()
-        .eq("id", id);
-
+      const { error } = await supabaseClient.from("learning_records").delete().eq("id", id);
       if (error) {
         alert("Learning delete failed: " + error.message);
         return;
       }
 
-      if (editingRecordId === id) {
-        cancelEdit();
-      }
-
-            await loadLearningRecords();
-
-      showSuccessNotification(
-        "আলহামদুলিল্লাহ!",
-        "শেখার রেকর্ড সফলভাবে মুছে ফেলা হয়েছে।"
-      );
-
+      if (editingRecordId === id) cancelEdit();
+      await loadLearningRecords();
+      showSuccessNotification("আলহামদুলিল্লাহ!", "শেখার রেকর্ড সফলভাবে মুছে ফেলা হয়েছে।");
     }
 
-
-        
-
-    
     // AUTHENTICATION & ROLE PROTECTION
-
     async function checkAuthentication() {
-
-      const { data: { session }, error } =
-        await supabaseClient.auth.getSession();
+      const { data: { session }, error } = await supabaseClient.auth.getSession();
 
       if (error || !session) {
         window.location.replace("login.html");
         return;
       }
-currentUserId = session.user.id;
-      const { data: roleData, error: roleError } =
-        await supabaseClient
-          .from("user_roles")
-          .select("role")
-          .eq("user_id", session.user.id)
-          .single();
+
+      currentUserId = session.user.id;
+
+      const { data: roleData, error: roleError } = await supabaseClient.from("user_roles")
+        .select("role").eq("user_id", session.user.id).single();
 
       if (roleError || !roleData) {
         await supabaseClient.auth.signOut();
@@ -2118,60 +981,49 @@ currentUserId = session.user.id;
         return;
       }
 
-      if (
-        roleData.role !== "admin" &&
-        roleData.role !== "observer"
-      ) {
+      if (roleData.role !== "admin" && roleData.role !== "observer") {
         await supabaseClient.auth.signOut();
         window.location.replace("https://hasanalamin7.github.io/#home");
         return;
       }
-            // OBSERVER PERMISSIONS
 
-      if (roleData.role === "observer") {
-        document.getElementById("learningFormCard")
-          .style.display = "none";
-      }
-            document.body.dataset.role = roleData.role;
-document.getElementById("transactionAmountLabel").textContent =
-  roleData.role === "admin"
-    ? "Amount (QAR)"
-    : "Amount (BDT)";
-await loadLearningRecords();
-await loadTransactions();
-const welcomeMessage =
-        document.getElementById("welcomeMessage");
+      document.body.dataset.role = roleData.role;
+
+      // Load this account's own saved theme before showing the dashboard.
+      await loadAccountTheme(session.user);
+
+      document.getElementById("transactionAmountLabel").textContent =
+        roleData.role === "admin" ? "Amount (QAR)" : "Amount (BDT)";
+
+      // The Learning form remains visible to the observer; saving is admin-only.
+      await loadLearningRecords();
+      await loadTransactions();
+
+      const welcomeMessage = document.getElementById("welcomeMessage");
       if (roleData.role === "admin") {
-        welcomeMessage.innerHTML =
-          'Welcome back, <span>Hasan Alamin!</span>';
+        welcomeMessage.innerHTML = 'Welcome back, <span>Hasan Alamin!</span>';
       } else {
-        welcomeMessage.innerHTML =
-          'Welcome, <span>Nahida Sultana!</span>';
+        welcomeMessage.innerHTML = 'Welcome, <span>Nahida Sultana!</span>';
       }
+
       document.getElementById("loadingScreen").style.display = "none";
       document.getElementById("dashboardContent").style.display = "block";
+      showPage("overview");
     }
 
     checkAuthentication();
-      
-// LOGOUT SYSTEM
 
-document.getElementById("logoutButton")
-  .addEventListener("click", async function() {
+    // LOGOUT
+    document.getElementById("logoutButton").addEventListener("click", async function() {
+      const { error } = await supabaseClient.auth.signOut();
 
-    const { error } =
-      await supabaseClient.auth.signOut();
+      if (error) {
+        alert("Logout failed: " + error.message);
+        return;
+      }
 
-    if (error) {
-      alert("Logout failed: " + error.message);
-      return;
-    }
-
-    window.location.replace("https://hasanalamin7.github.io/#home");
-
-  });
-
+      window.location.replace("https://hasanalamin7.github.io/#home");
+    });
   </script>
-
 </body>
 </html>

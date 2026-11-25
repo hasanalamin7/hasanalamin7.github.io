@@ -6,14 +6,98 @@
   <title>HASAN ALAMIN — Personal Management Dashboard</title>
 
   <style>
-    :root {
-      --background: #101B19;
-      --green: #49A982;
-      --gold: #D6B978;
-      --card: #1C302A;
-      --white: #FFFFFF;
-      --muted: #AAB8B1;
-    }
+    
+
+:root {
+  --background: #101B19;
+  --green: #49A982;
+  --gold: #D6B978;
+  --card: #1C302A;
+  --white: #FFFFFF;
+  --muted: #AAB8B1;
+  --border: #2B443A;
+  --input-border: #40584D;
+  --menu-background: #1C302A;
+  --toast-background: #142C24;
+  --toast-text: #D5E9DE;
+  --danger: #D66B6B;
+  --danger-text: #E18A8A;
+}
+
+/* LAVENDER & PURPLE */
+body[data-theme="lavender-purple"] {
+  --background: #211A35;
+  --green: #A78BFA;
+  --gold: #D8B4FE;
+  --card: #30264A;
+  --white: #FFFFFF;
+  --muted: #C4B8D9;
+  --border: #51416F;
+  --input-border: #655583;
+  --menu-background: #30264A;
+  --toast-background: #30264A;
+  --toast-text: #E9DDFF;
+}
+
+/* OCEAN BLUE */
+body[data-theme="ocean-blue"] {
+  --background: #102235;
+  --green: #38BDF8;
+  --gold: #67E8F9;
+  --card: #1A344C;
+  --white: #FFFFFF;
+  --muted: #B0C6D8;
+  --border: #31536D;
+  --input-border: #456A83;
+  --menu-background: #1A344C;
+  --toast-background: #17364C;
+  --toast-text: #D8F5FF;
+}
+
+/* ROSE PINK */
+body[data-theme="rose-pink"] {
+  --background: #301B27;
+  --green: #F472B6;
+  --gold: #FDA4AF;
+  --card: #452638;
+  --white: #FFFFFF;
+  --muted: #D7B8C7;
+  --border: #674052;
+  --input-border: #80536A;
+  --menu-background: #452638;
+  --toast-background: #452638;
+  --toast-text: #FFE1ED;
+}
+
+/* BLACK & GOLD */
+body[data-theme="black-gold"] {
+  --background: #111111;
+  --green: #D6B978;
+  --gold: #F0D99A;
+  --card: #222222;
+  --white: #FFFFFF;
+  --muted: #B8B8B8;
+  --border: #45403A;
+  --input-border: #625A4A;
+  --menu-background: #222222;
+  --toast-background: #242018;
+  --toast-text: #F3E8CB;
+}
+
+/* BLACK & BLUE */
+body[data-theme="black-blue"] {
+  --background: #101820;
+  --green: #38BDF8;
+  --gold: #7DD3FC;
+  --card: #1B2838;
+  --white: #FFFFFF;
+  --muted: #B0C0D0;
+  --border: #34495E;
+  --input-border: #456078;
+  --menu-background: #1B2838;
+  --toast-background: #172A3A;
+  --toast-text: #D9F2FF;
+}
 
     * {
       margin: 0;
@@ -36,7 +120,7 @@
     }
 
     header {
-      border-bottom: 1px solid #30443C;
+  border-bottom: 1px solid var(--border);
       padding-bottom: 20px;
       margin-bottom: 28px;
     }
@@ -81,7 +165,7 @@
       background: var(--card);
       border-radius: 12px;
       padding: 19px 15px;
-      border: 1px solid #2B443A;
+      border: 1px solid var(--border);
     }
 
     .summary-label {
@@ -98,7 +182,7 @@
 
     .content-card {
       background: var(--card);
-      border: 1px solid #2B443A;
+      border: 1px solid var(--border);
       border-radius: 12px;
       padding: 19px;
       margin-bottom: 18px;

@@ -71,9 +71,21 @@
     }
     .container { width:100%; max-width:1100px; margin:auto; padding:24px 18px; }
     header { position:relative; border-bottom:1px solid var(--border); padding-bottom:20px; margin-bottom:28px; }
-    .header-row { display:flex; align-items:center; justify-content:space-between; }
+    .header-row { display:flex; align-items:center; justify-content:space-between; gap:10px; }
     .brand { color:var(--gold); font-size:23px; font-weight:bold; letter-spacing:1px; animation:brandGlow 3s ease-in-out infinite; }
     .subtitle { color:var(--muted); font-size:13px; margin-top:7px; }
+    .header-actions { display:flex; align-items:center; gap:9px; flex-shrink:0; }
+    .header-theme-switcher { display:flex; align-items:center; gap:3px; }
+    .theme-dot {
+      width:14px; height:14px; padding:0; flex:0 0 14px;
+      display:grid; place-items:center; border:1px solid rgba(255,255,255,.35);
+      border-radius:50%; background:transparent; cursor:pointer;
+      transition:outline .15s ease,transform .15s ease,opacity .15s ease;
+    }
+    .theme-dot-inner { display:block; width:100%; height:100%; border-radius:50%; }
+    .theme-dot.active { outline:1.5px solid var(--gold); outline-offset:2px; }
+    .theme-dot:active { transform:scale(.88); }
+    .theme-dot:disabled { opacity:.55; cursor:wait; }
     .welcome { color:var(--white); font-size:19px; margin-bottom:24px; }
     .welcome span { color:var(--green); }
     .section-title { font-size:17px; color:var(--gold); margin-bottom:15px; }
@@ -106,7 +118,7 @@
     .edit-button,.delete-button { flex:1; padding:9px 13px; border-radius:6px; background:transparent; cursor:pointer; font-size:13px; }
     .edit-button { border:1px solid var(--green); color:var(--green); }
     .delete-button { border:1px solid var(--danger); color:var(--danger-text); }
-    #menuToggle { background:transparent; border:1px solid var(--gold); border-radius:8px; padding:9px; cursor:pointer; }
+    #menuToggle { background:transparent; border:1px solid var(--gold); border-radius:8px; padding:9px; cursor:pointer; flex-shrink:0; }
     #menuToggle span { display:block; width:21px; height:2px; margin:5px; background:var(--gold); }
     .side-menu {
       position:fixed; top:47%; left:0; width:250px; padding:12px;
@@ -137,20 +149,6 @@
     .success-toast-icon { color:var(--green); font-size:27px; flex-shrink:0; }
     .success-toast-title { color:var(--gold); font-size:15px; font-weight:bold; margin-bottom:5px; }
     .success-toast-message { color:var(--toast-text); font-size:13px; line-height:1.5; }
-    .theme-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; }
-    .theme-option {
-      display:flex; align-items:center; gap:10px; width:100%; padding:12px;
-      border:1px solid var(--border); border-radius:10px; background:var(--background);
-      color:var(--white); text-align:left; cursor:pointer;
-      transition:border-color .2s ease,transform .2s ease;
-    }
-    .theme-option:active { transform:scale(.98); }
-    .theme-option.active { border:2px solid var(--green); }
-    .theme-option:disabled { opacity:.6; cursor:wait; }
-    .theme-swatch { display:flex; flex-shrink:0; width:34px; height:34px; overflow:hidden; border-radius:50%; border:1px solid rgba(255,255,255,.25); }
-    .theme-swatch span { flex:1; }
-    .theme-name { font-size:13px; line-height:1.4; }
-    .theme-status { color:var(--muted); font-size:12px; margin-top:12px; line-height:1.5; }
     .summary-card,.content-card,.form-card,.learning-record { transition:transform .3s ease,box-shadow .3s ease,border-color .3s ease; }
     @media (hover:hover) {
       .summary-card:hover,.content-card:hover,.form-card:hover,.learning-record:hover {
@@ -163,9 +161,16 @@
       0%,100% { text-shadow:0 0 2px rgba(214,185,120,.15); }
       50% { text-shadow:0 0 8px rgba(214,185,120,.35); }
     }
+    @media (max-width:380px) {
+      .container { padding-left:13px; padding-right:13px; }
+      .brand { font-size:19px; letter-spacing:.6px; }
+      .subtitle { font-size:11px; }
+      .header-actions { gap:7px; }
+      .header-theme-switcher { gap:2px; }
+      .theme-dot { width:12px; height:12px; flex-basis:12px; }
+    }
     @media (min-width:700px) {
       .summary-grid { grid-template-columns:repeat(4,1fr); }
-      .theme-grid { grid-template-columns:repeat(3,minmax(0,1fr)); }
     }
   </style>
 </head>
@@ -192,9 +197,19 @@
           <div class="brand">HASAN ALAMIN</div>
           <div class="subtitle">Personal Management Dashboard</div>
         </div>
-        <button type="button" id="menuToggle" aria-label="Open menu" aria-expanded="false">
-          <span></span><span></span><span></span>
-        </button>
+        <div class="header-actions">
+          <div class="header-theme-switcher" id="headerThemeSwitcher" role="group" aria-label="Dashboard color themes">
+            <button type="button" class="theme-dot" data-theme-choice="dark-green-gold" aria-label="Dark Green and Gold" title="Dark Green &amp; Gold"><span class="theme-dot-inner" style="background:linear-gradient(135deg,#101B19 0 38%,#49A982 38% 68%,#D6B978 68% 100%)"></span></button>
+            <button type="button" class="theme-dot" data-theme-choice="lavender-purple" aria-label="Lavender and Purple" title="Lavender &amp; Purple"><span class="theme-dot-inner" style="background:linear-gradient(135deg,#211A35 0 38%,#A78BFA 38% 68%,#D8B4FE 68% 100%)"></span></button>
+            <button type="button" class="theme-dot" data-theme-choice="ocean-blue" aria-label="Ocean Blue" title="Ocean Blue"><span class="theme-dot-inner" style="background:linear-gradient(135deg,#102235 0 38%,#38BDF8 38% 68%,#67E8F9 68% 100%)"></span></button>
+            <button type="button" class="theme-dot" data-theme-choice="rose-pink" aria-label="Rose Pink" title="Rose Pink"><span class="theme-dot-inner" style="background:linear-gradient(135deg,#301B27 0 38%,#F472B6 38% 68%,#FDA4AF 68% 100%)"></span></button>
+            <button type="button" class="theme-dot" data-theme-choice="black-gold" aria-label="Black and Gold" title="Black &amp; Gold"><span class="theme-dot-inner" style="background:linear-gradient(135deg,#111111 0 38%,#D6B978 38% 68%,#F0D99A 68% 100%)"></span></button>
+            <button type="button" class="theme-dot" data-theme-choice="black-blue" aria-label="Black and Blue" title="Black &amp; Blue"><span class="theme-dot-inner" style="background:linear-gradient(135deg,#101820 0 38%,#38BDF8 38% 68%,#7DD3FC 68% 100%)"></span></button>
+          </div>
+          <button type="button" id="menuToggle" aria-label="Open menu" aria-expanded="false">
+            <span></span><span></span><span></span>
+          </button>
+        </div>
       </div>
     </header>
 
@@ -209,38 +224,6 @@
         <div class="summary-card"><p class="summary-label">Total Expense</p><p class="summary-value" id="overviewTotalExpense">0.00</p></div>
         <div class="summary-card"><p class="summary-label">Nahida Balance</p><p class="summary-value" id="overviewNahidaBalance">0.00</p></div>
         <div class="summary-card"><p class="summary-label">Nahida Expense</p><p class="summary-value" id="overviewNahidaExpense">0.00</p></div>
-      </div>
-
-      <h3 class="section-title">Appearance &amp; Themes</h3>
-      <div class="content-card">
-        <p class="summary-label">Choose your preferred dashboard theme</p>
-        <div class="theme-grid" id="themeGrid">
-          <button type="button" class="theme-option" data-theme-choice="dark-green-gold">
-            <span class="theme-swatch"><span style="background:#101B19"></span><span style="background:#49A982"></span><span style="background:#D6B978"></span></span>
-            <span class="theme-name">Dark Green &amp; Gold</span>
-          </button>
-          <button type="button" class="theme-option" data-theme-choice="lavender-purple">
-            <span class="theme-swatch"><span style="background:#211A35"></span><span style="background:#A78BFA"></span><span style="background:#D8B4FE"></span></span>
-            <span class="theme-name">Lavender &amp; Purple</span>
-          </button>
-          <button type="button" class="theme-option" data-theme-choice="ocean-blue">
-            <span class="theme-swatch"><span style="background:#102235"></span><span style="background:#38BDF8"></span><span style="background:#67E8F9"></span></span>
-            <span class="theme-name">Ocean Blue</span>
-          </button>
-          <button type="button" class="theme-option" data-theme-choice="rose-pink">
-            <span class="theme-swatch"><span style="background:#301B27"></span><span style="background:#F472B6"></span><span style="background:#FDA4AF"></span></span>
-            <span class="theme-name">Rose Pink</span>
-          </button>
-          <button type="button" class="theme-option" data-theme-choice="black-gold">
-            <span class="theme-swatch"><span style="background:#111111"></span><span style="background:#D6B978"></span><span style="background:#F0D99A"></span></span>
-            <span class="theme-name">Black &amp; Gold</span>
-          </button>
-          <button type="button" class="theme-option" data-theme-choice="black-blue">
-            <span class="theme-swatch"><span style="background:#101820"></span><span style="background:#38BDF8"></span><span style="background:#7DD3FC"></span></span>
-            <span class="theme-name">Black &amp; Blue</span>
-          </button>
-        </div>
-        <p class="theme-status" id="themeStatus">Your selected theme will be saved to your account.</p>
       </div>
 
       <h3 class="section-title">Recent Learning</h3>
@@ -376,18 +359,13 @@
     async function loadAccountTheme(user) {
       const savedTheme = user?.user_metadata?.dashboard_theme;
       applyTheme(savedTheme || "dark-green-gold");
-      document.getElementById("themeStatus").textContent =
-        "Your theme preference is saved separately to your account.";
     }
 
-    async function saveAccountTheme(themeName, clickedButton) {
+    async function saveAccountTheme(themeName) {
       if (!AVAILABLE_THEMES.includes(themeName)) return;
 
-      const status = document.getElementById("themeStatus");
-      const buttons = document.querySelectorAll("[data-theme-choice]");
-
+      const buttons = document.querySelectorAll("#headerThemeSwitcher [data-theme-choice]");
       buttons.forEach(button => button.disabled = true);
-      status.textContent = "Saving your theme...";
 
       try {
         const { data: { user }, error: userError } =
@@ -409,19 +387,17 @@
         if (error) throw error;
 
         applyTheme(themeName);
-        status.textContent = "Theme saved successfully to your account.";
       } catch (error) {
-        status.textContent = "Could not save theme: " + error.message;
         alert("Theme save failed: " + error.message);
       } finally {
         buttons.forEach(button => button.disabled = false);
       }
     }
 
-    document.getElementById("themeGrid").addEventListener("click", function(event) {
+    document.getElementById("headerThemeSwitcher").addEventListener("click", function(event) {
       const button = event.target.closest("[data-theme-choice]");
       if (!button || button.disabled) return;
-      saveAccountTheme(button.dataset.themeChoice, button);
+      saveAccountTheme(button.dataset.themeChoice);
     });
 
     // PREMIUM SUCCESS NOTIFICATION

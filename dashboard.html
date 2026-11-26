@@ -93,6 +93,9 @@
     .summary-card { background:var(--card); border-radius:12px; padding:19px 15px; border:1px solid var(--border); }
     .summary-label { color:var(--muted); font-size:13px; margin-bottom:13px; }
     .summary-value { color:var(--green); font-size:25px; font-weight:bold; }
+    /* Total Expense: label and amount are red in every theme. */
+    .expense-summary .summary-label,
+    .expense-summary .summary-value { color:#D66B6B !important; }
     .content-card { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:19px; margin-bottom:18px; min-height:100px; }
     .empty-message { color:var(--muted); font-size:13px; }
     .page { display:none; }
@@ -170,7 +173,7 @@
       .theme-dot { width:12px; height:12px; flex-basis:12px; }
     }
     @media (min-width:700px) {
-      .summary-grid { grid-template-columns:repeat(4,1fr); }
+      .summary-grid { grid-template-columns:repeat(3,1fr); }
     }
   </style>
 </head>
@@ -221,9 +224,8 @@
         <div class="summary-card"><p class="summary-label">Learning Sessions</p><p class="summary-value" id="overviewLearningSessions">0</p></div>
         <div class="summary-card"><p class="summary-label">Study Time</p><p class="summary-value" id="overviewStudyTime">0h 0m</p></div>
         <div class="summary-card"><p class="summary-label">Total Income</p><p class="summary-value" id="overviewTotalIncome">0.00</p></div>
-        <div class="summary-card"><p class="summary-label">Total Expense</p><p class="summary-value" id="overviewTotalExpense">0.00</p></div>
-        <div class="summary-card"><p class="summary-label">Nahida Balance</p><p class="summary-value" id="overviewNahidaBalance">0.00</p></div>
-        <div class="summary-card"><p class="summary-label">Nahida Expense</p><p class="summary-value" id="overviewNahidaExpense">0.00</p></div>
+        <div class="summary-card expense-summary"><p class="summary-label">Total Expense</p><p class="summary-value" id="overviewTotalExpense">0.00</p></div>
+        <div class="summary-card"><p class="summary-label">Current Balance</p><p class="summary-value" id="overviewCurrentBalance">0.00</p></div>
       </div>
 
       <h3 class="section-title">Recent Learning</h3>
@@ -473,7 +475,7 @@
       });
     });
 
-    // SUPABASE FINANCE TRANSACTIONS
+    // SUPABASE FINANCE TRANSACTIONS — every account loads only its own records.
     let transactions = [];
     let editingTransactionId = null;
     let transactionFilter = "All";
@@ -486,14 +488,11 @@
       const { data: { user } } = await supabaseClient.auth.getUser();
       if (!user) return;
 
-      let query = supabaseClient.from("finance_transactions")
-        .select("*").order("transaction_date", { ascending: false });
+      const { data, error } = await supabaseClient.from("finance_transactions")
+        .select("*")
+        .eq("user_id", user.id)
+        .order("transaction_date", { ascending: false });
 
-      if (document.body.dataset.role === "observer") {
-        query = query.eq("user_id", user.id);
-      }
-
-      const { data, error } = await query;
       if (error) {
         console.error("Finance load error:", error);
         alert("Could not load Finance Records: " + error.message);
@@ -522,13 +521,10 @@
 
       let error;
       if (editingTransactionId !== null) {
-        let query = supabaseClient.from("finance_transactions")
-          .update(payload).eq("id", editingTransactionId);
-
-        if (document.body.dataset.role === "observer") {
-          query = query.eq("user_id", user.id);
-        }
-        const result = await query;
+        const result = await supabaseClient.from("finance_transactions")
+          .update(payload)
+          .eq("id", editingTransactionId)
+          .eq("user_id", user.id);
         error = result.error;
       } else {
         const result = await supabaseClient.from("finance_transactions").insert(payload);
@@ -573,7 +569,7 @@
 
         const amount = document.createElement("p");
         amount.className = "record-topic";
-        const currency = record.user_id === currentUserId && document.body.dataset.role === "admin" ? "QAR" : "BDT";
+        const currency = document.body.dataset.role === "admin" ? "QAR" : "BDT";
         amount.textContent = Number(record.amount).toFixed(2) + " " + currency;
 
         const date = document.createElement("p");
@@ -609,7 +605,7 @@
 
     function editTransaction(id) {
       const record = transactions.find(item => item.id === id);
-      if (!record) return;
+      if (!record || record.user_id !== currentUserId) return;
 
       editingTransactionId = id;
       transactionType.value = record.transaction_type;
@@ -637,16 +633,20 @@
     cancelTransactionEdit.addEventListener("click", cancelTransactionEditForm);
 
     async function deleteTransaction(id) {
+      const record = transactions.find(item => item.id === id);
+      if (!record || record.user_id !== currentUserId) return;
+
       const confirmed = confirm("Are you sure you want to delete this transaction?");
       if (!confirmed) return;
 
       const { data: { user } } = await supabaseClient.auth.getUser();
-      if (!user) return;
+      if (!user || user.id !== record.user_id) return;
 
-      let query = supabaseClient.from("finance_transactions").delete().eq("id", id);
-      if (document.body.dataset.role === "observer") query = query.eq("user_id", user.id);
+      const { error } = await supabaseClient.from("finance_transactions")
+        .delete()
+        .eq("id", id)
+        .eq("user_id", user.id);
 
-      const { error } = await query;
       if (error) {
         alert("Transaction delete failed: " + error.message);
         return;
@@ -787,13 +787,12 @@
       });
     }
 
-    // OVERVIEW UPDATE
+    // OVERVIEW UPDATE — display only the signed-in account's own financial totals.
     async function updateOverview() {
       const learningCount = document.getElementById("overviewLearningSessions");
       const totalIncomeElement = document.getElementById("overviewTotalIncome");
       const totalExpenseElement = document.getElementById("overviewTotalExpense");
-      const nahidaBalanceElement = document.getElementById("overviewNahidaBalance");
-      const nahidaExpenseElement = document.getElementById("overviewNahidaExpense");
+      const currentBalanceElement = document.getElementById("overviewCurrentBalance");
       const recentLearning = document.getElementById("overviewRecentLearning");
       const recentTransactions = document.getElementById("overviewRecentTransactions");
 
@@ -802,18 +801,8 @@
       const { data: { user } } = await supabaseClient.auth.getUser();
       if (!user) return;
 
-      const isAdmin = document.body.dataset.role === "admin";
-      let nahidaUserId = user.id;
-
-      if (isAdmin) {
-        const { data: nahidaRole, error } = await supabaseClient.from("user_roles")
-          .select("user_id").eq("role", "observer").maybeSingle();
-        if (error) console.error("Nahida user lookup error:", error);
-        nahidaUserId = nahidaRole?.user_id || null;
-      }
-
+      // loadTransactions() already restricts this array to the signed-in user's ID.
       const ownTransactions = transactions.filter(record => record.user_id === user.id);
-      const nahidaTransactions = transactions.filter(record => record.user_id === nahidaUserId);
 
       function calculateTotal(records, type) {
         return records.filter(record => record.transaction_type === type)
@@ -822,13 +811,12 @@
 
       const ownIncome = calculateTotal(ownTransactions, "Income");
       const ownExpense = calculateTotal(ownTransactions, "Expense");
-      const nahidaIncome = calculateTotal(nahidaTransactions, "Income");
-      const nahidaExpense = calculateTotal(nahidaTransactions, "Expense");
+      const ownBalance = ownIncome - ownExpense;
+      const currency = document.body.dataset.role === "admin" ? "QAR" : "BDT";
 
-      totalIncomeElement.textContent = ownIncome.toFixed(2) + (isAdmin ? " QAR" : " BDT");
-      totalExpenseElement.textContent = ownExpense.toFixed(2) + (isAdmin ? " QAR" : " BDT");
-      nahidaBalanceElement.textContent = (nahidaIncome - nahidaExpense).toFixed(2) + " BDT";
-      nahidaExpenseElement.textContent = nahidaExpense.toFixed(2) + " BDT";
+      totalIncomeElement.textContent = ownIncome.toFixed(2) + " " + currency;
+      totalExpenseElement.textContent = ownExpense.toFixed(2) + " " + currency;
+      currentBalanceElement.textContent = ownBalance.toFixed(2) + " " + currency;
 
       recentLearning.innerHTML = "";
       const latestLearning = learningRecords.slice(0, 5);
@@ -862,7 +850,7 @@
       }
 
       recentTransactions.innerHTML = "";
-      const latestTransactions = transactions.slice(0, 5);
+      const latestTransactions = ownTransactions.slice(0, 5);
 
       if (latestTransactions.length === 0) {
         recentTransactions.innerHTML = '<p class="empty-message">No transactions yet.</p>';
@@ -877,7 +865,6 @@
 
           const amount = document.createElement("p");
           amount.className = "record-topic";
-          const currency = record.user_id === currentUserId && document.body.dataset.role === "admin" ? "QAR" : "BDT";
           amount.textContent = Number(record.amount).toFixed(2) + " " + currency;
 
           const date = document.createElement("p");

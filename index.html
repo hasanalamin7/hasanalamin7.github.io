@@ -667,6 +667,25 @@ button:hover { background-color: var(--button-hover); }
   #menuBtn { font-size: 21px; padding: 8px 6px; }
 }
 
+/* ===== HASAN ALAMIN AI DEMO ===== */
+#aiDemo { display:none; text-align:left; color:var(--text); padding:10px 4px 20px; }
+#aiDemo .ai-shell { max-width:760px; margin:0 auto; border:1px solid var(--card-border); border-radius:18px; overflow:hidden; background:var(--card-bg); box-shadow:0 12px 32px rgba(0,0,0,.24); }
+#aiDemo .ai-top { padding:18px; background:linear-gradient(135deg,var(--soft-bg),var(--card-bg)); border-bottom:1px solid var(--card-border); }
+#aiDemo .ai-top h2 { margin:0 0 6px; color:var(--gold); font-size:22px; }
+#aiDemo .ai-top p { color:var(--text); font-size:14px; margin:0; opacity:.8; }
+#aiDemo .ai-status { display:inline-block; margin-top:10px; padding:5px 9px; border-radius:20px; color:var(--gold); border:1px solid var(--gold); font-size:11px; }
+#aiDemo .ai-messages { min-height:260px; max-height:52vh; overflow-y:auto; padding:16px; display:flex; flex-direction:column; gap:12px; }
+#aiDemo .ai-bubble { max-width:88%; white-space:pre-wrap; overflow-wrap:anywhere; padding:12px 14px; border-radius:14px; line-height:1.65; font-size:15px; }
+#aiDemo .ai-bubble.bot { align-self:flex-start; background:var(--soft-bg); border:1px solid var(--card-border); color:var(--text); border-bottom-left-radius:4px; }
+#aiDemo .ai-bubble.user { align-self:flex-end; background:var(--button-bg); color:#fff; border-bottom-right-radius:4px; }
+#aiDemo .ai-suggestions { display:flex; flex-wrap:wrap; gap:7px; padding:0 15px 14px; }
+#aiDemo .ai-suggestions button { font-size:13px; padding:8px 11px; border:1px solid var(--accent); background:transparent; color:var(--text); border-radius:18px; }
+#aiDemo .ai-compose { display:flex; gap:8px; padding:12px; border-top:1px solid var(--card-border); background:var(--soft-bg); }
+#aiDemo .ai-compose textarea { flex:1; min-width:0; resize:vertical; min-height:44px; max-height:110px; border-radius:12px; border:1px solid var(--card-border); background:var(--bg); color:var(--text); padding:11px; font:inherit; font-size:15px; }
+#aiDemo .ai-compose button { font-size:16px; padding:10px 15px; border-radius:12px; }
+#aiDemo .ai-note { color:var(--text); opacity:.65; font-size:12px; text-align:center; padding:0 12px 14px; }
+#aiDemo .ai-back { display:inline-block; color:var(--gold); text-decoration:none; margin:0 0 14px 4px; }
+
 /* ===== REDUCED MOTION ===== */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
@@ -736,6 +755,7 @@ button:hover { background-color: var(--button-hover); }
   <a href="#aboutText" onclick="openAbout(); return false;">👤 আমার পরিচিতি</a>
   <a href="#writingText" onclick="openWriting(); return false;">✍️ আমার লিখালিখি</a>
   <a href="#videos" onclick="openVideos(); return false;">🎬 ভিডিও</a>
+  <a href="#aiDemo" onclick="openAIDemo(); return false;">✦ HASAN ALAMIN AI — Demo</a>
   <a href="https://www.facebook.com/share/1bkNh8jX9A/" target="_blank">📚 বইয়ের পাতার গল্প</a>
   <a href="mailto:hello.hasanalamin@gmail.com">✉️ যোগাযোগ</a>
   <a href="dashboard.html" class="dashboard-link">🔐 ব্যক্তিগত ড্যাশবোর্ড</a>
@@ -860,6 +880,31 @@ button:hover { background-color: var(--button-hover); }
   <p><a href="#" onclick="returnToMenu(); return false;" style="color:var(--accent); text-decoration:none;">← ফিরে যাও</a></p>
 </div>
 
+<!-- ===== HASAN ALAMIN AI DEMO ===== -->
+<section id="aiDemo">
+  <a class="ai-back" href="#" onclick="returnToMenu(); return false;">← মূল মেনুতে ফিরে যাও</a>
+  <div class="ai-shell">
+    <div class="ai-top">
+      <h2>HASAN ALAMIN <span style="color:var(--accent)">AI</span></h2>
+      <p>আল-আমীনের ব্যক্তিগত সহকারী</p>
+      <span class="ai-status">DEMO MODE · পরীক্ষামূলক সংস্করণ</span>
+    </div>
+    <div class="ai-messages" id="aiDemoMessages" aria-live="polite">
+      <div class="ai-bubble bot">আসসালামু আলাইকুম! আমি HASAN ALAMIN AI-এর ডেমো।\n\nএখানে কিছু নমুনা প্রশ্ন করে দেখতে পারো। এই সংস্করণে উত্তরগুলো পূর্বনির্ধারিত; এখনো লাইভ AI মডেল যুক্ত হয়নি।</div>
+    </div>
+    <div class="ai-suggestions">
+      <button type="button" data-ai-prompt="HTML কী?">HTML কী?</button>
+      <button type="button" data-ai-prompt="আমাকে একটি দৈনিক রুটিন দাও">দৈনিক রুটিন</button>
+      <button type="button" data-ai-prompt="AI কীভাবে কাজ করে?">AI কীভাবে কাজ করে?</button>
+    </div>
+    <div class="ai-compose">
+      <textarea id="aiDemoInput" rows="1" placeholder="এখানে প্রশ্ন লিখো..." aria-label="AI demo message"></textarea>
+      <button type="button" id="aiDemoSend">পাঠাও</button>
+    </div>
+    <div class="ai-note">এটি শুধু ডেমো। বাস্তব AI সংযোগ পরবর্তী ধাপে যুক্ত হবে।</div>
+  </div>
+</section>
+
 <!-- ===== MY 2027 DASHBOARD ===== -->
 <div id="goals2027">
   <a href="#home" class="goal-back" onclick="returnToMenu(); return false;">← মূল মেনুতে ফিরে যাও</a>
@@ -926,7 +971,7 @@ button:hover { background-color: var(--button-hover); }
 const sectionIds = [
   "aboutText", "writingText", "article1", "lifeCategory",
   "societyCategory", "currentCategory", "personalCategory",
-  "literatureCategory", "thoughtsCategory", "videos", "goals2027"
+  "literatureCategory", "thoughtsCategory", "videos", "aiDemo", "goals2027"
 ];
 
 function hideAllSections() {
@@ -959,6 +1004,7 @@ function returnToMenu() {
 function openAbout() { showSection("aboutText"); }
 function openWriting() { showSection("writingText"); }
 function openVideos() { showSection("videos"); }
+function openAIDemo() { showSection("aiDemo"); }
 function open2027() { showSection("goals2027"); }
 
 function openCategory(category) {
@@ -975,6 +1021,47 @@ function openCategory(category) {
 }
 
 function returnToLife() { showSection("writingText"); }
+
+// ===== AI DEMO CHAT (LOCAL SAMPLE RESPONSES) =====
+(function() {
+  const input = document.getElementById("aiDemoInput");
+  const send = document.getElementById("aiDemoSend");
+  const messages = document.getElementById("aiDemoMessages");
+  if (!input || !send || !messages) return;
+
+  function sampleReply(question) {
+    const q = question.toLowerCase();
+    if (/html|ওয়েবসাইট|ওয়েব ডেভেলপমেন্ট/.test(q)) return "HTML হলো ওয়েবসাইটের কাঠামো তৈরির ভাষা। CSS দিয়ে ডিজাইন করা হয়, আর JavaScript দিয়ে ইন্টারঅ্যাকশন যোগ করা হয়।\n\nএটি ডেমো উত্তর—লাইভ AI উত্তর নয়।";
+    if (/রুটিন|পড়াশোনা|শেখা/.test(q)) return "একটি নমুনা ২ ঘণ্টার রুটিন:\n১. ২০ মিনিট আগের বিষয় রিভিশন\n২. ৫০ মিনিট নতুন বিষয় শেখা\n৩. ৪০ মিনিট হাতে-কলমে অনুশীলন\n৪. ১০ মিনিট শেখা বিষয় নোট করা।\n\nএটি ডেমো উত্তর।";
+    if (/ai|কৃত্রিম বুদ্ধিমত্তা/.test(q)) return "AI বা কৃত্রিম বুদ্ধিমত্তা হলো এমন প্রযুক্তি, যার মাধ্যমে কম্পিউটার ভাষা বোঝা, তথ্য বিশ্লেষণ, ছবি শনাক্তকরণ ও বিভিন্ন সমস্যা সমাধানের মতো কাজ করতে পারে।\n\nএটি একটি নমুনা উত্তর।";
+    if (/হ্যালো|hello|সালাম|আসসালামু/.test(q)) return "ওয়ালাইকুমুস সালাম! 😊 HASAN ALAMIN AI ডেমোতে স্বাগতম। কী জানতে চাও?";
+    return "তোমার প্রশ্নটি পেয়েছি: “" + question + "”\n\nএই ডেমো সংস্করণে সীমিত নমুনা উত্তর দেওয়া হয়। পূর্ণাঙ্গ উত্তর পেতে পরবর্তী ধাপে নিরাপদ AI API সংযোগ করতে হবে।";
+  }
+
+  function addMessage(text, who) {
+    const bubble = document.createElement("div");
+    bubble.className = "ai-bubble " + who;
+    bubble.textContent = text;
+    messages.appendChild(bubble);
+    messages.scrollTop = messages.scrollHeight;
+  }
+
+  function submitMessage(text) {
+    const question = (text || input.value).trim();
+    if (!question) return;
+    addMessage(question, "user");
+    input.value = "";
+    window.setTimeout(function() { addMessage(sampleReply(question), "bot"); }, 350);
+  }
+
+  send.addEventListener("click", function() { submitMessage(); });
+  input.addEventListener("keydown", function(event) {
+    if (event.key === "Enter" && !event.shiftKey) { event.preventDefault(); submitMessage(); }
+  });
+  document.querySelectorAll("#aiDemo [data-ai-prompt]").forEach(function(button) {
+    button.addEventListener("click", function() { submitMessage(button.dataset.aiPrompt); });
+  });
+})();
 
 // ===== QUOTE SLIDER =====
 let currentQuote = 0;

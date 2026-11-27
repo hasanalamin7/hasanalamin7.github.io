@@ -1,1 +1,143 @@
 
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#101b19">
+<title>HASAN ALAMIN AI</title>
+<style>
+:root{--bg:#101b19;--panel:#172722;--panel2:#1c302a;--green:#49a982;--gold:#d6b978;--text:#edf4ef;--muted:#9eafa6;--line:rgba(214,185,120,.18);--red:#e47b7b}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 50% -20%,#244b3d 0,transparent 48%),var(--bg);color:var(--text);font-family:system-ui,-apple-system,"Noto Sans Bengali",sans-serif;min-height:100vh}
+button,input,textarea{font:inherit}button{cursor:pointer}
+.app{max-width:1000px;margin:auto;min-height:100vh;display:flex;flex-direction:column;padding:0 16px}
+header{height:72px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line);position:sticky;top:0;background:rgba(16,27,25,.9);backdrop-filter:blur(14px);z-index:3}
+.brand{display:flex;align-items:center;gap:11px}.logo{height:40px;width:40px;border-radius:14px;background:linear-gradient(145deg,#245642,#10231d);border:1px solid #568c70;display:grid;place-items:center;color:var(--gold);font-size:21px;box-shadow:0 0 24px #49a98222}
+.brand strong{letter-spacing:1.2px;font-size:14px}.brand small{display:block;color:var(--muted);font-size:10px;letter-spacing:2px;margin-top:2px}
+.header-actions{display:flex;gap:8px}.small-btn,.icon-btn{border:1px solid var(--line);background:#1b2b25;color:var(--text);border-radius:11px;padding:9px 12px}
+main{flex:1;display:flex;flex-direction:column;padding:28px 0 18px}.hero{text-align:center;margin:22px 0 25px}.orb{width:76px;height:76px;margin:0 auto 16px;border-radius:50%;display:grid;place-items:center;font-size:34px;color:var(--gold);background:radial-gradient(circle at 35% 30%,#477d61,#19372b 65%,#10201b);border:1px solid #76b28b;box-shadow:0 0 45px #49a98233, inset 0 0 20px #d6b97822}
+h1{font-size:clamp(24px,5vw,36px);margin:0;letter-spacing:1px}h1 span{color:var(--gold)}.subtitle{color:var(--muted);margin:8px 0 0;font-size:13px}
+.status{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--line);padding:6px 11px;border-radius:30px;color:var(--muted);font-size:11px;margin-top:14px}.dot{width:7px;height:7px;border-radius:50%;background:var(--gold)}
+.chat{width:100%;max-width:820px;margin:0 auto;flex:1;display:flex;flex-direction:column;gap:15px}
+.messages{display:flex;flex-direction:column;gap:14px;padding:4px 0 16px;min-height:180px}
+.msg{max-width:85%;padding:13px 15px;border-radius:16px;line-height:1.65;font-size:14px;white-space:pre-wrap;overflow-wrap:anywhere}
+.msg.ai{align-self:flex-start;background:var(--panel);border:1px solid var(--line);border-top-left-radius:5px}
+.msg.user{align-self:flex-end;background:#214735;border:1px solid #477c5e;border-top-right-radius:5px}
+.msg .who{font-size:10px;letter-spacing:1px;color:var(--gold);display:block;margin-bottom:5px}
+.welcome-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}.chip{border:1px solid var(--line);background:#192a24;color:#dce9df;border-radius:22px;padding:8px 12px;font-size:12px}
+.composer{position:sticky;bottom:0;padding:12px 0 10px;background:linear-gradient(transparent,var(--bg) 18%)}
+.input-wrap{display:flex;align-items:flex-end;gap:9px;background:#172721;border:1px solid #426a54;border-radius:18px;padding:9px;box-shadow:0 12px 35px #0003}
+textarea{flex:1;resize:none;min-height:42px;max-height:150px;border:0;outline:0;background:transparent;color:var(--text);padding:10px 7px;font-size:14px}
+textarea::placeholder{color:#81958a}.send,.mic{height:42px;width:44px;border:0;border-radius:13px;background:var(--green);color:#092016;font-weight:700}.mic{background:#263d32;color:var(--gold);border:1px solid var(--line)}.send:disabled{opacity:.5}
+.hint{text-align:center;color:#81958a;font-size:10px;margin-top:9px}
+footer{border-top:1px solid var(--line);padding:13px 0 18px;text-align:center;color:#82948a;font-size:10px}
+.overlay{position:fixed;inset:0;background:#0009;display:none;align-items:center;justify-content:center;padding:18px;z-index:10}.overlay.show{display:flex}.modal{width:100%;max-width:480px;background:#172722;border:1px solid var(--line);border-radius:18px;padding:20px;box-shadow:0 20px 80px #0008}.modal h2{margin:0 0 8px;color:var(--gold);font-size:19px}.modal p{font-size:12px;line-height:1.6;color:var(--muted)}.modal label{display:block;font-size:12px;margin:14px 0 6px}.modal input{width:100%;padding:12px;border-radius:10px;border:1px solid #456653;background:#0f1c17;color:white;outline:none}.modal-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:16px}.primary{background:var(--green);border:0;color:#092016;border-radius:10px;padding:10px 15px;font-weight:700}.secondary{background:transparent;color:var(--text);border:1px solid var(--line);border-radius:10px;padding:10px 15px}
+.notice{font-size:11px;color:var(--gold);margin-top:10px}.typing{color:var(--muted);font-size:12px;padding:6px}
+@media(max-width:560px){.app{padding:0 12px}header{height:64px}.brand strong{font-size:12px}.small-btn{padding:8px 9px;font-size:11px}.hero{margin:18px 0}.msg{max-width:93%;font-size:13px}.orb{width:66px;height:66px}}
+</style>
+</head>
+<body>
+<div class="app">
+<header>
+  <div class="brand"><div class="logo">✦</div><div><strong>HASAN ALAMIN AI</strong><small>PERSONAL AI ASSISTANT</small></div></div>
+  <div class="header-actions"><button class="small-btn" id="newChat">＋ নতুন চ্যাট</button><button class="small-btn" id="settingsBtn">⚙ সেটিংস</button></div>
+</header>
+<main>
+  <section class="hero" id="hero">
+    <div class="orb">✧</div>
+    <h1>HASAN ALAMIN <span>AI</span></h1>
+    <p class="subtitle">তোমার ব্যক্তিগত AI সহকারী</p>
+    <div class="status"><span class="dot" id="statusDot"></span><span id="statusText">Demo Mode · API সংযুক্ত নয়</span></div>
+  </section>
+  <section class="chat">
+    <div class="messages" id="messages" aria-live="polite">
+      <div class="msg ai"><span class="who">HASAN ALAMIN AI</span>আসসালামু আলাইকুম! আমি HASAN ALAMIN AI। 😊
+
+আমি এখন Demo Mode-এ আছি। সাধারণ কিছু কাজে সাহায্য করতে পারি। পূর্ণ AI উত্তর পেতে Settings থেকে একটি Free AI API key যোগ করতে হবে।
+
+তুমি কী জানতে চাও?
+        <div class="welcome-actions">
+          <button class="chip" data-prompt="আমাকে HTML শেখাও">HTML শেখাও</button>
+          <button class="chip" data-prompt="আমার জন্য একটি দৈনিক রুটিন তৈরি কর">দৈনিক রুটিন</button>
+          <button class="chip" data-prompt="আমার আয়-ব্যয়ের বাজেট সাজাতে সাহায্য কর">বাজেট পরিকল্পনা</button>
+        </div>
+      </div>
+    </div>
+    <div class="composer">
+      <div class="input-wrap">
+        <button class="mic" id="micBtn" title="ভয়েস ইনপুট">🎙</button>
+        <textarea id="prompt" rows="1" placeholder="এখানে লিখে পাঠাও..." aria-label="Message"></textarea>
+        <button class="send" id="sendBtn" title="পাঠান">➤</button>
+      </div>
+      <div class="hint">Enter = পাঠান · Shift + Enter = নতুন লাইন</div>
+    </div>
+  </section>
+</main>
+<footer>HASAN ALAMIN AI · VERSION 1.0 · BUILT WITH FREE WEB TECHNOLOGIES</footer>
+</div>
+<div class="overlay" id="settings">
+ <div class="modal">
+  <h2>AI সেটিংস</h2>
+  <p>এই ফাইলটি API key ছাড়া Demo Mode-এ চলে। সত্যিকারের AI উত্তর পেতে সমর্থিত Free-tier provider-এর API key প্রয়োজন। API key এই ব্রাউজারের Local Storage-এ রাখা হবে—এটি ব্যক্তিগত পরীক্ষার জন্য; পাবলিক ওয়েবসাইটে এভাবে key প্রকাশ করা নিরাপদ নয়।</p>
+  <label for="apiKey">Gemini API Key</label>
+  <input id="apiKey" type="password" placeholder="API key এখানে পেস্ট করো" autocomplete="off">
+  <div class="notice">API key পেতে Google AI Studio-তে নিজে অ্যাকাউন্টে প্রবেশ করে key তৈরি করতে হবে। ফ্রি ব্যবহারের সীমা ও প্রাপ্যতা Google নির্ধারণ করে।</div>
+  <div class="modal-actions"><button class="secondary" id="closeSettings">বন্ধ</button><button class="secondary" id="removeKey">Key মুছুন</button><button class="primary" id="saveKey">সংরক্ষণ</button></div>
+ </div>
+</div>
+<script>
+const $=s=>document.querySelector(s);
+const messages=$('#messages'), input=$('#prompt'), sendBtn=$('#sendBtn');
+let busy=false;
+const KEY_NAME='hasan_alamin_ai_gemini_key';
+let apiKey=localStorage.getItem(KEY_NAME)||'';
+function updateStatus(){ $('#statusText').textContent=apiKey?'Online AI · Gemini API key যুক্ত':'Demo Mode · API সংযুক্ত নয়'; $('#statusDot').style.background=apiKey?'#49a982':'#d6b978';}
+updateStatus();
+function addMessage(text,who='ai'){
+ const el=document.createElement('div');el.className='msg '+who;
+ const label=document.createElement('span');label.className='who';label.textContent=who==='user'?'তুমি':'HASAN ALAMIN AI';
+ el.append(label,document.createTextNode(text));messages.appendChild(el);el.scrollIntoView({behavior:'smooth',block:'end'});return el;
+}
+function demoReply(q){
+ const s=q.toLowerCase();
+ if(/হ্যালো|হাই|আসসালামু|hello|hi/.test(s))return 'ওয়ালাইকুম আসসালাম! কেমন আছো? কী বিষয়ে সাহায্য করতে পারি?';
+ if(/html|ওয়েবসাইট|কোড|javascript|জাভাস্ক্রিপ্ট/.test(s))return 'ওয়েব ডেভেলপমেন্ট শেখার জন্য HTML দিয়ে শুরু করো। HTML ওয়েবসাইটের কাঠামো তৈরি করে, CSS ডিজাইন করে এবং JavaScript ওয়েবসাইটে ইন্টারঅ্যাকশন যোগ করে।\n\nএটি Demo Mode-এর একটি প্রাথমিক উত্তর। আরও নির্দিষ্ট ও বুদ্ধিমান উত্তর পেতে Settings-এ AI API key যোগ করতে হবে।';
+ if(/রুটিন|পড়াশোনা|শেখা/.test(s))return 'একটি সহজ রুটিনের নমুনা:\n১. ৩০ মিনিট আগের বিষয় রিভিশন\n২. ৬০ মিনিট নতুন বিষয় শেখা\n৩. ২০ মিনিট হাতে-কলমে অনুশীলন\n৪. ১০ মিনিট দিনের অগ্রগতি লিখে রাখা\n\nতোমার সময় অনুযায়ী এটি পরিবর্তন করা যাবে।';
+ if(/বাজেট|আয়|ব্যয়|সঞ্চয়|টাকা/.test(s))return 'বাজেটের শুরুতে মাসিক আয় লিখে প্রয়োজনীয় খরচ, ব্যক্তিগত খরচ এবং সঞ্চয় আলাদা করো। প্রতিটি খরচের তারিখ ও পরিমাণ লিখে রাখো। এটি একটি সাধারণ পরামর্শ—Demo Mode-এ তোমার বাস্তব হিসাব বিশ্লেষণ করা হচ্ছে না।';
+ if(/তোমার নাম|কে তুমি|তুমি কে/.test(s))return 'আমি HASAN ALAMIN AI—তোমার ব্যক্তিগত AI Assistant-এর প্রাথমিক সংস্করণ।';
+ return 'তোমার বার্তাটি পেয়েছি। তবে এখন আমি Demo Mode-এ আছি, তাই পূর্ণাঙ্গ AI-এর মতো নতুন উত্তর তৈরি করতে পারছি না। Settings থেকে Gemini API key যুক্ত করলে অনলাইন AI উত্তর চালু হবে।';
+}
+async function askGemini(q){
+ const model='gemini-2.0-flash';
+ const url=`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${encodeURIComponent(apiKey)}`;
+ const res=await fetch(url,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({system_instruction:{parts:[{text:'তোমার নাম HASAN ALAMIN AI। তুমি একজন সহায়ক, সৎ, সংক্ষিপ্ত ও বন্ধুত্বপূর্ণ ব্যক্তিগত AI সহকারী। ব্যবহারকারী বাংলায় লিখলে বাংলায় উত্তর দেবে। কোনো কাজ করতে না পারলে স্পষ্ট করে বলবে।'}]},contents:[{role:'user',parts:[{text:q}]}],generationConfig:{temperature:0.7,maxOutputTokens:900}})});
+ const data=await res.json();
+ if(!res.ok)throw new Error(data.error?.message||'API request ব্যর্থ হয়েছে');
+ return data.candidates?.[0]?.content?.parts?.map(p=>p.text||'').join('')||'দুঃখিত, কোনো উত্তর পাওয়া যায়নি।';
+}
+async function send(){
+ const q=input.value.trim();if(!q||busy)return;
+ input.value='';input.style.height='42px';addMessage(q,'user');busy=true;sendBtn.disabled=true;
+ const typing=addMessage('ভাবছি…','ai');
+ try{typing.remove();let answer=apiKey?await askGemini(q):demoReply(q);addMessage(answer,'ai');}
+ catch(e){typing.remove();addMessage('AI সংযোগে সমস্যা হয়েছে: '+e.message+'\nAPI key ঠিক আছে কি না এবং Free Tier/মডেলটি উপলভ্য কি না পরীক্ষা করো।','ai');}
+ finally{busy=false;sendBtn.disabled=false;input.focus();}
+}
+sendBtn.addEventListener('click',send);
+input.addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();send();}});
+input.addEventListener('input',()=>{input.style.height='42px';input.style.height=Math.min(input.scrollHeight,150)+'px';});
+$('#settingsBtn').onclick=()=>{$('#apiKey').value=apiKey;$('#settings').classList.add('show');};
+$('#closeSettings').onclick=()=>$('#settings').classList.remove('show');
+$('#saveKey').onclick=()=>{apiKey=$('#apiKey').value.trim();if(apiKey)localStorage.setItem(KEY_NAME,apiKey);else localStorage.removeItem(KEY_NAME);updateStatus();$('#settings').classList.remove('show');addMessage(apiKey?'API key সংরক্ষিত হয়েছে। এখন অনলাইন AI ব্যবহার করার চেষ্টা করতে পারো।':'API key দেওয়া হয়নি। Demo Mode চালু আছে।');};
+$('#removeKey').onclick=()=>{apiKey='';localStorage.removeItem(KEY_NAME);$('#apiKey').value='';updateStatus();$('#settings').classList.remove('show');addMessage('API key মুছে ফেলা হয়েছে। Demo Mode চালু আছে।');};
+$('#newChat').onclick=()=>{messages.innerHTML='';addMessage('নতুন চ্যাট শুরু হয়েছে। কীভাবে সাহায্য করতে পারি?');};
+document.querySelectorAll('[data-prompt]').forEach(b=>b.addEventListener('click',()=>{input.value=b.dataset.prompt;send();}));
+let recognition=null;
+const SpeechRecognition=window.SpeechRecognition||window.webkitSpeechRecognition;
+if(SpeechRecognition){recognition=new SpeechRecognition();recognition.lang='bn-BD';recognition.interimResults=false;recognition.onresult=e=>{input.value=e.results[0][0].transcript;};recognition.onerror=()=>addMessage('ভয়েস ইনপুট কাজ করেনি। ব্রাউজারের microphone permission পরীক্ষা করো।');}
+else $('#micBtn').disabled=true;
+$('#micBtn').addEventListener('click',()=>{if(!recognition){addMessage('এই ব্রাউজারে Speech Recognition সমর্থিত নয়।');return;}try{recognition.start();}catch(e){addMessage('মাইক্রোফোন চালু করা যায়নি।');}});
+if('speechSynthesis'in window){const voiceBtn=document.createElement('button');voiceBtn.className='chip';voiceBtn.textContent='🔊 শেষ উত্তর শুনুন';voiceBtn.style.display='block';voiceBtn.style.margin='0 auto 12px';voiceBtn.onclick=()=>{const last=[...messages.querySelectorAll('.msg.ai')].pop();if(!last)return;const text=last.innerText.replace('HASAN ALAMIN AI','');const u=new SpeechSynthesisUtterance(text);u.lang='bn-BD';speechSynthesis.cancel();speechSynthesis.speak(u);};$('.chat').insertBefore(voiceBtn,$('.composer'));}
+</script>
+</body>
+</html>

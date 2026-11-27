@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="bn">
 <head>
@@ -110,7 +109,7 @@ function demoReply(q){
 async function askGemini(q){
  const model='gemini-2.0-flash';
  const url=`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${encodeURIComponent(apiKey)}`;
- const res=await fetch(url,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({system_instruction:{parts:[{text:'তোমার নাম HASAN ALAMIN AI। তুমি একজন সহায়ক, সৎ, সংক্ষিপ্ত ও বন্ধুত্বপূর্ণ ব্যক্তিগত AI সহকারী। ব্যবহারকারী বাংলায় লিখলে বাংলায় উত্তর দেবে। কোনো কাজ করতে না পারলে স্পষ্ট করে বলবে।'}]},contents:[{role:'user',parts:[{text:q}]}],generationConfig:{temperature:0.7,maxOutputTokens:900}})});
+ const res=await fetch(url,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({system_instruction:{parts:[{text:'তোমার নাম HASAN ALAMIN AI। তুমি আল-আমীনের ব্যক্তিগত সহকারী। ব্যবহারকারী জিজ্ঞেস করলে তুমি বলবে: 'আমি আল-আমীনের ব্যক্তিগত সহকারী।' ব্যবহারকারীকে সবসময় 'আল-আমীন' বলে সম্বোধন করবে। তুমি সহায়ক, সৎ, সংক্ষিপ্ত ও বন্ধুত্বপূর্ণ থাকবে। ব্যবহারকারী বাংলায় লিখলে বাংলায় উত্তর দেবে। কোনো কাজ করতে না পারলে স্পষ্ট করে বলবে।'}]},contents:[{role:'user',parts:[{text:q}]}],generationConfig:{temperature:0.7,maxOutputTokens:900}})});
  const data=await res.json();
  if(!res.ok)throw new Error(data.error?.message||'API request ব্যর্থ হয়েছে');
  return data.candidates?.[0]?.content?.parts?.map(p=>p.text||'').join('')||'দুঃখিত, কোনো উত্তর পাওয়া যায়নি।';
@@ -137,7 +136,7 @@ const SpeechRecognition=window.SpeechRecognition||window.webkitSpeechRecognition
 if(SpeechRecognition){recognition=new SpeechRecognition();recognition.lang='bn-BD';recognition.interimResults=false;recognition.onresult=e=>{input.value=e.results[0][0].transcript;};recognition.onerror=()=>addMessage('ভয়েস ইনপুট কাজ করেনি। ব্রাউজারের microphone permission পরীক্ষা করো।');}
 else $('#micBtn').disabled=true;
 $('#micBtn').addEventListener('click',()=>{if(!recognition){addMessage('এই ব্রাউজারে Speech Recognition সমর্থিত নয়।');return;}try{recognition.start();}catch(e){addMessage('মাইক্রোফোন চালু করা যায়নি।');}});
-if('speechSynthesis'in window){const voiceBtn=document.createElement('button');voiceBtn.className='chip';voiceBtn.textContent='🔊 শেষ উত্তর শুনুন';voiceBtn.style.display='block';voiceBtn.style.margin='0 auto 12px';voiceBtn.onclick=()=>{const last=[...messages.querySelectorAll('.msg.ai')].pop();if(!last)return;const text=last.innerText.replace('HASAN ALAMIN AI','');const u=new SpeechSynthesisUtterance(text);u.lang='bn-BD';speechSynthesis.cancel();speechSynthesis.speak(u);};$('.chat').insertBefore(voiceBtn,$('.composer'));}
+if('speechSynthesis'in window){const voiceBtn=document.createElement('button');voiceBtn.className='chip';voiceBtn.textContent='🔊 শেষ উত্তর শুনুন';voiceBtn.style.display='block';voiceBtn.style.margin='0 auto 12px';voiceBtn.onclick=()=>{const last=[...messages.querySelectorAll('.msg.ai')].pop();if(!last)return;const text=last.innerText.replace(/HASAN ALAMIN AI/gi,'হাসান আল আমিন এ আই').replace(/HASAN ALAMIN/gi,'হাসান আল আমিন');const u=new SpeechSynthesisUtterance(text);u.lang='bn-BD';speechSynthesis.cancel();speechSynthesis.speak(u);};$('.chat').insertBefore(voiceBtn,$('.composer'));}
 </script>
 </body>
 </html>

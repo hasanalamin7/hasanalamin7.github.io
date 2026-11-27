@@ -1,1152 +1,279 @@
 <!DOCTYPE html>
 <html lang="bn">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Hasan Alamin</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hasan Alamin</title>
 <style>
-:root {
-  --bg: #101B19;
-  --accent: #49A982;
-  --gold: #D6B978;
-  --text: #E8F1ED;
-  --button-bg: #245548;
-  --button-hover: #367563;
-  --menu-link: #C7B2F2;
-  --surface: rgba(73, 169, 130, 0.15);
-  --surface-strong: rgba(73, 169, 130, 0.22);
-  --card-bg: #172520;
-  --card-border: #315747;
-  --soft-bg: #14211D;
-}
-
-:root[data-theme="lavender"] {
-  --bg: #211A35;
-  --accent: #A78BFA;
-  --gold: #D8B4FE;
-  --text: #F0EAFB;
-  --button-bg: #49366F;
-  --button-hover: #60488D;
-  --menu-link: #E2D5FF;
-  --surface: rgba(167, 139, 250, 0.15);
-  --surface-strong: rgba(167, 139, 250, 0.22);
-  --card-bg: #2B2244;
-  --card-border: #59477F;
-  --soft-bg: #261E3C;
-}
-
-:root[data-theme="ocean"] {
-  --bg: #102235;
-  --accent: #38BDF8;
-  --gold: #67E8F9;
-  --text: #E5F6FF;
-  --button-bg: #174B68;
-  --button-hover: #216487;
-  --menu-link: #B8E9FF;
-  --surface: rgba(56, 189, 248, 0.15);
-  --surface-strong: rgba(56, 189, 248, 0.22);
-  --card-bg: #173047;
-  --card-border: #285775;
-  --soft-bg: #142A3F;
-}
-
-:root[data-theme="rose"] {
-  --bg: #301B27;
-  --accent: #F472B6;
-  --gold: #FDA4AF;
-  --text: #FFF0F5;
-  --button-bg: #71344F;
-  --button-hover: #914362;
-  --menu-link: #FFD0E5;
-  --surface: rgba(244, 114, 182, 0.15);
-  --surface-strong: rgba(244, 114, 182, 0.22);
-  --card-bg: #3D2332;
-  --card-border: #75415E;
-  --soft-bg: #351F2C;
-}
-
-:root[data-theme="black-gold"] {
-  --bg: #111111;
-  --accent: #D6B978;
-  --gold: #F0D99A;
-  --text: #F2EEE4;
-  --button-bg: #4B4028;
-  --button-hover: #685A37;
-  --menu-link: #F0D99A;
-  --surface: rgba(214, 185, 120, 0.13);
-  --surface-strong: rgba(214, 185, 120, 0.20);
-  --card-bg: #1D1B16;
-  --card-border: #625333;
-  --soft-bg: #191711;
-}
-
-:root[data-theme="black-blue"] {
-  --bg: #101820;
-  --accent: #38BDF8;
-  --gold: #7DD3FC;
-  --text: #E8F5FC;
-  --button-bg: #17445D;
-  --button-hover: #216486;
-  --menu-link: #B8E9FF;
-  --surface: rgba(56, 189, 248, 0.13);
-  --surface-strong: rgba(56, 189, 248, 0.20);
-  --card-bg: #182632;
-  --card-border: #31566B;
-  --soft-bg: #14212B;
-}
-
-/* ===== BASIC DESIGN ===== */
-body {
-  background-color: var(--bg);
-  font-family: Arial, sans-serif;
-  text-align: center;
-}
-
-h1 { color: var(--button-bg); }
-
-p {
-  color: #444444;
-  font-size: 18px;
-}
-
-button {
-  background-color: var(--button-bg);
-  color: white;
-  padding: 12px 20px;
-  border: none;
-  border-radius: 20px;
-  font-size: 22px;
-}
-
-button:hover { background-color: var(--button-hover); }
-
-.card {
-  background-color: transparent;
-  width: 100%;
-  max-width: 900px;
-  box-sizing: border-box;
-  margin: 10px auto;
-  padding: 4px 0;
-  border-radius: 15px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
-  position: relative;
-  z-index: 1;
-}
-
-/* ===== HEADER ===== */
-.header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0;
-  margin-bottom: 20px;
-  padding-bottom: 12px;
-  border-bottom: 1px solid var(--accent);
-  animation: fadeSlideIn 0.9s ease both;
-}
-
-.header h2 {
-  margin: 0;
-  color: var(--accent);
-  font-size: 22px;
-}
-
-.header-actions {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  gap: 7px;
-  flex-shrink: 0;
-}
-
-#themePicker {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 5px;
-}
-
-.theme-dot {
-  width: 13px;
-  height: 13px;
-  min-width: 13px;
-  padding: 0;
-  margin: 0;
-  border-radius: 50%;
-  border: 1px solid rgba(255, 255, 255, 0.45);
-  cursor: pointer;
-  box-sizing: border-box;
-  box-shadow: 0 0 2px rgba(0, 0, 0, 0.35);
-  transition: transform 0.2s ease, outline 0.2s ease;
-}
-
-.theme-dot:hover {
-  transform: scale(1.16);
-  background-color: inherit;
-}
-
-.theme-dot[aria-pressed="true"] {
-  outline: 2px solid var(--gold);
-  outline-offset: 3px;
-}
-
-.theme-dot:focus-visible {
-  outline: 2px solid var(--gold);
-  outline-offset: 3px;
-}
-
-#menuBtn {
-  font-size: 22px;
-  padding: 8px 10px;
-  margin: 0;
-  cursor: pointer;
-  color: var(--gold);
-  line-height: 1;
-  flex-shrink: 0;
-}
-
-/* ===== PREMIUM GLASS MENU ===== */
-#siteMenu {
-  box-sizing: border-box;
-  width: 250px;
-  max-width: 100%;
-  margin: 20px 0 16px;
-  padding: 12px;
-  border: 1px solid rgba(105, 195, 155, 0.45);
-  border-radius: 10px;
-  background: color-mix(in srgb, var(--bg) 58%, transparent);
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
-  box-shadow:
-    inset 0 1px 1px rgba(255, 255, 255, 0.08),
-    inset 0 0 14px rgba(255, 255, 255, 0.025),
-    0 8px 24px rgba(0, 0, 0, 0.18);
-  text-align: left;
-}
-
-#siteMenu[style*="display: block"] { animation: menuFadeIn 0.45s ease both; }
-
-#siteMenu a {
-  display: block;
-  color: var(--menu-link);
-  text-decoration: none;
-  margin: 0;
-  padding: 12px 8px;
-  border-bottom: 1px solid color-mix(in srgb, var(--accent) 22%, transparent);
-  font-size: 16px;
-  text-align: left;
-  transition: color 0.3s ease, background-color 0.3s ease;
-  animation: menuFadeIn 0.45s ease both;
-}
-
-#siteMenu a:last-child { border-bottom: none; }
-#siteMenu a:nth-child(1) { animation-delay: 0.05s; }
-#siteMenu a:nth-child(2) { animation-delay: 0.12s; }
-#siteMenu a:nth-child(3) { animation-delay: 0.19s; }
-#siteMenu a:nth-child(4) { animation-delay: 0.26s; }
-#siteMenu a:nth-child(5) { animation-delay: 0.33s; }
-#siteMenu a:nth-child(6) { animation-delay: 0.40s; }
-#siteMenu a:nth-child(7) { animation-delay: 0.47s; }
-
-#siteMenu a:hover,
-#siteMenu a:focus {
-  color: var(--gold);
-  background-color: color-mix(in srgb, var(--gold) 9%, transparent);
-  outline: none;
-}
-
-#siteMenu a.dashboard-link {
-  color: var(--gold);
-  font-weight: bold;
-  border-top: 1px solid color-mix(in srgb, var(--gold) 35%, transparent);
-  margin-top: 5px;
-  text-shadow: 0 0 8px color-mix(in srgb, var(--gold) 15%, transparent);
-}
-
-#siteMenu a.dashboard-link:hover,
-#siteMenu a.dashboard-link:focus {
-  color: var(--gold);
-  background-color: color-mix(in srgb, var(--gold) 12%, transparent);
-  box-shadow: inset 0 0 12px color-mix(in srgb, var(--gold) 8%, transparent);
-}
-
-/* ===== WELCOME ===== */
-#welcome {
-  text-align: left;
-  color: #ffffff;
-  animation: fadeUp 0.7s ease both;
-}
-
-#welcome h2 {
-  color: var(--accent);
-  font-size: 18px;
-  text-align: left;
-}
-
-#welcome p { color: #eeeeee; }
-
-/* ===== QUOTE SLIDER ===== */
-#quoteSlider {
-  position: relative;
-  z-index: 1;
-  height: 220px;
-  margin: 10px 0;
-  padding: 5px 35% 40px 10px;
-  text-align: left;
-  box-sizing: border-box;
-}
-
-.quote {
-  position: absolute;
-  top: 5px;
-  left: 10px;
-  right: 35%;
-  opacity: 0;
-  visibility: hidden;
-  transform: translateY(12px);
-  transition: opacity 0.8s ease, transform 0.8s ease, visibility 0.8s ease;
-}
-
-.quote.active {
-  opacity: 1;
-  visibility: visible;
-  transform: translateY(0);
-}
-
-.quote::before {
-  content: "“";
-  display: block;
-  color: var(--accent);
-  font-size: 48px;
-  line-height: 1;
-  margin-bottom: -28px;
-}
-
-.quote p {
-  color: #eeeeee;
-  font-size: 16px;
-  font-weight: 300;
-  line-height: 1.6;
-  margin: 0 0 10px;
-}
-
-.quote span {
-  display: block;
-  color: var(--accent);
-  font-size: 15px;
-  text-align: left;
-}
-
-#quoteDots {
-  display: flex;
-  position: absolute;
-  left: 10px;
-  bottom: 12px;
-  justify-content: flex-start;
-  gap: 8px;
-  margin-top: 0;
-}
-
-.quoteDot {
-  width: 9px;
-  height: 9px;
-  padding: 0;
-  border-radius: 50%;
-  background-color: #52635d;
-  cursor: pointer;
-}
-
-.quoteDot.active { background-color: var(--accent); }
-
-/* ===== ABOUT ===== */
-#aboutText {
-  background: var(--surface);
-  padding: 20px;
-  border-radius: 12px;
-  color: var(--text);
-  animation: fadeUp 0.7s ease both;
-}
-
-#aboutText p { color: var(--text); line-height: 1.8; }
-
-/* ===== WRITING SECTION ===== */
-#writingText { animation: fadeUp 0.7s ease both; }
-
-#writingText > h2 {
-  color: var(--accent);
-  text-align: left;
-  font-size: 22px;
-  margin-bottom: 12px;
-  padding-bottom: 10px;
-  border-bottom: 1px solid color-mix(in srgb, var(--accent) 50%, transparent);
-}
-
-#articleList {
-  background: color-mix(in srgb, var(--accent) 10%, transparent);
-  border: 1px solid var(--accent);
-  border-radius: 12px;
-  padding: 15px;
-  margin-top: 15px;
-  text-align: left;
-  animation: fadeUp 0.7s ease both;
-}
-
-#articleList p {
-  margin: 0;
-  border-bottom: 1px solid color-mix(in srgb, var(--accent) 25%, transparent);
-}
-
-#articleList p:last-child { border-bottom: none; }
-
-#articleList a {
-  display: block;
-  color: var(--menu-link);
-  text-decoration: none;
-  padding: 14px 10px;
-  font-size: 17px;
-  transition: color 0.3s ease, background 0.3s ease;
-}
-
-#articleList a:hover {
-  background: color-mix(in srgb, var(--gold) 9%, transparent);
-  color: var(--gold);
-}
-
-/* ===== ARTICLES ===== */
-#article1,
-#societyCategory,
-#currentCategory,
-#personalCategory,
-#literatureCategory,
-#thoughtsCategory {
-  background: var(--surface-strong);
-  border: 1px solid var(--accent);
-  padding: 55px 20px 20px;
-  border-radius: 12px;
-  text-align: left;
-  position: relative;
-  box-shadow: 0 0 18px color-mix(in srgb, var(--accent) 25%, transparent);
-  animation: fadeUp 0.7s ease both;
-}
-
-#article1 > p:first-child,
-#societyCategory > p:first-child,
-#currentCategory > p:first-child,
-#personalCategory > p:first-child,
-#literatureCategory > p:first-child,
-#thoughtsCategory > p:first-child {
-  position: absolute;
-  top: 8px;
-  right: 12px;
-  margin: 0;
-}
-
-#article1 > p:first-child a,
-#societyCategory > p:first-child a,
-#currentCategory > p:first-child a,
-#personalCategory > p:first-child a,
-#literatureCategory > p:first-child a,
-#thoughtsCategory > p:first-child a {
-  display: inline-block;
-  background: var(--button-bg);
-  color: #ffffff;
-  padding: 7px 13px;
-  border-radius: 8px;
-  text-decoration: none;
-  font-size: 14px;
-}
-
-#article1 h2,
-#article1 p,
-#societyCategory h2,
-#societyCategory p,
-#currentCategory h2,
-#currentCategory p,
-#personalCategory h2,
-#personalCategory p,
-#literatureCategory h2,
-#literatureCategory p {
-  color: var(--text);
-  line-height: 1.9;
-}
-
-#literatureCategory h3 { color: #D66B6B; }
-#thoughtsCategory h2,
-#thoughtsCategory p {
-  color: #FFFFFF;
-  text-shadow: 0 0 5px rgba(255, 255, 255, 0.25);
-}
-.red-point { color: #D66B6B; font-weight: 600; }
-
-/* ===== MY 2027 SECTION ===== */
-#goals2027 {
-  display: none;
-  text-align: left;
-  padding: 20px 5px;
-  color: var(--text);
-  animation: fadeUp 0.7s ease both;
-}
-
-.goals-hero {
-  text-align: center;
-  padding: 30px 15px;
-  border: 1px solid var(--accent);
-  border-radius: 14px;
-  background: linear-gradient(145deg, var(--card-bg), var(--bg));
-  margin-bottom: 25px;
-}
-
-.goals-hero h2 { color: var(--gold); font-size: 28px; margin-bottom: 8px; }
-.goals-hero p { color: #AFC3B8; line-height: 1.7; }
-
-.goal-card {
-  background: var(--card-bg);
-  border: 1px solid var(--card-border);
-  border-radius: 12px;
-  padding: 18px;
-  margin: 14px 0;
-}
-
-.goal-card h3 { color: var(--gold); margin-top: 0; }
-.goal-card p { color: #C5D2CB; line-height: 1.7; }
-
-.goal-progress {
-  height: 8px;
-  background: #30443B;
-  border-radius: 10px;
-  overflow: hidden;
-  margin-top: 12px;
-}
-
-.goal-progress span {
-  display: block;
-  height: 100%;
-  width: 0%;
-  background: var(--accent);
-  border-radius: 10px;
-}
-
-.year-month {
-  border: 1px solid var(--card-border);
-  border-radius: 10px;
-  padding: 14px;
-  margin: 10px 0;
-  background: var(--soft-bg);
-}
-
-.year-month summary { color: var(--gold); font-weight: bold; cursor: pointer; }
-.year-month p { color: #C5D2CB; line-height: 1.7; }
-.goal-back { color: var(--gold); text-decoration: none; display: inline-block; margin-bottom: 18px; }
-
-/* ===== REFLECTION CARD ===== */
-.reflection-card {
-  background: linear-gradient(145deg, var(--card-bg), var(--bg));
-  border-top: 1px solid var(--gold);
-  border-bottom: 1px solid var(--gold);
-  border-left: 3px solid var(--gold);
-  border-right: 3px solid var(--gold);
-  border-radius: 10px;
-  padding: 18px;
-  margin: 18px 0;
-  box-shadow: 0 5px 18px rgba(0, 0, 0, 0.25);
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-}
-
-.reflection-card p {
-  color: #eeeeee;
-  font-size: 16px;
-  line-height: 1.9;
-  text-align: left;
-  margin-bottom: 16px;
-}
-
-.reflection-label {
-  display: inline-block;
-  background: #493D24;
-  border: 1px solid var(--gold);
-  color: var(--gold);
-  font-size: 12px;
-  padding: 6px 10px;
-  border-radius: 5px;
-  align-self: flex-end;
-  margin-bottom: 12px;
-  text-align: center;
-}
-
-/* ===== FOOTER ===== */
-#footer {
-  margin-top: 40px;
-  padding: 25px 10px;
-  border-top: 1px solid var(--accent);
-  text-align: center;
-}
-
-#footer h3 { color: var(--gold); font-size: 18px; margin-bottom: 20px; }
-
-.social-links { display: flex; justify-content: center; gap: 18px; }
-
-.social-links a {
-  box-sizing: border-box;
-  width: 42px;
-  height: 42px;
-  padding: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid var(--gold);
-  border-radius: 50%;
-  color: var(--accent);
-  font-size: 22px;
-  text-decoration: none;
-  transition: 0.3s;
-}
-
-.social-links a:hover { background: var(--gold); color: var(--bg); }
-
-/* ===== PREMIUM BACK BUTTON ===== */
-.premium-back-wrap {
-  display: flex;
-  justify-content: center;
-  margin: 28px auto 8px;
-  padding: 0 5px;
-}
-
-.premium-back-button {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  width: 85%;
-  max-width: 320px;
-  box-sizing: border-box;
-  padding: 14px 18px;
-  background: linear-gradient(135deg, var(--button-bg), var(--card-bg));
-  color: #F1E6C5;
-  border: 1px solid var(--gold);
-  border-radius: 50px;
-  font-size: 16px;
-  font-weight: 600;
-  letter-spacing: 0.3px;
-  cursor: pointer;
-  box-shadow: 0 5px 18px rgba(0, 0, 0, 0.25), 0 0 12px color-mix(in srgb, var(--gold) 10%, transparent);
-  transition: all 0.3s ease;
-}
-
-.premium-back-button span { color: var(--gold); font-size: 21px; line-height: 1; }
-
-.premium-back-button:hover {
-  background: linear-gradient(135deg, var(--button-hover), var(--card-bg));
-  box-shadow: 0 0 18px color-mix(in srgb, var(--gold) 25%, transparent);
-  transform: translateY(-2px);
-}
-
-.premium-back-button:active { transform: scale(0.97); }
-
-/* ===== ANIMATIONS ===== */
-@keyframes fadeSlideIn {
-  from { opacity: 0; transform: translateY(-15px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(18px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-@keyframes menuFadeIn {
-  from { opacity: 0; transform: translateY(-12px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-/* ===== MOBILE HEADER ===== */
-@media (max-width: 380px) {
-  .header h2 { font-size: 19px; }
-  .header-actions { gap: 5px; }
-  #themePicker { gap: 4px; }
-  .theme-dot { width: 11px; height: 11px; min-width: 11px; }
-  #menuBtn { font-size: 21px; padding: 8px 6px; }
-}
-
-/* ===== HASAN ALAMIN AI DEMO ===== */
-#aiDemo { display:none; text-align:left; color:var(--text); padding:10px 4px 20px; }
-#aiDemo .ai-shell { max-width:760px; margin:0 auto; border:1px solid var(--card-border); border-radius:18px; overflow:hidden; background:var(--card-bg); box-shadow:0 12px 32px rgba(0,0,0,.24); }
-#aiDemo .ai-top { padding:18px; background:linear-gradient(135deg,var(--soft-bg),var(--card-bg)); border-bottom:1px solid var(--card-border); }
-#aiDemo .ai-top h2 { margin:0 0 6px; color:var(--gold); font-size:22px; }
-#aiDemo .ai-top p { color:var(--text); font-size:14px; margin:0; opacity:.8; }
-#aiDemo .ai-status { display:inline-block; margin-top:10px; padding:5px 9px; border-radius:20px; color:var(--gold); border:1px solid var(--gold); font-size:11px; }
-#aiDemo .ai-messages { min-height:260px; max-height:52vh; overflow-y:auto; padding:16px; display:flex; flex-direction:column; gap:12px; }
-#aiDemo .ai-bubble { max-width:88%; white-space:pre-wrap; overflow-wrap:anywhere; padding:12px 14px; border-radius:14px; line-height:1.65; font-size:15px; }
-#aiDemo .ai-bubble.bot { align-self:flex-start; background:var(--soft-bg); border:1px solid var(--card-border); color:var(--text); border-bottom-left-radius:4px; }
-#aiDemo .ai-bubble.user { align-self:flex-end; background:var(--button-bg); color:#fff; border-bottom-right-radius:4px; }
-#aiDemo .ai-suggestions { display:flex; flex-wrap:wrap; gap:7px; padding:0 15px 14px; }
-#aiDemo .ai-suggestions button { font-size:13px; padding:8px 11px; border:1px solid var(--accent); background:transparent; color:var(--text); border-radius:18px; }
-#aiDemo .ai-compose { display:flex; gap:8px; padding:12px; border-top:1px solid var(--card-border); background:var(--soft-bg); }
-#aiDemo .ai-compose textarea { flex:1; min-width:0; resize:vertical; min-height:44px; max-height:110px; border-radius:12px; border:1px solid var(--card-border); background:var(--bg); color:var(--text); padding:11px; font:inherit; font-size:15px; }
-#aiDemo .ai-compose button { font-size:16px; padding:10px 15px; border-radius:12px; }
-#aiDemo .ai-note { color:var(--text); opacity:.65; font-size:12px; text-align:center; padding:0 12px 14px; }
-#aiDemo .ai-back { display:inline-block; color:var(--gold); text-decoration:none; margin:0 0 14px 4px; }
-
-/* ===== REDUCED MOTION ===== */
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
-    animation-duration: 0.01ms !important;
-    transition-duration: 0.01ms !important;
-  }
-}
+:root{--bg:#101B19;--accent:#49A982;--gold:#D6B978;--text:#E8F1ED;--button-bg:#245548;--button-hover:#367563;--menu-link:#C7B2F2;--surface:rgba(73,169,130,.15);--surface-strong:rgba(73,169,130,.22);--card-bg:#172520;--card-border:#315747;--soft-bg:#14211D}
+:root[data-theme="lavender"]{--bg:#211A35;--accent:#A78BFA;--gold:#D8B4FE;--text:#F0EAFB;--button-bg:#49366F;--button-hover:#60488D;--menu-link:#E2D5FF;--surface:rgba(167,139,250,.15);--surface-strong:rgba(167,139,250,.22);--card-bg:#2B2244;--card-border:#59477F;--soft-bg:#261E3C}
+:root[data-theme="ocean"]{--bg:#102235;--accent:#38BDF8;--gold:#67E8F9;--text:#E5F6FF;--button-bg:#174B68;--button-hover:#216487;--menu-link:#B8E9FF;--surface:rgba(56,189,248,.15);--surface-strong:rgba(56,189,248,.22);--card-bg:#173047;--card-border:#285775;--soft-bg:#142A3F}
+:root[data-theme="rose"]{--bg:#301B27;--accent:#F472B6;--gold:#FDA4AF;--text:#FFF0F5;--button-bg:#71344F;--button-hover:#914362;--menu-link:#FFD0E5;--surface:rgba(244,114,182,.15);--surface-strong:rgba(244,114,182,.22);--card-bg:#3D2332;--card-border:#75415E;--soft-bg:#351F2C}
+:root[data-theme="black-gold"]{--bg:#111;--accent:#D6B978;--gold:#F0D99A;--text:#F2EEE4;--button-bg:#4B4028;--button-hover:#685A37;--menu-link:#F0D99A;--surface:rgba(214,185,120,.13);--surface-strong:rgba(214,185,120,.2);--card-bg:#1D1B16;--card-border:#625333;--soft-bg:#191711}
+:root[data-theme="black-blue"]{--bg:#101820;--accent:#38BDF8;--gold:#7DD3FC;--text:#E8F5FC;--button-bg:#17445D;--button-hover:#216486;--menu-link:#B8E9FF;--surface:rgba(56,189,248,.13);--surface-strong:rgba(56,189,248,.2);--card-bg:#182632;--card-border:#31566B;--soft-bg:#14212B}
+*{box-sizing:border-box}
+body{background:var(--bg);font-family:Arial,sans-serif;text-align:center;margin:8px}
+h1{color:var(--button-bg)}p{color:#444;font-size:18px}
+button{background:var(--button-bg);color:white;padding:12px 20px;border:0;border-radius:20px;font-size:22px}
+button:hover{background:var(--button-hover)}
+.card{background:transparent;width:100%;max-width:900px;margin:10px auto;padding:4px 0;border-radius:15px;box-shadow:0 8px 24px rgba(0,0,0,.18);position:relative;z-index:1}
+.header{display:flex;align-items:center;justify-content:space-between;flex-wrap:nowrap;gap:5px;margin-bottom:20px;padding-bottom:12px;border-bottom:1px solid var(--accent);animation:fadeSlideIn .9s ease both;min-width:0}
+.header h2{margin:0;color:var(--accent);font-size:clamp(14px,5vw,22px);white-space:nowrap;flex:0 1 auto;min-width:0}
+.header-actions{display:flex;align-items:center;justify-content:flex-end;gap:7px;flex-shrink:0;white-space:nowrap}
+#aiAssistantBtn{width:34px;height:34px;min-width:34px;padding:0;margin:0;flex-shrink:0;border-radius:50%;display:flex;align-items:center;justify-content:center;background:var(--button-bg);border:1px solid var(--gold);color:var(--gold);cursor:pointer;box-shadow:0 0 9px color-mix(in srgb,var(--gold) 20%,transparent)}
+#aiAssistantBtn svg{width:27px;height:27px;display:block}
+#aiAssistantBtn:hover{background:var(--button-hover);transform:scale(1.05)}
+#themePicker{display:flex;align-items:center;justify-content:center;gap:5px}
+.theme-dot{width:13px;height:13px;min-width:13px;padding:0;margin:0;border-radius:50%;border:1px solid rgba(255,255,255,.45);cursor:pointer;box-sizing:border-box;box-shadow:0 0 2px rgba(0,0,0,.35);transition:transform .2s ease,outline .2s ease}
+.theme-dot:hover{transform:scale(1.16);background-color:inherit}
+.theme-dot[aria-pressed="true"],.theme-dot:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+#menuBtn{font-size:22px;padding:8px 10px;margin:0;cursor:pointer;color:var(--gold);line-height:1;flex-shrink:0}
+#siteMenu{box-sizing:border-box;width:250px;max-width:100%;margin:20px 0 16px;padding:12px;border:1px solid rgba(105,195,155,.45);border-radius:10px;background:color-mix(in srgb,var(--bg) 58%,transparent);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);box-shadow:inset 0 1px 1px rgba(255,255,255,.08),inset 0 0 14px rgba(255,255,255,.025),0 8px 24px rgba(0,0,0,.18);text-align:left}
+#siteMenu[style*="display: block"]{animation:menuFadeIn .45s ease both}
+#siteMenu a{display:block;color:var(--menu-link);text-decoration:none;margin:0;padding:12px 8px;border-bottom:1px solid color-mix(in srgb,var(--accent) 22%,transparent);font-size:16px;text-align:left;transition:color .3s ease,background-color .3s ease;animation:menuFadeIn .45s ease both}
+#siteMenu a:last-child{border-bottom:0}
+#siteMenu a:hover,#siteMenu a:focus{color:var(--gold);background:color-mix(in srgb,var(--gold) 9%,transparent);outline:0}
+#siteMenu a.dashboard-link{color:var(--gold);font-weight:bold;border-top:1px solid color-mix(in srgb,var(--gold) 35%,transparent);margin-top:5px;text-shadow:0 0 8px color-mix(in srgb,var(--gold) 15%,transparent)}
+#welcome{text-align:left;color:#fff;animation:fadeUp .7s ease both}
+#welcome h2{color:var(--accent);font-size:18px;text-align:left}
+#welcome p{color:#eee}
+#quoteSlider{position:relative;z-index:1;height:220px;margin:10px 0;padding:5px 35% 40px 10px;text-align:left}
+.quote{position:absolute;top:5px;left:10px;right:35%;opacity:0;visibility:hidden;transform:translateY(12px);transition:opacity .8s ease,transform .8s ease,visibility .8s ease}
+.quote.active{opacity:1;visibility:visible;transform:translateY(0)}
+.quote:before{content:"“";display:block;color:var(--accent);font-size:48px;line-height:1;margin-bottom:-28px}
+.quote p{color:#eee;font-size:16px;font-weight:300;line-height:1.6;margin:0 0 10px}
+.quote span{display:block;color:var(--accent);font-size:15px;text-align:left}
+#quoteDots{display:flex;position:absolute;left:10px;bottom:12px;gap:8px}
+.quoteDot{width:9px;height:9px;padding:0;border-radius:50%;background:#52635d;cursor:pointer}
+.quoteDot.active{background:var(--accent)}
+#aboutText{background:var(--surface);padding:20px;border-radius:12px;color:var(--text);animation:fadeUp .7s ease both}
+#aboutText p{color:var(--text);line-height:1.8}
+#writingText{animation:fadeUp .7s ease both}
+#writingText>h2{color:var(--accent);text-align:left;font-size:22px;margin-bottom:12px;padding-bottom:10px;border-bottom:1px solid color-mix(in srgb,var(--accent) 50%,transparent)}
+#articleList{background:color-mix(in srgb,var(--accent) 10%,transparent);border:1px solid var(--accent);border-radius:12px;padding:15px;margin-top:15px;text-align:left;animation:fadeUp .7s ease both}
+#articleList p{margin:0;border-bottom:1px solid color-mix(in srgb,var(--accent) 25%,transparent)}
+#articleList p:last-child{border:0}
+#articleList a{display:block;color:var(--menu-link);text-decoration:none;padding:14px 10px;font-size:17px}
+#articleList a:hover{background:color-mix(in srgb,var(--gold) 9%,transparent);color:var(--gold)}
+#article1,#societyCategory,#currentCategory,#personalCategory,#literatureCategory,#thoughtsCategory{background:var(--surface-strong);border:1px solid var(--accent);padding:55px 20px 20px;border-radius:12px;text-align:left;position:relative;box-shadow:0 0 18px color-mix(in srgb,var(--accent) 25%,transparent);animation:fadeUp .7s ease both}
+#article1>p:first-child,#societyCategory>p:first-child,#currentCategory>p:first-child,#personalCategory>p:first-child,#literatureCategory>p:first-child,#thoughtsCategory>p:first-child{position:absolute;top:8px;right:12px;margin:0}
+#article1>p:first-child a,#societyCategory>p:first-child a,#currentCategory>p:first-child a,#personalCategory>p:first-child a,#literatureCategory>p:first-child a,#thoughtsCategory>p:first-child a{display:inline-block;background:var(--button-bg);color:#fff;padding:7px 13px;border-radius:8px;text-decoration:none;font-size:14px}
+#article1 h2,#article1 p,#societyCategory h2,#societyCategory p,#currentCategory h2,#currentCategory p,#personalCategory h2,#personalCategory p,#literatureCategory h2,#literatureCategory p{color:var(--text);line-height:1.9}
+#literatureCategory h3{color:#D66B6B}
+#thoughtsCategory h2,#thoughtsCategory p{color:#fff;text-shadow:0 0 5px rgba(255,255,255,.25)}
+.red-point{color:#D66B6B;font-weight:600}
+#goals2027{display:none;text-align:left;padding:20px 5px;color:var(--text);animation:fadeUp .7s ease both}
+.goals-hero{text-align:center;padding:30px 15px;border:1px solid var(--accent);border-radius:14px;background:linear-gradient(145deg,var(--card-bg),var(--bg));margin-bottom:25px}
+.goals-hero h2{color:var(--gold);font-size:28px;margin-bottom:8px}.goals-hero p{color:#AFC3B8;line-height:1.7}
+.goal-card{background:var(--card-bg);border:1px solid var(--card-border);border-radius:12px;padding:18px;margin:14px 0}
+.goal-card h3{color:var(--gold);margin-top:0}.goal-card p{color:#C5D2CB;line-height:1.7}
+.goal-progress{height:8px;background:#30443B;border-radius:10px;overflow:hidden;margin-top:12px}.goal-progress span{display:block;height:100%;width:0%;background:var(--accent);border-radius:10px}
+.year-month{border:1px solid var(--card-border);border-radius:10px;padding:14px;margin:10px 0;background:var(--soft-bg)}
+.year-month summary{color:var(--gold);font-weight:bold;cursor:pointer}.year-month p{color:#C5D2CB;line-height:1.7}
+.goal-back{color:var(--gold);text-decoration:none;display:inline-block;margin-bottom:18px}
+.reflection-card{background:linear-gradient(145deg,var(--card-bg),var(--bg));border-top:1px solid var(--gold);border-bottom:1px solid var(--gold);border-left:3px solid var(--gold);border-right:3px solid var(--gold);border-radius:10px;padding:18px;margin:18px 0;box-shadow:0 5px 18px rgba(0,0,0,.25);display:flex;flex-direction:column;align-items:flex-start}
+.reflection-card p{color:#eee;font-size:16px;line-height:1.9;text-align:left;margin-bottom:16px}
+.reflection-label{display:inline-block;background:#493D24;border:1px solid var(--gold);color:var(--gold);font-size:12px;padding:6px 10px;border-radius:5px;align-self:flex-end;margin-bottom:12px;text-align:center}
+#footer{margin-top:40px;padding:25px 10px;border-top:1px solid var(--accent);text-align:center}
+#footer h3{color:var(--gold);font-size:18px;margin-bottom:20px}
+.social-links{display:flex;justify-content:center;gap:18px}
+.social-links a{width:42px;height:42px;padding:0;display:flex;align-items:center;justify-content:center;border:1px solid var(--gold);border-radius:50%;color:var(--accent);font-size:22px;text-decoration:none;transition:.3s}
+.social-links a:hover{background:var(--gold);color:var(--bg)}
+.premium-back-wrap{display:flex;justify-content:center;margin:28px auto 8px;padding:0 5px}
+.premium-back-button{display:flex;align-items:center;justify-content:center;gap:10px;width:85%;max-width:320px;padding:14px 18px;background:linear-gradient(135deg,var(--button-bg),var(--card-bg));color:#F1E6C5;border:1px solid var(--gold);border-radius:50px;font-size:16px;font-weight:600;letter-spacing:.3px;cursor:pointer;box-shadow:0 5px 18px rgba(0,0,0,.25),0 0 12px color-mix(in srgb,var(--gold) 10%,transparent);transition:all .3s ease}
+.premium-back-button span{color:var(--gold);font-size:21px;line-height:1}
+.premium-back-button:hover{background:linear-gradient(135deg,var(--button-hover),var(--card-bg));box-shadow:0 0 18px color-mix(in srgb,var(--gold) 25%,transparent);transform:translateY(-2px)}
+.premium-back-button:active{transform:scale(.97)}
+@keyframes fadeSlideIn{from{opacity:0;transform:translateY(-15px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+@keyframes menuFadeIn{from{opacity:0;transform:translateY(-12px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:380px){.header{gap:3px}.header h2{font-size:clamp(13px,4.5vw,18px)}.header-actions{gap:4px}#aiAssistantBtn{width:28px;height:28px;min-width:28px}#aiAssistantBtn svg{width:23px;height:23px}#themePicker{gap:3px}.theme-dot{width:10px;height:10px;min-width:10px}#menuBtn{font-size:20px;padding:7px 5px}}
+#aiDemo{display:none;text-align:left;color:var(--text);padding:10px 4px 20px}
+#aiDemo .ai-shell{max-width:760px;margin:0 auto;border:1px solid var(--card-border);border-radius:18px;overflow:hidden;background:var(--card-bg);box-shadow:0 12px 32px rgba(0,0,0,.24)}
+#aiDemo .ai-top{padding:18px;background:linear-gradient(135deg,var(--soft-bg),var(--card-bg));border-bottom:1px solid var(--card-border)}
+#aiDemo .ai-top h2{margin:0 0 6px;color:var(--gold);font-size:22px}
+#aiDemo .ai-top p{color:var(--text);font-size:14px;margin:0;opacity:.8}
+#aiDemo .ai-status{display:inline-block;margin-top:10px;padding:5px 9px;border-radius:20px;color:var(--gold);border:1px solid var(--gold);font-size:11px}
+#aiDemo .ai-messages{min-height:260px;max-height:52vh;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:12px}
+#aiDemo .ai-bubble{max-width:88%;white-space:pre-wrap;overflow-wrap:anywhere;padding:12px 14px;border-radius:14px;line-height:1.65;font-size:15px}
+#aiDemo .ai-bubble.bot{align-self:flex-start;background:var(--soft-bg);border:1px solid var(--card-border);color:var(--text);border-bottom-left-radius:4px}
+#aiDemo .ai-bubble.user{align-self:flex-end;background:var(--button-bg);color:#fff;border-bottom-right-radius:4px}
+#aiDemo .ai-suggestions{display:flex;flex-wrap:wrap;gap:7px;padding:0 15px 14px}
+#aiDemo .ai-suggestions button{font-size:13px;padding:8px 11px;border:1px solid var(--accent);background:transparent;color:var(--text);border-radius:18px}
+#aiDemo .ai-compose{display:flex;gap:8px;padding:12px;border-top:1px solid var(--card-border);background:var(--soft-bg)}
+#aiDemo .ai-compose textarea{flex:1;min-width:0;resize:vertical;min-height:44px;max-height:110px;border-radius:12px;border:1px solid var(--card-border);background:var(--bg);color:var(--text);padding:11px;font:inherit;font-size:15px}
+#aiDemo .ai-compose button{font-size:16px;padding:10px 15px;border-radius:12px}
+#aiDemo .ai-note{color:var(--text);opacity:.65;font-size:12px;text-align:center;padding:0 12px 14px}
+#aiDemo .ai-back{display:inline-block;color:var(--gold);text-decoration:none;margin:0 0 14px 4px}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
 </style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
-  <div class="card">
-<div class="header">
-  <h2>HASAN ALAMIN</h2>
-  <div class="header-actions">
-    <div id="themePicker" aria-label="Color theme selector">
-      <button type="button" class="theme-dot" data-theme-choice="dark-green" style="background:#49A982;" aria-label="Dark Green and Gold" title="Dark Green & Gold" aria-pressed="true"></button>
-      <button type="button" class="theme-dot" data-theme-choice="lavender" style="background:#A78BFA;" aria-label="Lavender and Purple" title="Lavender & Purple" aria-pressed="false"></button>
-      <button type="button" class="theme-dot" data-theme-choice="ocean" style="background:#38BDF8;" aria-label="Ocean Blue" title="Ocean Blue" aria-pressed="false"></button>
-      <button type="button" class="theme-dot" data-theme-choice="rose" style="background:#F472B6;" aria-label="Rose Pink" title="Rose Pink" aria-pressed="false"></button>
-      <button type="button" class="theme-dot" data-theme-choice="black-gold" style="background:#D6B978;" aria-label="Black and Gold" title="Black & Gold" aria-pressed="false"></button>
-      <button type="button" class="theme-dot" data-theme-choice="black-blue" style="background:#38BDF8;" aria-label="Black and Blue" title="Black & Blue" aria-pressed="false"></button>
-    </div>
-    <button id="menuBtn" aria-label="মেনু খুলুন">☰</button>
-  </div>
+<div class="card">
+<header class="header">
+<h2>HASAN ALAMIN</h2>
+<div class="header-actions">
+<button type="button" id="aiAssistantBtn" aria-label="HASAN ALAMIN AI খুলুন" title="HASAN ALAMIN AI" onclick="openAIDemo()">
+<svg viewBox="0 0 40 40" role="img" aria-label="AI message icon">
+<circle cx="20" cy="20" r="18" fill="none" stroke="var(--gold)" stroke-width="1.5"/>
+<path d="M10 12.5Q10 10 12.5 10H27.5Q30 10 30 12.5V23Q30 25.5 27.5 25.5H19L13 30V25.5H12.5Q10 25.5 10 23Z" fill="none" stroke="var(--gold)" stroke-width="1.5" stroke-linejoin="round"/>
+<text x="20" y="21" text-anchor="middle" font-size="9" font-weight="700" fill="var(--gold)">AI</text>
+</svg>
+</button>
+<div id="themePicker" aria-label="Color theme selector">
+<button type="button" class="theme-dot" data-theme-choice="dark-green" style="background:#49A982" aria-label="Dark Green and Gold" title="Dark Green & Gold" aria-pressed="true"></button>
+<button type="button" class="theme-dot" data-theme-choice="lavender" style="background:#A78BFA" aria-label="Lavender and Purple" title="Lavender & Purple" aria-pressed="false"></button>
+<button type="button" class="theme-dot" data-theme-choice="ocean" style="background:#38BDF8" aria-label="Ocean Blue" title="Ocean Blue" aria-pressed="false"></button>
+<button type="button" class="theme-dot" data-theme-choice="rose" style="background:#F472B6" aria-label="Rose Pink" title="Rose Pink" aria-pressed="false"></button>
+<button type="button" class="theme-dot" data-theme-choice="black-gold" style="background:#D6B978" aria-label="Black and Gold" title="Black & Gold" aria-pressed="false"></button>
+<button type="button" class="theme-dot" data-theme-choice="black-blue" style="background:#38BDF8" aria-label="Black and Blue" title="Black & Blue" aria-pressed="false"></button>
 </div>
+<button id="menuBtn" aria-label="মেনু খুলুন">☰</button>
+</div>
+</header>
 <div id="quoteSlider">
-  <div class="quote active">
-    <p>উত্তাল সমুদ্রের ঢেউয়ের মতো সমগ্র পৃথিবীটা সীমাহীন দুঃখ-কষ্টের আবাসস্থল</p>
-    <span>— Hasan Alamin</span>
-  </div>
-  <div class="quote">
-    <p>অনেক পরিশ্রমী কে ঠেকতে দেখেছি কিন্ত বিফল হতে দেখিনি</p>
-    <span>— Hasan Alamin</span>
-  </div>
-  <div class="quote">
-    <p>আপনার পরিকল্পনা ভেস্তে গেলে হতাশ হবেন না কারন আল্লাহর পরিকল্পনা সর্বোত্তম</p>
-    <span>— Hasan Alamin</span>
-  </div>
-  <div class="quote">
-    <p>জীবনের সব চাওয়া হবে পূরন এমন কখনো ভেবো না,জীবন মানেই সংগ্রাম করে যেতে হয় সাধনা</p>
-    <span>— Hasan Alamin</span>
-  </div>
-  <div class="quote">
-    <p>জুতার ফিতা ছিঁড়ে গেলেও আল্লাহর সাহায্য চাও কারন আল্লাহ সাহায্য ছাড়া কোনকিছুই হয় না।</p>
-    <span>— Hasan Alamin</span>
-  </div>
-  <div id="quoteDots">
-    <button class="quoteDot active" onclick="showQuote(0)"> </button>
-    <button class="quoteDot" onclick="showQuote(1)"> </button>
-    <button class="quoteDot" onclick="showQuote(2)"> </button>
-    <button class="quoteDot" onclick="showQuote(3)"> </button>
-    <button class="quoteDot" onclick="showQuote(4)"> </button>
-  </div>
+<div class="quote active"><p>উত্তাল সমুদ্রের ঢেউয়ের মতো সমগ্র পৃথিবীটা সীমাহীন দুঃখ-কষ্টের আবাসস্থল</p><span>— Hasan Alamin</span></div>
+<div class="quote"><p>অনেক পরিশ্রমী কে ঠেকতে দেখেছি কিন্ত বিফল হতে দেখিনি</p><span>— Hasan Alamin</span></div>
+<div class="quote"><p>আপনার পরিকল্পনা ভেস্তে গেলে হতাশ হবেন না কারন আল্লাহর পরিকল্পনা সর্বোত্তম</p><span>— Hasan Alamin</span></div>
+<div class="quote"><p>জীবনের সব চাওয়া হবে পূরন এমন কখনো ভেবো না,জীবন মানেই সংগ্রাম করে যেতে হয় সাধনা</p><span>— Hasan Alamin</span></div>
+<div class="quote"><p>জুতার ফিতা ছিঁড়ে গেলেও আল্লাহর সাহায্য চাও কারন আল্লাহ সাহায্য ছাড়া কোনকিছুই হয় না।</p><span>— Hasan Alamin</span></div>
+<div id="quoteDots"><button class="quoteDot active" onclick="showQuote(0)"> </button><button class="quoteDot" onclick="showQuote(1)"> </button><button class="quoteDot" onclick="showQuote(2)"> </button><button class="quoteDot" onclick="showQuote(3)"> </button><button class="quoteDot" onclick="showQuote(4)"> </button></div>
 </div>
-
 <div id="welcome">
-  <div class="reflection-card">
-    <div class="reflection-label">২০২৬ সালের অনুধাবন</div>
-    <p>আত্ম-সম্মান বজায় রেখে কঠিন পথে চলাটাই প্রকৃত মানুষের অস্তিত্বের মূল ভিত্তি।</p>
-    <p>যে অন্যের কাঁধে ভর দিয়ে চলে সে আসলে সমতলেও হোঁচট খায়, আর যে অনেক বড়-বড় পাহাড় চড়ে অভ্যস্ত সে অনেক বড় ঝড় আসলেও আঁকড়ে ধরে থাকতে চায়।</p>
-  </div>
-</div>
-
-<nav id="siteMenu" style="display: none;">
-  <a href="#home">🏠 হোম</a>
-  <a href="#aboutText" onclick="openAbout(); return false;">👤 আমার পরিচিতি</a>
-  <a href="#writingText" onclick="openWriting(); return false;">✍️ আমার লিখালিখি</a>
-  <a href="#videos" onclick="openVideos(); return false;">🎬 ভিডিও</a>
-  <a href="#aiDemo" onclick="openAIDemo(); return false;">✦ HASAN ALAMIN AI — Demo</a>
-  <a href="https://www.facebook.com/share/1bkNh8jX9A/" target="_blank">📚 বইয়ের পাতার গল্প</a>
-  <a href="mailto:hello.hasanalamin@gmail.com">✉️ যোগাযোগ</a>
-  <a href="dashboard.html" class="dashboard-link">🔐 ব্যক্তিগত ড্যাশবোর্ড</a>
+<div class="reflection-card"><div class="reflection-label">২০২৬ সালের অনুধাবন</div>
+<p>আত্ম-সম্মান বজায় রেখে কঠিন পথে চলাটাই প্রকৃত মানুষের অস্তিত্বের মূল ভিত্তি।</p>
+<p>যে অন্যের কাঁধে ভর দিয়ে চলে সে আসলে সমতলেও হোঁচট খায়, আর যে অনেক বড়-বড় পাহাড় চড়ে অভ্যস্ত সে অনেক বড় ঝড় আসলেও আঁকড়ে ধরে থাকতে চায়।</p></div></div>
+<nav id="siteMenu" style="display:none">
+<a href="#home">🏠 হোম</a>
+<a href="#aboutText" onclick="openAbout();return false">👤 আমার পরিচিতি</a>
+<a href="#writingText" onclick="openWriting();return false">✍️ আমার লিখালিখি</a>
+<a href="#videos" onclick="openVideos();return false">🎬 ভিডিও</a>
+<a href="https://www.facebook.com/share/1bkNh8jX9A/" target="_blank">📚 বইয়ের পাতার গল্প</a>
+<a href="mailto:hello.hasanalamin@gmail.com">✉️ যোগাযোগ</a>
+<a href="dashboard.html" class="dashboard-link">🔐 ব্যক্তিগত ড্যাশবোর্ড</a>
 </nav>
-
-<div id="aboutText" style="display: none;">
-  <h2>আমার পরিচিতি</h2>
-  <p>আমি <a href="https://www.facebook.com/hasanalamin02" target="_blank" style="color:var(--gold); text-decoration:none;">HASAN ALAMIN</a></p>
-  <p>মানুষ, জীবন, সমাজ ও সমকালীন বাস্তবতাকে বোঝার চেষ্টা করি নিজের মতো করে। চারপাশে ঘটে যাওয়া ঘটনা, মানুষের আচরণ, সম্পর্কের টানাপোড়েন এবং জীবনের নানা অভিজ্ঞতা আমাকে ভাবায়। সেই ভাবনাগুলোই কখনো শব্দ হয়ে প্রকাশ পায় আমার লেখায়।</p>
-  <p>আমার কাছে লেখালেখি শুধু মনের কথা প্রকাশের মাধ্যম নয়; বরং মানুষ, জীবন ও চারপাশের বাস্তবতাকে বোঝার একটি প্রচেষ্টা। আমি বিশ্বাস করি, চিন্তার গভীরতা মানুষকে নতুন করে দেখতে ও প্রশ্ন করতে শেখায়।</p>
-  <p>বই, সমাজ, সমকাল, জীবনবোধ ও মানুষের মনস্তত্ত্ব—এসবই আমার আগ্রহের জায়গা। যা দেখি, যা অনুভব করি, যা আমাকে ভাবায়—সেসব নিয়েই লিখতে ভালোবাসি।</p>
-  <p>আমি বিশ্বাস করি, প্রতিটি মানুষের জীবনেই কিছু গল্প ও উপলব্ধি থাকে, যা অন্য কারও চিন্তায় নতুন আলো জ্বালাতে পারে।</p>
-  <p>আমার এই ব্যক্তিগত পরিসরে সেই ভাবনা, পর্যবেক্ষণ ও উপলব্ধিগুলোই তুলে ধরতে চাই।</p>
-  <p><strong>লেখার মধ্য দিয়ে নিজেকে প্রকাশ করতে চাই, আর ভাবনার মধ্য দিয়ে মানুষ ও জীবনকে আরও গভীরভাবে বুঝতে চাই।</strong></p>
-  <div class="premium-back-wrap">
-    <button class="premium-back-button" onclick="returnToMenu()"><span>←</span> মূল মেনুতে ফিরে যান</button>
-  </div>
+<div id="aboutText" style="display:none">
+<h2>আমার পরিচিতি</h2>
+<p>আমি <a href="https://www.facebook.com/hasanalamin02" target="_blank" style="color:var(--gold);text-decoration:none">HASAN ALAMIN</a></p>
+<p>মানুষ, জীবন, সমাজ ও সমকালীন বাস্তবতাকে বোঝার চেষ্টা করি নিজের মতো করে। চারপাশে ঘটে যাওয়া ঘটনা, মানুষের আচরণ, সম্পর্কের টানাপোড়েন এবং জীবনের নানা অভিজ্ঞতা আমাকে ভাবায়। সেই ভাবনাগুলোই কখনো শব্দ হয়ে প্রকাশ পায় আমার লেখায়।</p>
+<p>আমার কাছে লেখালেখি শুধু মনের কথা প্রকাশের মাধ্যম নয়; বরং মানুষ, জীবন ও চারপাশের বাস্তবতাকে বোঝার একটি প্রচেষ্টা। আমি বিশ্বাস করি, চিন্তার গভীরতা মানুষকে নতুন করে দেখতে ও প্রশ্ন করতে শেখায়।</p>
+<p>বই, সমাজ, সমকাল, জীবনবোধ ও মানুষের মনস্তত্ত্ব—এসবই আমার আগ্রহের জায়গা। যা দেখি, যা অনুভব করি, যা আমাকে ভাবায়—সেসব নিয়েই লিখতে ভালোবাসি।</p>
+<p>আমি বিশ্বাস করি, প্রতিটি মানুষের জীবনেই কিছু গল্প ও উপলব্ধি থাকে, যা অন্য কারও চিন্তায় নতুন আলো জ্বালাতে পারে।</p>
+<p>আমার এই ব্যক্তিগত পরিসরে সেই ভাবনা, পর্যবেক্ষণ ও উপলব্ধিগুলোই তুলে ধরতে চাই।</p>
+<p><strong>লেখার মধ্য দিয়ে নিজেকে প্রকাশ করতে চাই, আর ভাবনার মধ্য দিয়ে মানুষ ও জীবনকে আরও গভীরভাবে বুঝতে চাই।</strong></p>
+<div class="premium-back-wrap"><button class="premium-back-button" onclick="returnToMenu()"><span>←</span> মূল মেনুতে ফিরে যান</button></div>
 </div>
-
-<div id="writingText" style="display:none;">
-  <h2>আমার লিখালিখি</h2>
-  <div id="articleList">
-    <p><a href="#" onclick="openCategory('life'); return false;">📖 জীবন ও দর্শন</a></p>
-    <p><a href="#" onclick="openCategory('society'); return false;">📖 সমাজ ও মানুষ</a></p>
-    <p><a href="#" onclick="openCategory('current'); return false;">📖 সমসাময়িক ভাবনা</a></p>
-    <p><a href="#" onclick="openCategory('personal'); return false;">📖 ব্যক্তিগত অনুভূতি</a></p>
-    <p><a href="#" onclick="openCategory('literature'); return false;">📖 সাহিত্য ও সংস্কৃতি</a></p>
-    <p><a href="#" onclick="openCategory('thoughts'); return false;">📖 চিন্তা ও উপলব্ধি</a></p>
-  </div>
-  <div class="premium-back-wrap">
-    <button class="premium-back-button" onclick="returnToMenu()"><span>←</span> মূল মেনুতে ফিরে যান</button>
-  </div>
-</div>
-
-<div id="lifeCategory" style="display:none;">
-  <h2>জীবন ও দর্শন</h2>
-</div>
-
-<div id="societyCategory" style="display:none;">
-  <p><a href="#" onclick="returnToLife(); return false;">← সমাজ ও মানুষ</a></p>
-  <h2>নশ্বর দুনিয়ার মোহে</h2>
-  <p>আজকালকার জামানায় আমরা এতটাই বস্তুবাদী হয়ে উঠছি যে অর্থের পেছনে নিরলসভাবে ছুটে চলেছি প্রতিনিয়ত। অর্থের পেছনে এই ছুটে চলাকেই বানিয়ে ফেলেছি আমাদের ক্যারিয়ার। এ যেন এক অবিরাম, অন্তহীন দৌড়। নিজেকে বিলিয়ে দিয়ে এতটাই উদ্যমী হয়ে উঠছি, যেন চিরশান্তির কোনো এক দুনিয়ায় আমাদের বসবাস। এখানে যেন পেয়ে গেছি প্রশান্তিময় জান্নাতি জীবন। যেন মৃত্যু বলে কিছুই নেই। এই ধরাতে চিরকাল, চিরদিন থাকতে এসেছি। এখান থেকে চলে যাওয়া নিয়ে যেন কোনো আক্ষেপই নেই। জীবনের যত আয়োজন, সবকিছুই যেন এই ধরাতেই সীমাবদ্ধ।</p>
-  <p>অথচ ঐশী বাণী পাঠিয়ে সর্বশক্তিমান রব বলেই দিয়েছেন, এই দুনিয়া একটি ধোঁকার সামগ্রী। এর মরীচিকাময় চাকচিক্য কেবল একটি প্রলেপ। এই প্রলেপের স্থায়িত্ব খুবই কম। যেকোনো মুহূর্তেই ভেস্তে যেতে পারে রঙিন দুনিয়ার এই অবকাঠামো। জীবনের শতসহস্র আয়োজন ব্যর্থ করে দিতে পারে ধ্বংসের উন্মত্ততা। সাগরের গর্জন থেমে গিয়ে সুবিশাল জলরাশি পরিণত হতে পারে চৈত্রের চৌচির ধু-ধু প্রান্তরে।</p>
-  <p>যেকোনো প্রাণীর প্রাণ যেকোনো মুহূর্তেই চলে যেতে পারে। নিস্তেজ হয়ে যেতে পারে যত্নে গড়া দেহ। চোখ বুজলেই দুনিয়া অন্ধকার হয়ে যেতে পারে যেকোনো সময়। এখানে কোনো কিছুরই কোনো নিশ্চয়তা নেই। অথচ অনিশ্চয়তার এই জীবনেও আমরা বিকৃত মানসিকতা লালন করি। স্বার্থান্বেষী মানুষের আচরণ কিংবা কর্মকাণ্ড দেখে মনে হয়, এই দুনিয়ায় সবাই যেন চিরকাল থাকার জন্যই এসেছি।</p>
-  <p>অথচ কত দাদা-পরদাদা গত হয়ে গেছেন কত শতাব্দী আগে। যাঁদের অস্তিত্বেরও কোনো প্রমাণ নেই এখন। কেউ তাঁদের চেনেও না, মনেও করে না।</p>
-  <p>তবুও এই নশ্বর দুনিয়া নিয়ে আমাদের কত বিবাদ, কত মতানৈক্য! কত লোভ, কত লালসা! কত ফ্যাসাদ, কত ফ্যাসিবাদ! কত উন্মত্ততা, কত হুঙ্কার! কত বিপ্লব, কত প্রতিবিপ্লব! হায় আফসোস! 😰</p>
-</div>
-
-<div id="currentCategory" style="display:none;">
-  <p><a href="#" onclick="returnToLife(); return false;">← সমসাময়িক ভাবনা</a></p>
-  <h2>রাজনীতি, ক্ষমতা ও জনমানুষের প্রত্যাশা</h2>
-  <p>রাজনীতি কেবল ক্ষমতায় আরোহণ কিংবা রাষ্ট্র পরিচালনার একটি প্রক্রিয়া নয়; রাজনীতি হলো মানুষের অধিকার, প্রত্যাশা, নিরাপত্তা ও সামগ্রিক জীবনমানের সঙ্গে গভীরভাবে সম্পৃক্ত একটি বিষয়। একটি রাষ্ট্রের রাজনৈতিক পরিবেশ তার অর্থনীতি, শিক্ষা, সংস্কৃতি, সামাজিক স্থিতিশীলতা এবং ভবিষ্যৎ প্রজন্মের স্বপ্নকে প্রত্যক্ষ ও পরোক্ষভাবে প্রভাবিত করে।</p>
-  <p>অথচ রাজনীতির মূল উদ্দেশ্য যখন জনকল্যাণ থেকে সরে গিয়ে ক্ষমতা অর্জন ও ক্ষমতা ধরে রাখার প্রতিযোগিতায় সীমাবদ্ধ হয়ে পড়ে, তখন সাধারণ মানুষের প্রত্যাশা আর বাস্তবতার মধ্যে দূরত্ব তৈরি হয়। জনগণ যাঁদের ওপর আস্থা রেখে রাষ্ট্র পরিচালনার দায়িত্ব অর্পণ করে, তাঁদের কাছ থেকে প্রত্যাশা থাকে সততা, দায়িত্বশীলতা, জবাবদিহি এবং জনস্বার্থকে সর্বোচ্চ গুরুত্ব দেওয়ার।</p>
-  <p>একটি সুস্থ রাজনৈতিক পরিবেশে মতপার্থক্য থাকতেই পারে। ভিন্নমত গণতান্ত্রিক সমাজের স্বাভাবিক সৌন্দর্য। কিন্তু মতের অমিলকে শত্রুতায় রূপান্তর করা, প্রতিপক্ষের বক্তব্যকে অগ্রাহ্য করা কিংবা ভিন্নমতের মানুষের অধিকার সংকুচিত করা কোনো সুস্থ রাজনৈতিক সংস্কৃতির পরিচয় হতে পারে না। বরং যুক্তি, সহনশীলতা, পারস্পরিক শ্রদ্ধা এবং আইনের প্রতি আনুগত্যই রাজনৈতিক পরিপক্বতার পরিচায়ক।</p>
-  <p>রাষ্ট্রের প্রতিটি নাগরিকেরই কিছু মৌলিক প্রত্যাশা থাকে। মানুষ নিরাপদে বাঁচতে চায়, ন্যায়বিচার পেতে চায়, নিজের শ্রমের যথাযথ মূল্য চায় এবং ভবিষ্যৎ প্রজন্মের জন্য একটি সম্ভাবনাময় পরিবেশ দেখতে চায়। এসব প্রত্যাশা কোনো বিশেষ রাজনৈতিক দলের প্রতি অনুগ্রহ নয়; বরং নাগরিক হিসেবে মানুষের ন্যায্য অধিকার।</p>
-  <p>তবে রাষ্ট্রের সব দায়ভার কেবল রাজনৈতিক নেতৃত্বের ওপর চাপিয়ে দিলেও চলবে না। নাগরিক হিসেবেও আমাদের দায়িত্ব রয়েছে। সত্য ও মিথ্যার পার্থক্য বোঝা, গুজব থেকে দূরে থাকা, অন্যায়ের প্রতিবাদে সচেতন থাকা, আইন মেনে চলা এবং নিজের অবস্থান থেকে দায়িত্বশীল ভূমিকা পালন করা জরুরি। কারণ সচেতন নাগরিক ছাড়া দায়িত্বশীল রাষ্ট্রব্যবস্থা গড়ে তোলা কঠিন।</p>
-  <p>আমাদের মনে রাখতে হবে, রাষ্ট্র কোনো ব্যক্তি, দল কিংবা গোষ্ঠীর ব্যক্তিগত সম্পত্তি নয়। রাষ্ট্রের প্রকৃত মালিকানা ও মর্যাদা তার জনগণের সঙ্গে সম্পর্কিত। ক্ষমতা সাময়িক, কিন্তু একটি রাষ্ট্রের প্রতিষ্ঠান, মূল্যবোধ এবং জনগণের ওপর তার প্রভাব দীর্ঘস্থায়ী।</p>
-  <p>তাই রাজনীতির প্রতিটি পর্যায়ে ক্ষমতার চেয়ে দায়িত্ব, প্রতিহিংসার চেয়ে সহনশীলতা এবং ব্যক্তিস্বার্থের চেয়ে জনস্বার্থকে অগ্রাধিকার দেওয়া প্রয়োজন। কারণ রাজনীতির সার্থকতা ক্ষমতার উচ্চাসনে নয়; বরং সাধারণ মানুষের জীবনে কতটা ইতিবাচক পরিবর্তন আনা সম্ভব হয়েছে, তার মধ্যেই নিহিত।</p>
-</div>
-
-<div id="personalCategory" style="display:none;">
-  <p><a href="#" onclick="returnToLife(); return false;">← ব্যক্তিগত অনুভূতি</a></p>
-  <h2>মনের কিছু কথা, যা বলা হয়ে ওঠে না</h2>
-  <p>মানুষের মনের ভেতর এমন কিছু কথা জমে থাকে, যা সবসময় ভাষায় প্রকাশ করা যায় না। কখনো কিছু অনুভূতি শব্দের চেয়েও গভীর হয়, কখনো কিছু কষ্ট হাসির আড়ালে লুকিয়ে থাকে। বাইরে থেকে একজন মানুষকে যতটা স্বাভাবিক মনে হয়, তার ভেতরের পৃথিবী হয়তো ততটাই অগোছালো।</p>
-  <p>জীবনের পথে চলতে গিয়ে আমরা অনেক মানুষের সঙ্গে পরিচিত হই। কেউ অল্প সময়ের জন্য আসে, কেউ দীর্ঘদিন পাশে থাকে, আবার কেউ একসময় স্মৃতির অংশ হয়ে যায়। কিন্তু প্রত্যেক মানুষের রেখে যাওয়া অনুভূতি এক রকম নয়। কারও উপস্থিতি মনে শান্তি এনে দেয়, আবার কারও অনুপস্থিতি নীরবে শূন্যতা তৈরি করে।</p>
-  <p>কখনো আমরা চাই, কেউ আমাদের না বলা কথাগুলো বুঝে নিক। আমাদের নীরবতার পেছনের অভিমানটুকু অনুভব করুক। কিন্তু বাস্তবতা হলো, সবাই আমাদের মনের ভাষা পড়তে পারে না। তাই অনেক সময় নিজের অনুভূতিগুলো নিজের কাছেই রেখে দিতে হয়।</p>
-  <p>তবু জীবন থেমে থাকে না। কষ্ট, অভিমান, আনন্দ আর প্রত্যাশা—সবকিছু নিয়েই মানুষকে সামনে এগিয়ে যেতে হয়। সময়ের সঙ্গে আমরা শিখি, সব প্রশ্নের উত্তর পাওয়া যায় না, সব সম্পর্ক প্রত্যাশামতো হয় না, আর সব অনুভূতির প্রকাশও সম্ভব হয় না।</p>
-  <p>আমার মনে হয়, মানুষের জীবনে নিজের অনুভূতিকে সম্মান করাও জরুরি। সবসময় শক্ত থাকার অভিনয় করতে হয় না। কখনো মন খারাপ হওয়া, একা থাকতে ইচ্ছে করা কিংবা নিজের সঙ্গে কিছুটা সময় কাটানোও স্বাভাবিক। কারণ নিজের মনের যত্ন নেওয়া দুর্বলতা নয়; বরং নিজেকে বোঝার একটি গুরুত্বপূর্ণ অংশ।</p>
-  <p>জীবনের শেষ পর্যন্ত হয়তো অনেক কথাই না বলা থেকে যাবে। কিছু স্মৃতি মনের গভীরে থেকে যাবে, কিছু মানুষ দূরত্বের ওপারে হারিয়ে যাবে। তবু এই অনুভূতিগুলোই আমাদের মানুষ হিসেবে আরও গভীর, সংবেদনশীল ও পরিণত করে তোলে।</p>
-  <p>সব অনুভূতির প্রকাশ প্রয়োজন হয় না; কিছু অনুভূতি নীরবে বেঁচে থাকলেই জীবনের গল্প পূর্ণতা পায়।</p>
-</div>
-
-<div id="literatureCategory" style="display:none;">
-  <p><a href="#" onclick="returnToLife(); return false;">← সাহিত্য ও সংস্কৃতি</a></p>
-  <h2>আরোপিত সাংস্কৃতিক আধিপত্য ও অরক্ষিত বাংলাদেশ</h2>
-  <p>একটি জাতির পরিচয় কেবল তার ভৌগোলিক সীমানা, রাজনৈতিক স্বাধীনতা কিংবা অর্থনৈতিক সক্ষমতার মধ্যে সীমাবদ্ধ নয়। একটি জাতির প্রকৃত পরিচয় গড়ে ওঠে তার ভাষা, ইতিহাস, সাহিত্য, শিল্প, ঐতিহ্য, জীবনবোধ ও সাংস্কৃতিক স্বাতন্ত্র্যের সমন্বয়ে। সংস্কৃতি একটি জাতির আত্মপরিচয়ের আয়না, যার মধ্যে প্রতিফলিত হয় তার অতীত, বর্তমান এবং ভবিষ্যতের আকাঙ্ক্ষা। অথচ বিশ্বায়নের এই সময়ে দাঁড়িয়ে আমাদের সামনে একটি গুরুত্বপূর্ণ প্রশ্ন ক্রমেই স্পষ্ট হয়ে উঠছে—বাংলাদেশ কি তার নিজস্ব সাংস্কৃতিক পরিচয় সংরক্ষণে যথেষ্ট সচেতন, নাকি নানা বহিরাগত প্রভাবের মুখে ধীরে ধীরে নিজস্ব স্বাতন্ত্র্য হারানোর ঝুঁকিতে পড়ছে?</p>
-  <h3>সাংস্কৃতিক আধিপত্যের ধারণা ও বাস্তবতা</h3>
-  <p>সাংস্কৃতিক আধিপত্য বলতে এমন এক প্রভাব বিস্তারের প্রক্রিয়াকে বোঝায়, যার মাধ্যমে কোনো প্রভাবশালী সংস্কৃতির ভাষা, চিন্তা, রুচি, মূল্যবোধ ও জীবনযাপনের ধরন অন্য একটি সমাজের ওপর প্রত্যক্ষ কিংবা পরোক্ষভাবে প্রভাব বিস্তার করে। এই প্রভাব সব সময় জবরদস্তির মাধ্যমে আসে না; বরং বিনোদন, গণমাধ্যম, শিক্ষা, প্রযুক্তি, ভোগবাদী প্রবণতা এবং জনপ্রিয় সংস্কৃতির হাত ধরে তা মানুষের দৈনন্দিন জীবনের অংশ হয়ে উঠতে পারে।</p>
-  <p>অন্য সংস্কৃতির সঙ্গে পরিচিত হওয়া, তার ভালো দিক গ্রহণ করা কিংবা বৈশ্বিক সাংস্কৃতিক বিনিময়ে অংশ নেওয়া কোনো নেতিবাচক বিষয় নয়। বরং একটি সুস্থ ও বিকাশমান সমাজের জন্য সাংস্কৃতিক বিনিময় প্রয়োজন। সংকট তৈরি হয় তখন, যখন এই বিনিময় একমুখী হয়ে ওঠে; যখন অন্যের সংস্কৃতি গ্রহণ করতে গিয়ে নিজের সংস্কৃতিকে হীন মনে করার প্রবণতা তৈরি হয়।</p>
-  <h3>বাংলাদেশের সাংস্কৃতিক আত্মপরিচয় ও বর্তমান সংকট</h3>
-  <p>বাংলাদেশের সাংস্কৃতিক পরিচয়ের শিকড় অত্যন্ত গভীরে প্রোথিত। বাংলা ভাষার ইতিহাস, ভাষা আন্দোলনের আত্মত্যাগ, মুক্তিযুদ্ধের চেতনা, গ্রামীণ লোকসংস্কৃতি, বাউল দর্শন, ভাটিয়ালি গান, পল্লিসাহিত্য, রবীন্দ্রনাথ, নজরুল, জসীমউদ্‌দীন এবং অসংখ্য কবি-সাহিত্যিকের সৃষ্টিকর্ম আমাদের সাংস্কৃতিক ঐতিহ্যকে সমৃদ্ধ করেছে।</p>
-  <p>কিন্তু বর্তমান সময়ে এই ঐতিহ্যের সঙ্গে নতুন প্রজন্মের সম্পর্ক কতটা গভীর, তা নিয়ে প্রশ্ন তোলার যথেষ্ট অবকাশ রয়েছে। প্রযুক্তির প্রসার এবং সামাজিক যোগাযোগমাধ্যমের বিস্তারে মানুষের সাংস্কৃতিক পরিসর আগের চেয়ে অনেক বড় হয়েছে। একই সঙ্গে বিদেশি বিনোদন, ভাষা, ফ্যাশন ও জীবনধারার প্রভাবও বেড়েছে। এর সবটুকুকে নেতিবাচক বলা যাবে না। তবে উদ্বেগের জায়গা হলো, অনেক ক্ষেত্রে নিজস্ব সাহিত্য, সংগীত, ইতিহাস ও লোকজ ঐতিহ্যের প্রতি আগ্রহ কমে যাওয়ার প্রবণতা দেখা যায়।</p>
-  <p>নিজের ভাষায় কথা বলতে সংকোচ, বাংলা সাহিত্য সম্পর্কে অনাগ্রহ কিংবা নিজস্ব ঐতিহ্যকে আধুনিকতার পথে বাধা হিসেবে বিবেচনা করার মানসিকতা কোনো সুস্থ সাংস্কৃতিক আত্মবিশ্বাসের পরিচয় নয়। আধুনিক হওয়া মানে নিজের শিকড় ভুলে যাওয়া নয়; বরং নিজের পরিচয় অক্ষুণ্ণ রেখে সময়ের সঙ্গে এগিয়ে যাওয়াই প্রকৃত আধুনিকতা।</p>
-  <h3>গণমাধ্যম, প্রযুক্তি ও সাংস্কৃতিক প্রভাব</h3>
-  <p>বর্তমান বিশ্বে সাংস্কৃতিক প্রভাব বিস্তারের অন্যতম শক্তিশালী মাধ্যম হলো গণমাধ্যম ও ডিজিটাল প্ল্যাটফর্ম। চলচ্চিত্র, নাটক, সংগীত, বিজ্ঞাপন, সামাজিক যোগাযোগমাধ্যম এবং অনলাইন বিনোদন মানুষের চিন্তা ও রুচি গঠনে গুরুত্বপূর্ণ ভূমিকা রাখছে।</p>
-  <p>যে সমাজ নিজস্ব সাংস্কৃতিক বিষয়বস্তুকে মানসম্মতভাবে মানুষের সামনে তুলে ধরতে পারে না, সে সমাজের সাংস্কৃতিক পরিসরে অন্যের তৈরি বিষয়বস্তু স্বাভাবিকভাবেই বেশি জায়গা করে নিতে পারে। ফলে আমাদের প্রয়োজন কেবল বিদেশি সংস্কৃতির প্রভাব নিয়ে অভিযোগ করা নয়; বরং নিজেদের সাহিত্য, সংগীত, চলচ্চিত্র, নাটক ও সৃজনশীল শিল্পকে আরও সমৃদ্ধ ও প্রতিযোগিতামূলক করে তোলা।</p>
-  <p>সাংস্কৃতিক আত্মরক্ষার অর্থ কোনো সংস্কৃতির বিরুদ্ধে দেয়াল তৈরি করা নয়। বরং নিজের সংস্কৃতিকে এতটাই প্রাণবন্ত, সমৃদ্ধ ও গ্রহণযোগ্য করে তোলা, যাতে তা বিশ্বসংস্কৃতির সঙ্গে মর্যাদাপূর্ণ বিনিময়ে অংশ নিতে পারে।</p>
-  <h3>সাংস্কৃতিক আধিপত্যের দায় কি কেবল বহিরাগতদের?</h3>
-  <p>এই প্রশ্নের উত্তর খুঁজতে গেলে আমাদের নিজেদের দিকেও তাকাতে হবে। কোনো সংস্কৃতি তখনই দুর্বল হয়ে পড়ে, যখন তার নিজস্ব সমাজ সেই সংস্কৃতির চর্চা, সংরক্ষণ ও বিকাশের দায়িত্ব থেকে সরে আসে। আমরা যদি নিজেরা বই পড়তে আগ্রহী না হই, সন্তানদের ভাষা ও ইতিহাস সম্পর্কে সচেতন না করি, শিল্প-সাহিত্যকে যথাযথ মূল্যায়ন না করি এবং নিজস্ব সংস্কৃতির সৃজনশীল বিকাশে ভূমিকা না রাখি, তাহলে কেবল বহিরাগত প্রভাবকে দায়ী করে সমস্যার সমাধান সম্ভব নয়।</p>
-  <p>এখানে পরিবার, শিক্ষাপ্রতিষ্ঠান, সাংস্কৃতিক সংগঠন, গণমাধ্যম এবং রাষ্ট্রীয় প্রতিষ্ঠানের দায়িত্ব রয়েছে। বিশেষ করে শিক্ষাব্যবস্থায় ইতিহাস, সাহিত্য, ভাষা ও সংস্কৃতির চর্চাকে এমনভাবে গুরুত্ব দেওয়া প্রয়োজন, যাতে নতুন প্রজন্ম কেবল পরীক্ষায় উত্তীর্ণ হওয়ার জন্য নয়, বরং নিজের জাতিগত ও সাংস্কৃতিক পরিচয় উপলব্ধি করার জন্যও এসব বিষয়ে আগ্রহী হয়ে ওঠে।</p>
-  <h3>অরক্ষিত বাংলাদেশ: আমাদের করণীয়</h3>
-  <p>বাংলাদেশের সাংস্কৃতিক পরিচয় রক্ষার জন্য প্রথম প্রয়োজন আত্মপরিচয় সম্পর্কে সুস্পষ্ট ধারণা। আমাদের বুঝতে হবে, সাংস্কৃতিক ঐতিহ্য কোনো জাদুঘরে সংরক্ষিত অতীতের স্মারক নয়; এটি একটি জীবন্ত প্রবাহ, যা প্রতিটি প্রজন্মের চর্চা ও সৃজনশীলতার মধ্য দিয়ে বিকশিত হয়।</p>
-  <p>বাংলা ভাষার শুদ্ধ ও মর্যাদাপূর্ণ ব্যবহার, দেশীয় সাহিত্য পাঠ, লোকজ সংস্কৃতির চর্চা, ইতিহাস সম্পর্কে সচেতনতা এবং নিজস্ব শিল্প-সাহিত্যের বিকাশে উদ্যোগী হওয়া জরুরি। পাশাপাশি বিদেশি সংস্কৃতির ইতিবাচক দিক গ্রহণের ক্ষেত্রেও প্রয়োজন বিচারবোধ। কোনটি আমাদের জ্ঞান ও সৃজনশীলতাকে সমৃদ্ধ করছে, আর কোনটি অন্ধ অনুকরণের প্রবণতা তৈরি করছে—এই পার্থক্য অনুধাবন করতে হবে।</p>
-  <h3>উপসংহার</h3>
-  <p>একটি জাতিকে সাংস্কৃতিকভাবে দুর্বল করে দেওয়ার জন্য সব সময় তার ভূখণ্ড দখল করার প্রয়োজন হয় না। কখনো কখনো নিজের ইতিহাস, ভাষা, ঐতিহ্য ও আত্মপরিচয়ের প্রতি অনাগ্রহই একটি জাতিকে ভেতর থেকে দুর্বল করে দিতে পারে। তবে সাংস্কৃতিক পরিবর্তন মানেই সাংস্কৃতিক পরাজয় নয়; পরিবর্তনকে বিচার করার জন্য প্রয়োজন সচেতনতা, যুক্তিবোধ ও আত্মপরিচয়ের দৃঢ়তা।</p>
-  <p>বাংলাদেশ এমন একটি দেশ হোক, যে দেশ বিশ্বসাহিত্যের সঙ্গে পরিচিত হবে, বিশ্বসংস্কৃতি থেকে জ্ঞান ও সৃজনশীলতা গ্রহণ করবে, কিন্তু নিজের ভাষা, ইতিহাস, ঐতিহ্য ও সাংস্কৃতিক আত্মপরিচয় নিয়ে কখনো হীনম্মন্যতায় ভুগবে না।</p>
-  <p>নিজের সংস্কৃতিকে ভালোবাসা মানে অন্যের সংস্কৃতিকে ঘৃণা করা নয়; বরং নিজের পরিচয়কে মর্যাদা দিয়ে বিশ্বের সঙ্গে সমান আত্মবিশ্বাসে পথচলা।</p>
-</div>
-
-<div id="thoughtsCategory" style="display:none;">
-  <p><a href="#" onclick="returnToLife(); return false;">← চিন্তা ও উপলব্ধি</a></p>
-  <p>আচ্ছা এই যে নিঃশ্বাস কে বিশ্বাস করে ঘর-বাড়ি বেঁধেছেন। এই নিঃশ্বাস যে আপনার সাথে বিশ্বাসঘাতকতা(?) করবে না তা আপনি কতটুকু নিশ্চিত! বাস্তবমুখী চিন্তা করলে নিশ্চিত হবেন যে 'এক মিনিটের নাই ভরসা এই রঙের দুনিয়ায়'।</p>
-  <p>ক্ষণস্থায়ী এই ধরাধামে আপনি নিজেকে কতকিছু মনে করেন! সবকিছুর নিয়ন্ত্রক হিসাবে নিজেকে উপস্থাপন করছেন প্রতিটি জায়গায়,প্রায় সব সব বিষয়ে সবখানে। একটু চক্ষুদ্বয় বন্ধ করে দেখুন আপনাকে ছাড়াই কিভাবে চলছে পৃথিবী!</p>
-  <p>এমন অনেকেই ছিলেন আপনার আশপাশে যাঁরা আজ রঙ্গ পৃথিবীর সঙ্গ ত্যাগ করে চলে গেছেন পরপারে। তাঁদের জীবনের শত আয়োজন গুলোকে আপনি দেখুন না নিজের মতো করে যতটুকু মনে পড়ে! নিজের বর্তমান জীবনের আয়নায় মিলিয়ে দেখুন ঐ বিদায়ী মানুষটির যাপিত সময়ের প্রায় সবগুলো দুনিয়াবী আয়োজনই কতটা ব্যর্থ,কতটা অপ্রয়োজনীয়! এমনই মনে হবে আপনার কাছে।</p>
-  <p>তাহলে বোধোদয় হবে আপনার অনুপস্থিতি আপনার স্বীয় ব্যক্তিত্বকে কতটা অস্তিত্বহীন করে তোলে আর কতটা নিরর্থবহ করে তোলে। এসব জাস্ট ফিল করতে হবে! একটু স্পিরিচুয়ালি নিজেকে নিয়ে যেতে হবে 'পরাবাস্তব' দুনিয়ার ইনভিজিবল* ক্যাম্পাসে!</p>
-  <p>তবুও চিন্তা করুন প্রতিদিন নিজেকে কতটা রি-প্রোডাক্টিভ হিসাবে রি*চার্জ করা যায়! আল্লাহর উপস্থিতি কিভাবে টের পাওয়া যায়! সমগ্র ইহকালীন/পরকালীন জগতের পুরো সিস্টেমে নিজেকে একজন সাচ্চা মননের মানুষ হিসাবে কিভাবে রিপ্রেজেন্ট করা যায়। এমন চিন্তার ক্যানভাস কে রং তুলি দিয়ে আঁকিবুঁকি করুন। মসজিদে বসে আল্লাহর সাথে কথা বলতে গিয়ে পরকালীন জীবনকে কল্পনায় আনুন। আপনি ঐ মহাবাস্তবিক দুনিয়ায় বিচরন করছেন। কতটা নির্ভীক চিত্তে,প্রশান্ত নয়নে!</p>
-  <p>এসব পেতে হলে সবার আগে নিজেকে প্রোডাক্টিভ মুসলিম হিসাবে গড়তে হবে। নিজেকে নিয়ে যেতে হবে তাকওয়ার সর্বোচ্চ(Pro-Max) লেভেলে। আল্লাহর সাথে কানেক্টিভিটির এক প্রো লেভেলে চলে গেলে আপনার সাথে আল্লাহর সুন্দর সম্পর্ক তৈরী হবে। তবে এই ক্ষেত্রে প্রি-কন্ডিশনস এবং সুপার নিড হলো__(সর্বাগ্রে)'Know thyself'!</p>
-</div>
-
-<div id="article1" style="display:none;">
-  <p><a href="#" onclick="returnToLife(); return false;">← জীবন ও দর্শন</a></p>
-  <h2>দুঃখ, সুখ ও মানুষের বোধোদয়</h2>
-  <p>—দুঃখ মানুষ কে একত্রিত করে—ঐক্যবদ্ধ করে। সমস্ত শত্রুত্ব কে এক বিন্দু তে এনে মিলিত করে। জাগতিক কৃতকর্ম কে অহেতুক করে। দুনিয়ার সমস্ত মোহনীয় জাদু কে অপ্রয়োজনীয় ও বেদরকারি প্রমাণ করে।</p>
-  <p>—সুখ মানুষ কে স্বার্থপর করে তোলে। একে-অপরের সাথে দূরত্ব বাড়িয়ে তোলে। সামাজিক সংঘাত তৈরী করে। আপনজনদের মধ্যে রেষারেষি তৈরী করে। পারিবারিক সম্পর্কের টানাপোড়েন সৃষ্টি করে।</p>
-  <p>এইজন্যই তো— সমস্ত পৃথিবীটা সীমাহীন দুঃখ-কষ্টের আবাস্থল। আল্লাহ সুখ খুঁজতে বলছেন চিরস্থায়ী জান্নাতের। অথচ আমরা দুনিয়ায় সুখ খুঁজে বেড়ায়। মরীচিকার পিছনে ছুটতে মানুষ গুনাহের দিকে পা বাড়ায়। আলেয়ার বিষের পেয়ালা ভর্তি শরাব পান করতে করতে মানুষ পরকালের যাত্রা শুরু করে।</p>
-  <p>এটার পরিবর্তন জরুরি। আল্লাহ মানুষের বোধোদয় দিন।</p>
-</div>
-
-<div id="videos" style="display:none;">
-  <h2 style="color:var(--accent);">ভিডিও</h2>
-  <p style="color:var(--text);">ভিডিও শিগগিরই যুক্ত হবে, ইনশাআল্লাহ।</p>
-  <p><a href="#" onclick="returnToMenu(); return false;" style="color:var(--accent); text-decoration:none;">← ফিরে যাও</a></p>
-</div>
-
-<!-- ===== HASAN ALAMIN AI DEMO ===== -->
+<div id="writingText" style="display:none"><h2>আমার লিখালিখি</h2><div id="articleList">
+<p><a href="#" onclick="openCategory('life');return false">📖 জীবন ও দর্শন</a></p><p><a href="#" onclick="openCategory('society');return false">📖 সমাজ ও মানুষ</a></p><p><a href="#" onclick="openCategory('current');return false">📖 সমসাময়িক ভাবনা</a></p><p><a href="#" onclick="openCategory('personal');return false">📖 ব্যক্তিগত অনুভূতি</a></p><p><a href="#" onclick="openCategory('literature');return false">📖 সাহিত্য ও সংস্কৃতি</a></p><p><a href="#" onclick="openCategory('thoughts');return false">📖 চিন্তা ও উপলব্ধি</a></p></div>
+<div class="premium-back-wrap"><button class="premium-back-button" onclick="returnToMenu()"><span>←</span> মূল মেনুতে ফিরে যান</button></div></div>
+<div id="lifeCategory" style="display:none"><h2>জীবন ও দর্শন</h2></div>
+<div id="societyCategory" style="display:none"><p><a href="#" onclick="returnToLife();return false">← সমাজ ও মানুষ</a></p><h2>নশ্বর দুনিয়ার মোহে</h2>
+<p>আজকালকার জামানায় আমরা এতটাই বস্তুবাদী হয়ে উঠছি যে অর্থের পেছনে নিরলসভাবে ছুটে চলেছি প্রতিনিয়ত। অর্থের পেছনে এই ছুটে চলাকেই বানিয়ে ফেলেছি আমাদের ক্যারিয়ার। এ যেন এক অবিরাম, অন্তহীন দৌড়। নিজেকে বিলিয়ে দিয়ে এতটাই উদ্যমী হয়ে উঠছি, যেন চিরশান্তির কোনো এক দুনিয়ায় আমাদের বসবাস। এখানে যেন পেয়ে গেছি প্রশান্তিময় জান্নাতি জীবন। যেন মৃত্যু বলে কিছুই নেই। এই ধরাতে চিরকাল, চিরদিন থাকতে এসেছি। এখান থেকে চলে যাওয়া নিয়ে যেন কোনো আক্ষেপই নেই। জীবনের যত আয়োজন, সবকিছুই যেন এই ধরাতেই সীমাবদ্ধ।</p>
+<p>অথচ ঐশী বাণী পাঠিয়ে সর্বশক্তিমান রব বলেই দিয়েছেন, এই দুনিয়া একটি ধোঁকার সামগ্রী। এর মরীচিকাময় চাকচিক্য কেবল একটি প্রলেপ। এই প্রলেপের স্থায়িত্ব খুবই কম। যেকোনো মুহূর্তেই ভেস্তে যেতে পারে রঙিন দুনিয়ার এই অবকাঠামো। জীবনের শতসহস্র আয়োজন ব্যর্থ করে দিতে পারে ধ্বংসের উন্মত্ততা। সাগরের গর্জন থেমে গিয়ে সুবিশাল জলরাশি পরিণত হতে পারে চৈত্রের চৌচির ধু-ধু প্রান্তরে।</p>
+<p>যেকোনো প্রাণীর প্রাণ যেকোনো মুহূর্তেই চলে যেতে পারে। নিস্তেজ হয়ে যেতে পারে যত্নে গড়া দেহ। চোখ বুজলেই দুনিয়া অন্ধকার হয়ে যেতে পারে যেকোনো সময়। এখানে কোনো কিছুরই কোনো নিশ্চয়তা নেই। অথচ অনিশ্চয়তার এই জীবনেও আমরা বিকৃত মানসিকতা লালন করি। স্বার্থান্বেষী মানুষের আচরণ কিংবা কর্মকাণ্ড দেখে মনে হয়, এই দুনিয়ায় সবাই যেন চিরকাল থাকার জন্যই এসেছি।</p><p>অথচ কত দাদা-পরদাদা গত হয়ে গেছেন কত শতাব্দী আগে। যাঁদের অস্তিত্বেরও কোনো প্রমাণ নেই এখন। কেউ তাঁদের চেনেও না, মনেও করে না।</p><p>তবুও এই নশ্বর দুনিয়া নিয়ে আমাদের কত বিবাদ, কত মতানৈক্য! কত লোভ, কত লালসা! কত ফ্যাসাদ, কত ফ্যাসিবাদ! কত উন্মত্ততা, কত হুঙ্কার! কত বিপ্লব, কত প্রতিবিপ্লব! হায় আফসোস! 😰</p></div>
+<div id="currentCategory" style="display:none"><p><a href="#" onclick="returnToLife();return false">← সমসাময়িক ভাবনা</a></p><h2>রাজনীতি, ক্ষমতা ও জনমানুষের প্রত্যাশা</h2>
+<p>রাজনীতি কেবল ক্ষমতায় আরোহণ কিংবা রাষ্ট্র পরিচালনার একটি প্রক্রিয়া নয়; রাজনীতি হলো মানুষের অধিকার, প্রত্যাশা, নিরাপত্তা ও সামগ্রিক জীবনমানের সঙ্গে গভীরভাবে সম্পৃক্ত একটি বিষয়। একটি রাষ্ট্রের রাজনৈতিক পরিবেশ তার অর্থনীতি, শিক্ষা, সংস্কৃতি, সামাজিক স্থিতিশীলতা এবং ভবিষ্যৎ প্রজন্মের স্বপ্নকে প্রত্যক্ষ ও পরোক্ষভাবে প্রভাবিত করে।</p>
+<p>অথচ রাজনীতির মূল উদ্দেশ্য যখন জনকল্যাণ থেকে সরে গিয়ে ক্ষমতা অর্জন ও ক্ষমতা ধরে রাখার প্রতিযোগিতায় সীমাবদ্ধ হয়ে পড়ে, তখন সাধারণ মানুষের প্রত্যাশা আর বাস্তবতার মধ্যে দূরত্ব তৈরি হয়। জনগণ যাঁদের ওপর আস্থা রেখে রাষ্ট্র পরিচালনার দায়িত্ব অর্পণ করে, তাঁদের কাছ থেকে প্রত্যাশা থাকে সততা, দায়িত্বশীলতা, জবাবদিহি এবং জনস্বার্থকে সর্বোচ্চ গুরুত্ব দেওয়ার।</p>
+<p>একটি সুস্থ রাজনৈতিক পরিবেশে মতপার্থক্য থাকতেই পারে। ভিন্নমত গণতান্ত্রিক সমাজের স্বাভাবিক সৌন্দর্য। কিন্তু মতের অমিলকে শত্রুতায় রূপান্তর করা, প্রতিপক্ষের বক্তব্যকে অগ্রাহ্য করা কিংবা ভিন্নমতের মানুষের অধিকার সংকুচিত করা কোনো সুস্থ রাজনৈতিক সংস্কৃতির পরিচয় হতে পারে না। বরং যুক্তি, সহনশীলতা, পারস্পরিক শ্রদ্ধা এবং আইনের প্রতি আনুগত্যই রাজনৈতিক পরিপক্বতার পরিচায়ক।</p>
+<p>রাষ্ট্রের প্রতিটি নাগরিকেরই কিছু মৌলিক প্রত্যাশা থাকে। মানুষ নিরাপদে বাঁচতে চায়, ন্যায়বিচার পেতে চায়, নিজের শ্রমের যথাযথ মূল্য চায় এবং ভবিষ্যৎ প্রজন্মের জন্য একটি সম্ভাবনাময় পরিবেশ দেখতে চায়। এসব প্রত্যাশা কোনো বিশেষ রাজনৈতিক দলের প্রতি অনুগ্রহ নয়; বরং নাগরিক হিসেবে মানুষের ন্যায্য অধিকার।</p>
+<p>তবে রাষ্ট্রের সব দায়ভার কেবল রাজনৈতিক নেতৃত্বের ওপর চাপিয়ে দিলেও চলবে না। নাগরিক হিসেবেও আমাদের দায়িত্ব রয়েছে। সত্য ও মিথ্যার পার্থক্য বোঝা, গুজব থেকে দূরে থাকা, অন্যায়ের প্রতিবাদে সচেতন থাকা, আইন মেনে চলা এবং নিজের অবস্থান থেকে দায়িত্বশীল ভূমিকা পালন করা জরুরি। কারণ সচেতন নাগরিক ছাড়া দায়িত্বশীল রাষ্ট্রব্যবস্থা গড়ে তোলা কঠিন।</p>
+<p>আমাদের মনে রাখতে হবে, রাষ্ট্র কোনো ব্যক্তি, দল কিংবা গোষ্ঠীর ব্যক্তিগত সম্পত্তি নয়। রাষ্ট্রের প্রকৃত মালিকানা ও মর্যাদা তার জনগণের সঙ্গে সম্পর্কিত। ক্ষমতা সাময়িক, কিন্তু একটি রাষ্ট্রের প্রতিষ্ঠান, মূল্যবোধ এবং জনগণের ওপর তার প্রভাব দীর্ঘস্থায়ী।</p>
+<p>তাই রাজনীতির প্রতিটি পর্যায়ে ক্ষমতার চেয়ে দায়িত্ব, প্রতিহিংসার চেয়ে সহনশীলতা এবং ব্যক্তিস্বার্থের চেয়ে জনস্বার্থকে অগ্রাধিকার দেওয়া প্রয়োজন। কারণ রাজনীতির সার্থকতা ক্ষমতার উচ্চাসনে নয়; বরং সাধারণ মানুষের জীবনে কতটা ইতিবাচক পরিবর্তন আনা সম্ভব হয়েছে, তার মধ্যেই নিহিত।</p></div>
+<div id="personalCategory" style="display:none"><p><a href="#" onclick="returnToLife();return false">← ব্যক্তিগত অনুভূতি</a></p><h2>মনের কিছু কথা, যা বলা হয়ে ওঠে না</h2>
+<p>মানুষের মনের ভেতর এমন কিছু কথা জমে থাকে, যা সবসময় ভাষায় প্রকাশ করা যায় না। কখনো কিছু অনুভূতি শব্দের চেয়েও গভীর হয়, কখনো কিছু কষ্ট হাসির আড়ালে লুকিয়ে থাকে। বাইরে থেকে একজন মানুষকে যতটা স্বাভাবিক মনে হয়, তার ভেতরের পৃথিবী হয়তো ততটাই অগোছালো।</p>
+<p>জীবনের পথে চলতে গিয়ে আমরা অনেক মানুষের সঙ্গে পরিচিত হই। কেউ অল্প সময়ের জন্য আসে, কেউ দীর্ঘদিন পাশে থাকে, আবার কেউ একসময় স্মৃতির অংশ হয়ে যায়। কিন্তু প্রত্যেক মানুষের রেখে যাওয়া অনুভূতি এক রকম নয়। কারও উপস্থিতি মনে শান্তি এনে দেয়, আবার কারও অনুপস্থিতি নীরবে শূন্যতা তৈরি করে।</p>
+<p>কখনো আমরা চাই, কেউ আমাদের না বলা কথাগুলো বুঝে নিক। আমাদের নীরবতার পেছনের অভিমানটুকু অনুভব করুক। কিন্তু বাস্তবতা হলো, সবাই আমাদের মনের ভাষা পড়তে পারে না। তাই অনেক সময় নিজের অনুভূতিগুলো নিজের কাছেই রেখে দিতে হয়।</p>
+<p>তবু জীবন থেমে থাকে না। কষ্ট, অভিমান, আনন্দ আর প্রত্যাশা—সবকিছু নিয়েই মানুষকে সামনে এগিয়ে যেতে হয়। সময়ের সঙ্গে আমরা শিখি, সব প্রশ্নের উত্তর পাওয়া যায় না, সব সম্পর্ক প্রত্যাশামতো হয় না, আর সব অনুভূতির প্রকাশও সম্ভব হয় না।</p>
+<p>আমার মনে হয়, মানুষের জীবনে নিজের অনুভূতিকে সম্মান করাও জরুরি। সবসময় শক্ত থাকার অভিনয় করতে হয় না। কখনো মন খারাপ হওয়া, একা থাকতে ইচ্ছে করা কিংবা নিজের সঙ্গে কিছুটা সময় কাটানোও স্বাভাবিক। কারণ নিজের মনের যত্ন নেওয়া দুর্বলতা নয়; বরং নিজেকে বোঝার একটি গুরুত্বপূর্ণ অংশ।</p>
+<p>জীবনের শেষ পর্যন্ত হয়তো অনেক কথাই না বলা থেকে যাবে। কিছু স্মৃতি মনের গভীরে থেকে যাবে, কিছু মানুষ দূরত্বের ওপারে হারিয়ে যাবে। তবু এই অনুভূতিগুলোই আমাদের মানুষ হিসেবে আরও গভীর, সংবেদনশীল ও পরিণত করে তোলে।</p><p>সব অনুভূতির প্রকাশ প্রয়োজন হয় না; কিছু অনুভূতি নীরবে বেঁচে থাকলেই জীবনের গল্প পূর্ণতা পায়।</p></div>
+<div id="literatureCategory" style="display:none"><p><a href="#" onclick="returnToLife();return false">← সাহিত্য ও সংস্কৃতি</a></p><h2>আরোপিত সাংস্কৃতিক আধিপত্য ও অরক্ষিত বাংলাদেশ</h2>
+<p>একটি জাতির পরিচয় কেবল তার ভৌগোলিক সীমানা, রাজনৈতিক স্বাধীনতা কিংবা অর্থনৈতিক সক্ষমতার মধ্যে সীমাবদ্ধ নয়। একটি জাতির প্রকৃত পরিচয় গড়ে ওঠে তার ভাষা, ইতিহাস, সাহিত্য, শিল্প, ঐতিহ্য, জীবনবোধ ও সাংস্কৃতিক স্বাতন্ত্র্যের সমন্বয়ে। সংস্কৃতি একটি জাতির আত্মপরিচয়ের আয়না, যার মধ্যে প্রতিফলিত হয় তার অতীত, বর্তমান এবং ভবিষ্যতের আকাঙ্ক্ষা। অথচ বিশ্বায়নের এই সময়ে দাঁড়িয়ে আমাদের সামনে একটি গুরুত্বপূর্ণ প্রশ্ন ক্রমেই স্পষ্ট হয়ে উঠছে—বাংলাদেশ কি তার নিজস্ব সাংস্কৃতিক পরিচয় সংরক্ষণে যথেষ্ট সচেতন, নাকি নানা বহিরাগত প্রভাবের মুখে ধীরে ধীরে নিজস্ব স্বাতন্ত্র্য হারানোর ঝুঁকিতে পড়ছে?</p>
+<h3>সাংস্কৃতিক আধিপত্যের ধারণা ও বাস্তবতা</h3><p>সাংস্কৃতিক আধিপত্য বলতে এমন এক প্রভাব বিস্তারের প্রক্রিয়াকে বোঝায়, যার মাধ্যমে কোনো প্রভাবশালী সংস্কৃতির ভাষা, চিন্তা, রুচি, মূল্যবোধ ও জীবনযাপনের ধরন অন্য একটি সমাজের ওপর প্রত্যক্ষ কিংবা পরোক্ষভাবে প্রভাব বিস্তার করে। এই প্রভাব সব সময় জবরদস্তির মাধ্যমে আসে না; বরং বিনোদন, গণমাধ্যম, শিক্ষা, প্রযুক্তি, ভোগবাদী প্রবণতা এবং জনপ্রিয় সংস্কৃতির হাত ধরে তা মানুষের দৈনন্দিন জীবনের অংশ হয়ে উঠতে পারে।</p>
+<p>অন্য সংস্কৃতির সঙ্গে পরিচিত হওয়া, তার ভালো দিক গ্রহণ করা কিংবা বৈশ্বিক সাংস্কৃতিক বিনিময়ে অংশ নেওয়া কোনো নেতিবাচক বিষয় নয়। বরং একটি সুস্থ ও বিকাশমান সমাজের জন্য সাংস্কৃতিক বিনিময় প্রয়োজন। সংকট তৈরি হয় তখন, যখন এই বিনিময় একমুখী হয়ে ওঠে; যখন অন্যের সংস্কৃতি গ্রহণ করতে গিয়ে নিজের সংস্কৃতিকে হীন মনে করার প্রবণতা তৈরি হয়।</p>
+<h3>বাংলাদেশের সাংস্কৃতিক আত্মপরিচয় ও বর্তমান সংকট</h3><p>বাংলাদেশের সাংস্কৃতিক পরিচয়ের শিকড় অত্যন্ত গভীরে প্রোথিত। বাংলা ভাষার ইতিহাস, ভাষা আন্দোলনের আত্মত্যাগ, মুক্তিযুদ্ধের চেতনা, গ্রামীণ লোকসংস্কৃতি, বাউল দর্শন, ভাটিয়ালি গান, পল্লিসাহিত্য, রবীন্দ্রনাথ, নজরুল, জসীমউদ্‌দীন এবং অসংখ্য কবি-সাহিত্যিকের সৃষ্টিকর্ম আমাদের সাংস্কৃতিক ঐতিহ্যকে সমৃদ্ধ করেছে।</p>
+<p>কিন্তু বর্তমান সময়ে এই ঐতিহ্যের সঙ্গে নতুন প্রজন্মের সম্পর্ক কতটা গভীর, তা নিয়ে প্রশ্ন তোলার যথেষ্ট অবকাশ রয়েছে। প্রযুক্তির প্রসার এবং সামাজিক যোগাযোগমাধ্যমের বিস্তারে মানুষের সাংস্কৃতিক পরিসর আগের চেয়ে অনেক বড় হয়েছে। একই সঙ্গে বিদেশি বিনোদন, ভাষা, ফ্যাশন ও জীবনধারার প্রভাবও বেড়েছে। এর সবটুকুকে নেতিবাচক বলা যাবে না। তবে উদ্বেগের জায়গা হলো, অনেক ক্ষেত্রে নিজস্ব সাহিত্য, সংগীত, ইতিহাস ও লোকজ ঐতিহ্যের প্রতি আগ্রহ কমে যাওয়ার প্রবণতা দেখা যায়।</p>
+<p>নিজের ভাষায় কথা বলতে সংকোচ, বাংলা সাহিত্য সম্পর্কে অনাগ্রহ কিংবা নিজস্ব ঐতিহ্যকে আধুনিকতার পথে বাধা হিসেবে বিবেচনা করার মানসিকতা কোনো সুস্থ সাংস্কৃতিক আত্মবিশ্বাসের পরিচয় নয়। আধুনিক হওয়া মানে নিজের শিকড় ভুলে যাওয়া নয়; বরং নিজের পরিচয় অক্ষুণ্ণ রেখে সময়ের সঙ্গে এগিয়ে যাওয়াই প্রকৃত আধুনিকতা।</p>
+<h3>গণমাধ্যম, প্রযুক্তি ও সাংস্কৃতিক প্রভাব</h3><p>বর্তমান বিশ্বে সাংস্কৃতিক প্রভাব বিস্তারের অন্যতম শক্তিশালী মাধ্যম হলো গণমাধ্যম ও ডিজিটাল প্ল্যাটফর্ম। চলচ্চিত্র, নাটক, সংগীত, বিজ্ঞাপন, সামাজিক যোগাযোগমাধ্যম এবং অনলাইন বিনোদন মানুষের চিন্তা ও রুচি গঠনে গুরুত্বপূর্ণ ভূমিকা রাখছে।</p>
+<p>যে সমাজ নিজস্ব সাংস্কৃতিক বিষয়বস্তুকে মানসম্মতভাবে মানুষের সামনে তুলে ধরতে পারে না, সে সমাজের সাংস্কৃতিক পরিসরে অন্যের তৈরি বিষয়বস্তু স্বাভাবিকভাবেই বেশি জায়গা করে নিতে পারে। ফলে আমাদের প্রয়োজন কেবল বিদেশি সংস্কৃতির প্রভাব নিয়ে অভিযোগ করা নয়; বরং নিজেদের সাহিত্য, সংগীত, চলচ্চিত্র, নাটক ও সৃজনশীল শিল্পকে আরও সমৃদ্ধ ও প্রতিযোগিতামূলক করে তোলা।</p>
+<p>সাংস্কৃতিক আত্মরক্ষার অর্থ কোনো সংস্কৃতির বিরুদ্ধে দেয়াল তৈরি করা নয়। বরং নিজের সংস্কৃতিকে এতটাই প্রাণবন্ত, সমৃদ্ধ ও গ্রহণযোগ্য করে তোলা, যাতে তা বিশ্বসংস্কৃতির সঙ্গে মর্যাদাপূর্ণ বিনিময়ে অংশ নিতে পারে।</p>
+<h3>সাংস্কৃতিক আধিপত্যের দায় কি কেবল বহিরাগতদের?</h3><p>এই প্রশ্নের উত্তর খুঁজতে গেলে আমাদের নিজেদের দিকেও তাকাতে হবে। কোনো সংস্কৃতি তখনই দুর্বল হয়ে পড়ে, যখন তার নিজস্ব সমাজ সেই সংস্কৃতির চর্চা, সংরক্ষণ ও বিকাশের দায়িত্ব থেকে সরে আসে। আমরা যদি নিজেরা বই পড়তে আগ্রহী না হই, সন্তানদের ভাষা ও ইতিহাস সম্পর্কে সচেতন না করি, শিল্প-সাহিত্যকে যথাযথ মূল্যায়ন না করি এবং নিজস্ব সংস্কৃতির সৃজনশীল বিকাশে ভূমিকা না রাখি, তাহলে কেবল বহিরাগত প্রভাবকে দায়ী করে সমস্যার সমাধান সম্ভব নয়।</p>
+<p>এখানে পরিবার, শিক্ষাপ্রতিষ্ঠান, সাংস্কৃতিক সংগঠন, গণমাধ্যম এবং রাষ্ট্রীয় প্রতিষ্ঠানের দায়িত্ব রয়েছে। বিশেষ করে শিক্ষাব্যবস্থায় ইতিহাস, সাহিত্য, ভাষা ও সংস্কৃতির চর্চাকে এমনভাবে গুরুত্ব দেওয়া প্রয়োজন, যাতে নতুন প্রজন্ম কেবল পরীক্ষায় উত্তীর্ণ হওয়ার জন্য নয়, বরং নিজের জাতিগত ও সাংস্কৃতিক পরিচয় উপলব্ধি করার জন্যও এসব বিষয়ে আগ্রহী হয়ে ওঠে।</p>
+<h3>অরক্ষিত বাংলাদেশ: আমাদের করণীয়</h3><p>বাংলাদেশের সাংস্কৃতিক পরিচয় রক্ষার জন্য প্রথম প্রয়োজন আত্মপরিচয় সম্পর্কে সুস্পষ্ট ধারণা। আমাদের বুঝতে হবে, সাংস্কৃতিক ঐতিহ্য কোনো জাদুঘরে সংরক্ষিত অতীতের স্মারক নয়; এটি একটি জীবন্ত প্রবাহ, যা প্রতিটি প্রজন্মের চর্চা ও সৃজনশীলতার মধ্য দিয়ে বিকশিত হয়।</p>
+<p>বাংলা ভাষার শুদ্ধ ও মর্যাদাপূর্ণ ব্যবহার, দেশীয় সাহিত্য পাঠ, লোকজ সংস্কৃতির চর্চা, ইতিহাস সম্পর্কে সচেতনতা এবং নিজস্ব শিল্প-সাহিত্যের বিকাশে উদ্যোগী হওয়া জরুরি। পাশাপাশি বিদেশি সংস্কৃতির ইতিবাচক দিক গ্রহণের ক্ষেত্রেও প্রয়োজন বিচারবোধ। কোনটি আমাদের জ্ঞান ও সৃজনশীলতাকে সমৃদ্ধ করছে, আর কোনটি অন্ধ অনুকরণের প্রবণতা তৈরি করছে—এই পার্থক্য অনুধাবন করতে হবে।</p>
+<h3>উপসংহার</h3><p>একটি জাতিকে সাংস্কৃতিকভাবে দুর্বল করে দেওয়ার জন্য সব সময় তার ভূখণ্ড দখল করার প্রয়োজন হয় না। কখনো কখনো নিজের ইতিহাস, ভাষা, ঐতিহ্য ও আত্মপরিচয়ের প্রতি অনাগ্রহই একটি জাতিকে ভেতর থেকে দুর্বল করে দিতে পারে। তবে সাংস্কৃতিক পরিবর্তন মানেই সাংস্কৃতিক পরাজয় নয়; পরিবর্তনকে বিচার করার জন্য প্রয়োজন সচেতনতা, যুক্তিবোধ ও আত্মপরিচয়ের দৃঢ়তা।</p>
+<p>বাংলাদেশ এমন একটি দেশ হোক, যে দেশ বিশ্বসাহিত্যের সঙ্গে পরিচিত হবে, বিশ্বসংস্কৃতি থেকে জ্ঞান ও সৃজনশীলতা গ্রহণ করবে, কিন্তু নিজের ভাষা, ইতিহাস, ঐতিহ্য ও সাংস্কৃতিক আত্মপরিচয় নিয়ে কখনো হীনম্মন্যতায় ভুগবে না।</p><p>নিজের সংস্কৃতিকে ভালোবাসা মানে অন্যের সংস্কৃতিকে ঘৃণা করা নয়; বরং নিজের পরিচয়কে মর্যাদা দিয়ে বিশ্বের সঙ্গে সমান আত্মবিশ্বাসে পথচলা।</p></div>
+<div id="thoughtsCategory" style="display:none"><p><a href="#" onclick="returnToLife();return false">← চিন্তা ও উপলব্ধি</a></p>
+<p>আচ্ছা এই যে নিঃশ্বাস কে বিশ্বাস করে ঘর-বাড়ি বেঁধেছেন। এই নিঃশ্বাস যে আপনার সাথে বিশ্বাসঘাতকতা(?) করবে না তা আপনি কতটুকু নিশ্চিত! বাস্তবমুখী চিন্তা করলে নিশ্চিত হবেন যে 'এক মিনিটের নাই ভরসা এই রঙের দুনিয়ায়'।</p>
+<p>ক্ষণস্থায়ী এই ধরাধামে আপনি নিজেকে কতকিছু মনে করেন! সবকিছুর নিয়ন্ত্রক হিসাবে নিজেকে উপস্থাপন করছেন প্রতিটি জায়গায়,প্রায় সব সব বিষয়ে সবখানে। একটু চক্ষুদ্বয় বন্ধ করে দেখুন আপনাকে ছাড়াই কিভাবে চলছে পৃথিবী!</p>
+<p>এমন অনেকেই ছিলেন আপনার আশপাশে যাঁরা আজ রঙ্গ পৃথিবীর সঙ্গ ত্যাগ করে চলে গেছেন পরপারে। তাঁদের জীবনের শত আয়োজন গুলোকে আপনি দেখুন না নিজের মতো করে যতটুকু মনে পড়ে! নিজের বর্তমান জীবনের আয়নায় মিলিয়ে দেখুন ঐ বিদায়ী মানুষটির যাপিত সময়ের প্রায় সবগুলো দুনিয়াবী আয়োজনই কতটা ব্যর্থ,কতটা অপ্রয়োজনীয়! এমনই মনে হবে আপনার কাছে।</p>
+<p>তাহলে বোধোদয় হবে আপনার অনুপস্থিতি আপনার স্বীয় ব্যক্তিত্বকে কতটা অস্তিত্বহীন করে তোলে আর কতটা নিরর্থবহ করে তোলে। এসব জাস্ট ফিল করতে হবে! একটু স্পিরিচুয়ালি নিজেকে নিয়ে যেতে হবে 'পরাবাস্তব' দুনিয়ার ইনভিজিবল* ক্যাম্পাসে!</p>
+<p>তবুও চিন্তা করুন প্রতিদিন নিজেকে কতটা প্রোডাক্টিভ হিসাবে রি-প্রোডাক্টিভ করা যায়! আল্লাহর উপস্থিতি কিভাবে টের পাওয়া যায়! সমগ্র ইহকালীন/পরকালীন জগতের পুরো সিস্টেমে নিজেকে একজন সাচ্চা মননের মানুষ হিসাবে কিভাবে রিপ্রেজেন্ট করা যায়। এমন চিন্তার ক্যানভাস কে রং তুলি দিয়ে আঁকিবুঁকি করুন। মসজিদে বসে আল্লাহর সাথে কথা বলতে গিয়ে পরকালীন জীবনকে কল্পনায় আনুন। আপনি ঐ মহাবাস্তবিক দুনিয়ায় বিচরন করছেন। কতটা নির্ভীক চিত্তে,প্রশান্ত নয়নে!</p>
+<p>এসব পেতে হলে সবার আগে নিজেকে প্রোডাক্টিভ মুসলিম হিসাবে গড়তে হবে। নিজেকে নিয়ে যেতে হবে তাকওয়ার সর্বোচ্চ(Pro-Max) লেভেলে। আল্লাহর সাথে কানেক্টিভিটির এক প্রো লেভেলে চলে গেলে আপনার সাথে আল্লাহর সুন্দর সম্পর্ক তৈরী হবে। তবে এই ক্ষেত্রে প্রি-কন্ডিশনস এবং সুপার নিড হলো__(সর্বাগ্রে)'Know thyself'!</p></div>
+<div id="article1" style="display:none"><p><a href="#" onclick="returnToLife();return false">← জীবন ও দর্শন</a></p><h2>দুঃখ, সুখ ও মানুষের বোধোদয়</h2>
+<p>—দুঃখ মানুষ কে একত্রিত করে—ঐক্যবদ্ধ করে। সমস্ত শত্রুত্ব কে এক বিন্দু তে এনে মিলিত করে। জাগতিক কৃতকর্ম কে অহেতুক করে। দুনিয়ার সমস্ত মোহনীয় জাদু কে অপ্রয়োজনীয় ও বেদরকারি প্রমাণ করে।</p>
+<p>—সুখ মানুষ কে স্বার্থপর করে তোলে। একে-অপরের সাথে দূরত্ব বাড়িয়ে তোলে। সামাজিক সংঘাত তৈরী করে। আপনজনদের মধ্যে রেষারেষি তৈরী করে। পারিবারিক সম্পর্কের টানাপোড়েন সৃষ্টি করে।</p>
+<p>এইজন্যই তো— সমস্ত পৃথিবীটা সীমাহীন দুঃখ-কষ্টের আবাস্থল। আল্লাহ সুখ খুঁজতে বলছেন চিরস্থায়ী জান্নাতের। অথচ আমরা দুনিয়ায় সুখ খুঁজে বেড়ায়। মরীচিকার পিছনে ছুটতে মানুষ গুনাহের দিকে পা বাড়ায়। আলেয়ার বিষের পেয়ালা ভর্তি শরাব পান করতে করতে মানুষ পরকালের যাত্রা শুরু করে।</p><p>এটার পরিবর্তন জরুরি। আল্লাহ মানুষের বোধোদয় দিন।</p></div>
+<div id="videos" style="display:none"><h2 style="color:var(--accent)">ভিডিও</h2><p style="color:var(--text)">ভিডিও শিগগিরই যুক্ত হবে, ইনশাআল্লাহ।</p><p><a href="#" onclick="returnToMenu();return false" style="color:var(--accent);text-decoration:none">← ফিরে যাও</a></p></div>
 <section id="aiDemo">
-  <a class="ai-back" href="#" onclick="returnToMenu(); return false;">← মূল মেনুতে ফিরে যাও</a>
-  <div class="ai-shell">
-    <div class="ai-top">
-      <h2>HASAN ALAMIN <span style="color:var(--accent)">AI</span></h2>
-      <p>আল-আমীনের ব্যক্তিগত সহকারী</p>
-      <span class="ai-status">DEMO MODE · পরীক্ষামূলক সংস্করণ</span>
-    </div>
-    <div class="ai-messages" id="aiDemoMessages" aria-live="polite">
-      <div class="ai-bubble bot">আসসালামু আলাইকুম! আমি HASAN ALAMIN AI-এর ডেমো।\n\nএখানে কিছু নমুনা প্রশ্ন করে দেখতে পারো। এই সংস্করণে উত্তরগুলো পূর্বনির্ধারিত; এখনো লাইভ AI মডেল যুক্ত হয়নি।</div>
-    </div>
-    <div class="ai-suggestions">
-      <button type="button" data-ai-prompt="HTML কী?">HTML কী?</button>
-      <button type="button" data-ai-prompt="আমাকে একটি দৈনিক রুটিন দাও">দৈনিক রুটিন</button>
-      <button type="button" data-ai-prompt="AI কীভাবে কাজ করে?">AI কীভাবে কাজ করে?</button>
-    </div>
-    <div class="ai-compose">
-      <textarea id="aiDemoInput" rows="1" placeholder="এখানে প্রশ্ন লিখো..." aria-label="AI demo message"></textarea>
-      <button type="button" id="aiDemoSend">পাঠাও</button>
-    </div>
-    <div class="ai-note">এটি শুধু ডেমো। বাস্তব AI সংযোগ পরবর্তী ধাপে যুক্ত হবে।</div>
-  </div>
-</section>
-
-<!-- ===== MY 2027 DASHBOARD ===== -->
+<a class="ai-back" href="#" onclick="returnToMenu();return false">← মূল মেনুতে ফিরে যাও</a>
+<div class="ai-shell"><div class="ai-top"><h2>HASAN ALAMIN <span style="color:var(--accent)">AI</span></h2><p>আল-আমীনের ব্যক্তিগত সহকারী</p><span class="ai-status">DEMO MODE · পরীক্ষামূলক সংস্করণ</span></div>
+<div class="ai-messages" id="aiDemoMessages" aria-live="polite"><div class="ai-bubble bot">আসসালামু আলাইকুম! আমি HASAN ALAMIN AI-এর ডেমো।\n\nএখানে কিছু নমুনা প্রশ্ন করে দেখতে পারো। এই সংস্করণে উত্তরগুলো পূর্বনির্ধারিত; এখনো লাইভ AI মডেল যুক্ত হয়নি।</div></div>
+<div class="ai-suggestions"><button type="button" data-ai-prompt="HTML কী?">HTML কী?</button><button type="button" data-ai-prompt="আমাকে একটি দৈনিক রুটিন দাও">দৈনিক রুটিন</button><button type="button" data-ai-prompt="AI কীভাবে কাজ করে?">AI কীভাবে কাজ করে?</button></div>
+<div class="ai-compose"><textarea id="aiDemoInput" rows="1" placeholder="এখানে প্রশ্ন লিখো..." aria-label="AI demo message"></textarea><button type="button" id="aiDemoSend">পাঠাও</button></div><div class="ai-note">এটি শুধু ডেমো। বাস্তব AI সংযোগ পরবর্তী ধাপে যুক্ত হবে।</div></div></section>
 <div id="goals2027">
-  <a href="#home" class="goal-back" onclick="returnToMenu(); return false;">← মূল মেনুতে ফিরে যাও</a>
-  <div class="goals-hero">
-    <h2>আমার ২০২৭</h2>
-    <p>স্বপ্ন থেকে বাস্তবতায়</p>
-    <p>২০২৭ সাল আমার শেখা, পরিশ্রম, আত্মগঠন এবং নিজের স্বপ্ন বাস্তবায়নের একটি বছর।</p>
-  </div>
-  <h3 style="color:var(--gold);">🎯 আমার প্রধান লক্ষ্য</h3>
-  <div class="goal-card">
-    <h3>💻 Full Stack Web Developer</h3>
-    <p>HTML, CSS, JavaScript থেকে শুরু করে Frontend, Backend, Database এবং AI Integration শেখার মাধ্যমে দক্ষ Full Stack Developer হয়ে ওঠা।</p>
-    <div class="goal-progress"><span></span></div>
-    <p>অগ্রগতি: ০%</p>
-  </div>
-  <div class="goal-card">
-    <h3>📈 Forex Learning</h3>
-    <p>Forex সম্পর্কে জ্ঞান অর্জন, বাজার বিশ্লেষণ এবং Demo Account-এ অনুশীলন। ২০২৭ সালে বাস্তব অর্থ বিনিয়োগ নয়।</p>
-    <div class="goal-progress"><span></span></div>
-    <p>অগ্রগতি: ০%</p>
-  </div>
-  <div class="goal-card">
-    <h3>💰 Income & Stability</h3>
-    <p>Food Delivery-কে আয়ের উৎস হিসেবে চালিয়ে যাওয়া, পাশাপাশি নিজের দক্ষতা ও ভবিষ্যৎ আর্থিক স্থিতিশীলতা গড়ে তোলা।</p>
-    <div class="goal-progress"><span></span></div>
-    <p>অগ্রগতি: ০%</p>
-  </div>
-  <h3 style="color:var(--gold); margin-top:30px;">📅 মাসভিত্তিক পরিকল্পনা</h3>
-  <details class="year-month"><summary>জানুয়ারি — ভিত্তি তৈরি</summary><p>HTML, CSS এবং ওয়েবসাইটের মৌলিক কাঠামো শেখা।</p></details>
-  <details class="year-month"><summary>ফেব্রুয়ারি — CSS ও Responsive Design</summary><p>ওয়েবসাইটের ডিজাইন, Layout এবং Mobile Responsive করা শেখা।</p></details>
-  <details class="year-month"><summary>মার্চ — JavaScript শুরু</summary><p>JavaScript-এর মৌলিক বিষয় ও Programming Logic শেখা।</p></details>
-  <details class="year-month"><summary>এপ্রিল — JavaScript অনুশীলন</summary><p>DOM, Events এবং Interactive Website তৈরি করা।</p></details>
-  <details class="year-month"><summary>মে — Git ও GitHub</summary><p>Code Management এবং নিজের প্রজেক্ট প্রকাশ করা।</p></details>
-  <details class="year-month"><summary>জুন — Frontend Projects</summary><p>JavaScript দিয়ে বাস্তবধর্মী ছোট ছোট প্রজেক্ট তৈরি করা।</p></details>
-  <details class="year-month"><summary>জুলাই — Frontend Framework</summary><p>React অথবা উপযুক্ত কোনো Frontend Framework শেখা।</p></details>
-  <details class="year-month"><summary>আগস্ট — API ও Backend পরিচিতি</summary><p>API, Server এবং Backend-এর মৌলিক ধারণা অর্জন।</p></details>
-  <details class="year-month"><summary>সেপ্টেম্বর — Backend Development</summary><p>Node.js এবং Express দিয়ে Backend তৈরি শেখা।</p></details>
-  <details class="year-month"><summary>অক্টোবর — Database</summary><p>Database, Authentication এবং Data Management শেখা।</p></details>
-  <details class="year-month"><summary>নভেম্বর — Full Stack Project</summary><p>Frontend ও Backend যুক্ত করে পূর্ণাঙ্গ প্রজেক্ট তৈরি।</p></details>
-  <details class="year-month"><summary>ডিসেম্বর — মূল্যায়ন ও পরবর্তী প্রস্তুতি</summary><p>নিজের কাজ মূল্যায়ন, Portfolio উন্নয়ন এবং ২০২৮ সালের পরিকল্পনা।</p></details>
-  <div class="goal-card" style="margin-top:25px;">
-    <h3>🏆 আমার অর্জন</h3>
-    <p>এখানে ২০২৭ সালে অর্জিত দক্ষতা, সম্পন্ন করা প্রজেক্ট এবং উল্লেখযোগ্য সাফল্য তারিখসহ যুক্ত করব।</p>
-  </div>
-  <div class="goal-card">
-    <h3>📝 বছরের শেষ মূল্যায়ন</h3>
-    <p>কী শিখলাম, কী অর্জন করলাম, কোথায় পিছিয়ে পড়লাম এবং ২০২৮ সালে কী করতে চাই—সবকিছু এখানে লিখব।</p>
-  </div>
+<a href="#home" class="goal-back" onclick="returnToMenu();return false">← মূল মেনুতে ফিরে যাও</a>
+<div class="goals-hero"><h2>আমার ২০২৭</h2><p>স্বপ্ন থেকে বাস্তবতায়</p><p>২০২৭ সাল আমার শেখা, পরিশ্রম, আত্মগঠন এবং নিজের স্বপ্ন বাস্তবায়নের একটি বছর।</p></div>
+<h3 style="color:var(--gold)">🎯 আমার প্রধান লক্ষ্য</h3>
+<div class="goal-card"><h3>💻 Full Stack Web Developer</h3><p>HTML, CSS, JavaScript থেকে শুরু করে Frontend, Backend, Database এবং AI Integration শেখার মাধ্যমে দক্ষ Full Stack Developer হয়ে ওঠা।</p><div class="goal-progress"><span></span></div><p>অগ্রগতি: ০%</p></div>
+<div class="goal-card"><h3>📈 Forex Learning</h3><p>Forex সম্পর্কে জ্ঞান অর্জন, বাজার বিশ্লেষণ এবং Demo Account-এ অনুশীলন। ২০২৭ সালে বাস্তব অর্থ বিনিয়োগ নয়।</p><div class="goal-progress"><span></span></div><p>অগ্রগতি: ০%</p></div>
+<div class="goal-card"><h3>💰 Income & Stability</h3><p>Food Delivery-কে আয়ের উৎস হিসেবে চালিয়ে যাওয়া, পাশাপাশি নিজের দক্ষতা ও ভবিষ্যৎ আর্থিক স্থিতিশীলতা গড়ে তোলা।</p><div class="goal-progress"><span></span></div><p>অগ্রগতি: ০%</p></div>
+<h3 style="color:var(--gold);margin-top:30px">📅 মাসভিত্তিক পরিকল্পনা</h3>
+<details class="year-month"><summary>জানুয়ারি — ভিত্তি তৈরি</summary><p>HTML, CSS এবং ওয়েবসাইটের মৌলিক কাঠামো শেখা।</p></details>
+<details class="year-month"><summary>ফেব্রুয়ারি — CSS ও Responsive Design</summary><p>ওয়েবসাইটের ডিজাইন, Layout এবং Mobile Responsive করা শেখা।</p></details>
+<details class="year-month"><summary>মার্চ — JavaScript শুরু</summary><p>JavaScript-এর মৌলিক বিষয় ও Programming Logic শেখা।</p></details>
+<details class="year-month"><summary>এপ্রিল — JavaScript অনুশীলন</summary><p>DOM, Events এবং Interactive Website তৈরি করা।</p></details>
+<details class="year-month"><summary>মে — Git ও GitHub</summary><p>Code Management এবং নিজের প্রজেক্ট প্রকাশ করা।</p></details>
+<details class="year-month"><summary>জুন — Frontend Projects</summary><p>JavaScript দিয়ে বাস্তবধর্মী ছোট ছোট প্রজেক্ট তৈরি করা।</p></details>
+<details class="year-month"><summary>জুলাই — Frontend Framework</summary><p>React অথবা উপযুক্ত কোনো Frontend Framework শেখা।</p></details>
+<details class="year-month"><summary>আগস্ট — API ও Backend পরিচিতি</summary><p>API, Server এবং Backend-এর মৌলিক ধারণা অর্জন।</p></details>
+<details class="year-month"><summary>সেপ্টেম্বর — Backend Development</summary><p>Node.js এবং Express দিয়ে Backend তৈরি শেখা।</p></details>
+<details class="year-month"><summary>অক্টোবর — Database</summary><p>Database, Authentication এবং Data Management শেখা।</p></details>
+<details class="year-month"><summary>নভেম্বর — Full Stack Project</summary><p>Frontend ও Backend যুক্ত করে পূর্ণাঙ্গ প্রজেক্ট তৈরি।</p></details>
+<details class="year-month"><summary>ডিসেম্বর — মূল্যায়ন ও পরবর্তী প্রস্তুতি</summary><p>নিজের কাজ মূল্যায়ন, Portfolio উন্নয়ন এবং ২০২৮ সালের পরিকল্পনা।</p></details>
+<div class="goal-card" style="margin-top:25px"><h3>🏆 আমার অর্জন</h3><p>এখানে ২০২৭ সালে অর্জিত দক্ষতা, সম্পন্ন করা প্রজেক্ট এবং উল্লেখযোগ্য সাফল্য তারিখসহ যুক্ত করব।</p></div>
+<div class="goal-card"><h3>📝 বছরের শেষ মূল্যায়ন</h3><p>কী শিখলাম, কী অর্জন করলাম, কোথায় পিছিয়ে পড়লাম এবং ২০২৮ সালে কী করতে চাই—সবকিছু এখানে লিখব।</p></div>
 </div>
 </div>
-
-<footer id="footer">
-  <h3>আমার সঙ্গে যুক্ত থাকুন</h3>
-  <div class="social-links">
-    <a href="https://www.facebook.com/hasanalamin02" target="_blank">f</a>
-    <a href="https://wa.me/qr/FKMSEUFCVCNVP1" target="_blank">◉</a>
-    <a href="https://t.me/hasanalamin0" target="_blank">➤</a>
-    <a href="https://www.instagram.com/haasan_alamin/" target="_blank">◎</a>
-  </div>
-</footer>
-
+<footer id="footer"><h3>আমার সঙ্গে যুক্ত থাকুন</h3><div class="social-links">
+<a href="https://www.facebook.com/hasanalamin02" target="_blank">f</a><a href="https://wa.me/qr/FKMSEUFCVCNVP1" target="_blank">◉</a><a href="https://t.me/hasanalamin0" target="_blank">➤</a><a href="https://www.instagram.com/haasan_alamin/" target="_blank">◎</a>
+</div></footer>
 <script>
-// ===== WEBSITE NAVIGATION =====
-const sectionIds = [
-  "aboutText", "writingText", "article1", "lifeCategory",
-  "societyCategory", "currentCategory", "personalCategory",
-  "literatureCategory", "thoughtsCategory", "videos", "aiDemo", "goals2027"
-];
-
-function hideAllSections() {
-  sectionIds.forEach(id => {
-    const section = document.getElementById(id);
-    if (section) section.style.display = "none";
-  });
-}
-
-function showSection(id) {
-  hideAllSections();
-  document.getElementById("siteMenu").style.display = "none";
-  document.getElementById("welcome").style.display = "none";
-  const section = document.getElementById(id);
-  if (section) section.style.display = "block";
-}
-
-function openHome() {
-  hideAllSections();
-  document.getElementById("siteMenu").style.display = "none";
-  document.getElementById("welcome").style.display = "block";
-}
-
-function returnToMenu() {
-  hideAllSections();
-  document.getElementById("siteMenu").style.display = "block";
-  document.getElementById("welcome").style.display = "none";
-}
-
-function openAbout() { showSection("aboutText"); }
-function openWriting() { showSection("writingText"); }
-function openVideos() { showSection("videos"); }
-function openAIDemo() { showSection("aiDemo"); }
-function open2027() { showSection("goals2027"); }
-
-function openCategory(category) {
-  const categorySections = {
-    life: "article1",
-    society: "societyCategory",
-    current: "currentCategory",
-    personal: "personalCategory",
-    literature: "literatureCategory",
-    thoughts: "thoughtsCategory"
-  };
-  const sectionId = categorySections[category];
-  if (sectionId) showSection(sectionId);
-}
-
-function returnToLife() { showSection("writingText"); }
-
-// ===== AI DEMO CHAT (LOCAL SAMPLE RESPONSES) =====
-(function() {
-  const input = document.getElementById("aiDemoInput");
-  const send = document.getElementById("aiDemoSend");
-  const messages = document.getElementById("aiDemoMessages");
-  if (!input || !send || !messages) return;
-
-  function sampleReply(question) {
-    const q = question.toLowerCase();
-    if (/html|ওয়েবসাইট|ওয়েব ডেভেলপমেন্ট/.test(q)) return "HTML হলো ওয়েবসাইটের কাঠামো তৈরির ভাষা। CSS দিয়ে ডিজাইন করা হয়, আর JavaScript দিয়ে ইন্টারঅ্যাকশন যোগ করা হয়।\n\nএটি ডেমো উত্তর—লাইভ AI উত্তর নয়।";
-    if (/রুটিন|পড়াশোনা|শেখা/.test(q)) return "একটি নমুনা ২ ঘণ্টার রুটিন:\n১. ২০ মিনিট আগের বিষয় রিভিশন\n২. ৫০ মিনিট নতুন বিষয় শেখা\n৩. ৪০ মিনিট হাতে-কলমে অনুশীলন\n৪. ১০ মিনিট শেখা বিষয় নোট করা।\n\nএটি ডেমো উত্তর।";
-    if (/ai|কৃত্রিম বুদ্ধিমত্তা/.test(q)) return "AI বা কৃত্রিম বুদ্ধিমত্তা হলো এমন প্রযুক্তি, যার মাধ্যমে কম্পিউটার ভাষা বোঝা, তথ্য বিশ্লেষণ, ছবি শনাক্তকরণ ও বিভিন্ন সমস্যা সমাধানের মতো কাজ করতে পারে।\n\nএটি একটি নমুনা উত্তর।";
-    if (/হ্যালো|hello|সালাম|আসসালামু/.test(q)) return "ওয়ালাইকুমুস সালাম! 😊 HASAN ALAMIN AI ডেমোতে স্বাগতম। কী জানতে চাও?";
-    return "তোমার প্রশ্নটি পেয়েছি: “" + question + "”\n\nএই ডেমো সংস্করণে সীমিত নমুনা উত্তর দেওয়া হয়। পূর্ণাঙ্গ উত্তর পেতে পরবর্তী ধাপে নিরাপদ AI API সংযোগ করতে হবে।";
-  }
-
-  function addMessage(text, who) {
-    const bubble = document.createElement("div");
-    bubble.className = "ai-bubble " + who;
-    bubble.textContent = text;
-    messages.appendChild(bubble);
-    messages.scrollTop = messages.scrollHeight;
-  }
-
-  function submitMessage(text) {
-    const question = (text || input.value).trim();
-    if (!question) return;
-    addMessage(question, "user");
-    input.value = "";
-    window.setTimeout(function() { addMessage(sampleReply(question), "bot"); }, 350);
-  }
-
-  send.addEventListener("click", function() { submitMessage(); });
-  input.addEventListener("keydown", function(event) {
-    if (event.key === "Enter" && !event.shiftKey) { event.preventDefault(); submitMessage(); }
-  });
-  document.querySelectorAll("#aiDemo [data-ai-prompt]").forEach(function(button) {
-    button.addEventListener("click", function() { submitMessage(button.dataset.aiPrompt); });
-  });
-})();
-
-// ===== QUOTE SLIDER =====
-let currentQuote = 0;
-const quotes = document.querySelectorAll(".quote");
-const dots = document.querySelectorAll(".quoteDot");
-
-function showQuote(index) {
-  if (quotes.length === 0 || index < 0 || index >= quotes.length || index >= dots.length) return;
-  quotes[currentQuote].classList.remove("active");
-  dots[currentQuote].classList.remove("active");
-  currentQuote = index;
-  quotes[currentQuote].classList.add("active");
-  dots[currentQuote].classList.add("active");
-}
-
-if (quotes.length > 1 && quotes.length === dots.length) {
-  setInterval(function() {
-    showQuote((currentQuote + 1) % quotes.length);
-  }, 4000);
-}
-
-// ===== MENU BUTTON =====
-document.getElementById("menuBtn").onclick = function() {
-  const menu = document.getElementById("siteMenu");
-  const welcome = document.getElementById("welcome");
-  const isClosed = menu.style.display === "none";
-  if (isClosed) {
-    hideAllSections();
-    menu.style.display = "block";
-    welcome.style.display = "none";
-  } else {
-    menu.style.display = "none";
-    welcome.style.display = "block";
-  }
-};
-
-// ===== HOME MENU LINK =====
-document.querySelector('#siteMenu a[href="#home"]').onclick = function(event) {
-  event.preventDefault();
-  openHome();
-};
-
-// ===== INITIAL PAGE STATE =====
-hideAllSections();
-document.getElementById("siteMenu").style.display = "none";
-document.getElementById("welcome").style.display = "block";
-
-// ===== WEBSITE COLOR THEMES =====
-(function() {
-  const allowedThemes = ["dark-green", "lavender", "ocean", "rose", "black-gold", "black-blue"];
-  const themeButtons = document.querySelectorAll(".theme-dot");
-  const storageKey = "hasanAlaminWebsiteTheme";
-
-  function applyTheme(theme, saveChoice) {
-    if (!allowedThemes.includes(theme)) theme = "dark-green";
-    document.documentElement.dataset.theme = theme;
-    themeButtons.forEach(button => {
-      const active = button.dataset.themeChoice === theme;
-      button.setAttribute("aria-pressed", active ? "true" : "false");
-    });
-    if (saveChoice) {
-      try { localStorage.setItem(storageKey, theme); } catch (error) {}
-    }
-  }
-
-  let savedTheme = "dark-green";
-  try {
-    const storedTheme = localStorage.getItem(storageKey);
-    if (allowedThemes.includes(storedTheme)) savedTheme = storedTheme;
-  } catch (error) {}
-
-  applyTheme(savedTheme, false);
-
-  themeButtons.forEach(button => {
-    button.addEventListener("click", function() {
-      applyTheme(button.dataset.themeChoice, true);
-    });
-  });
-})();
+const sectionIds=["aboutText","writingText","article1","lifeCategory","societyCategory","currentCategory","personalCategory","literatureCategory","thoughtsCategory","videos","aiDemo","goals2027"];
+function hideAllSections(){sectionIds.forEach(id=>{const el=document.getElementById(id);if(el)el.style.display="none"})}
+function showSection(id){hideAllSections();document.getElementById("siteMenu").style.display="none";document.getElementById("welcome").style.display="none";const el=document.getElementById(id);if(el)el.style.display="block"}
+function openHome(){hideAllSections();document.getElementById("siteMenu").style.display="none";document.getElementById("welcome").style.display="block"}
+function returnToMenu(){hideAllSections();document.getElementById("siteMenu").style.display="block";document.getElementById("welcome").style.display="none"}
+function openAbout(){showSection("aboutText")}function openWriting(){showSection("writingText")}function openVideos(){showSection("videos")}function openAIDemo(){showSection("aiDemo")}function open2027(){showSection("goals2027")}
+function openCategory(category){const map={life:"article1",society:"societyCategory",current:"currentCategory",personal:"personalCategory",literature:"literatureCategory",thoughts:"thoughtsCategory"};if(map[category])showSection(map[category])}
+function returnToLife(){showSection("writingText")}
+(function(){const input=document.getElementById("aiDemoInput"),send=document.getElementById("aiDemoSend"),messages=document.getElementById("aiDemoMessages");if(!input||!send||!messages)return;
+function sampleReply(question){const q=question.toLowerCase();if(/html|ওয়েবসাইট|ওয়েব ডেভেলপমেন্ট/.test(q))return "HTML হলো ওয়েবসাইটের কাঠামো তৈরির ভাষা। CSS দিয়ে ডিজাইন করা হয়, আর JavaScript দিয়ে ইন্টারঅ্যাকশন যোগ করা হয়।\n\nএটি ডেমো উত্তর—লাইভ AI উত্তর নয়।";if(/রুটিন|পড়াশোনা|শেখা/.test(q))return "একটি নমুনা ২ ঘণ্টার রুটিন:\n১. ২০ মিনিট আগের বিষয় রিভিশন\n২. ৫০ মিনিট নতুন বিষয় শেখা\n৩. ৪০ মিনিট হাতে-কলমে অনুশীলন\n৪. ১০ মিনিট শেখা বিষয় নোট করা।\n\nএটি ডেমো উত্তর।";if(/ai|কৃত্রিম বুদ্ধিমত্তা/.test(q))return "AI বা কৃত্রিম বুদ্ধিমত্তা হলো এমন প্রযুক্তি, যার মাধ্যমে কম্পিউটার ভাষা বোঝা, তথ্য বিশ্লেষণ, ছবি শনাক্তকরণ ও বিভিন্ন সমস্যা সমাধানের মতো কাজ করতে পারে।\n\nএটি একটি নমুনা উত্তর।";if(/হ্যালো|hello|সালাম|আসসালামু/.test(q))return "ওয়ালাইকুমুস সালাম! 😊 HASAN ALAMIN AI ডেমোতে স্বাগতম। কী জানতে চাও?";return "তোমার প্রশ্নটি পেয়েছি: “"+question+"”\n\nএই ডেমো সংস্করণে সীমিত নমুনা উত্তর দেওয়া হয়। পূর্ণাঙ্গ উত্তর পেতে পরবর্তী ধাপে নিরাপদ AI API সংযোগ করতে হবে।"}
+function addMessage(text,who){const bubble=document.createElement("div");bubble.className="ai-bubble "+who;bubble.textContent=text;messages.appendChild(bubble);messages.scrollTop=messages.scrollHeight}
+function submitMessage(text){const question=(text||input.value).trim();if(!question)return;addMessage(question,"user");input.value="";window.setTimeout(()=>addMessage(sampleReply(question),"bot"),350)}
+send.addEventListener("click",()=>submitMessage());input.addEventListener("keydown",event=>{if(event.key==="Enter"&&!event.shiftKey){event.preventDefault();submitMessage()}});document.querySelectorAll("#aiDemo [data-ai-prompt]").forEach(button=>button.addEventListener("click",()=>submitMessage(button.dataset.aiPrompt)))})();
+let currentQuote=0;const quotes=document.querySelectorAll(".quote"),dots=document.querySelectorAll(".quoteDot");
+function showQuote(index){if(!quotes.length||index<0||index>=quotes.length||index>=dots.length)return;quotes[currentQuote].classList.remove("active");dots[currentQuote].classList.remove("active");currentQuote=index;quotes[currentQuote].classList.add("active");dots[currentQuote].classList.add("active")}
+if(quotes.length>1&&quotes.length===dots.length)setInterval(()=>showQuote((currentQuote+1)%quotes.length),4000);
+document.getElementById("menuBtn").onclick=function(){const menu=document.getElementById("siteMenu"),welcome=document.getElementById("welcome");if(menu.style.display==="none"){hideAllSections();menu.style.display="block";welcome.style.display="none"}else{menu.style.display="none";welcome.style.display="block"}};
+document.querySelector('#siteMenu a[href="#home"]').onclick=function(event){event.preventDefault();openHome()};
+hideAllSections();document.getElementById("siteMenu").style.display="none";document.getElementById("welcome").style.display="block";
+(function(){const allowed=["dark-green","lavender","ocean","rose","black-gold","black-blue"],buttons=document.querySelectorAll(".theme-dot"),key="hasanAlaminWebsiteTheme";function apply(theme,save){if(!allowed.includes(theme))theme="dark-green";document.documentElement.dataset.theme=theme;buttons.forEach(b=>b.setAttribute("aria-pressed",b.dataset.themeChoice===theme?"true":"false"));if(save){try{localStorage.setItem(key,theme)}catch(e){}}}let saved="dark-green";try{const stored=localStorage.getItem(key);if(allowed.includes(stored))saved=stored}catch(e){}apply(saved,false);buttons.forEach(b=>b.addEventListener("click",()=>apply(b.dataset.themeChoice,true)))})();
 </script>
-
 <script>
-const SUPABASE_URL = "https://rtevxoywkcvbprafkhxr.supabase.co";
-const SUPABASE_KEY = "sb_publishable_EuPBlIzVy4ztbWnml3KEag_WinN7S5a";
-const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+const SUPABASE_URL="https://rtevxoywkcvbprafkhxr.supabase.co";
+const SUPABASE_KEY="sb_publishable_EuPBlIzVy4ztbWnml3KEag_WinN7S5a";
+const supabaseClient=supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
 </script>
 </body>
 </html>

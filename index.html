@@ -18,7 +18,7 @@ button{background:var(--button-bg);color:white;padding:12px 20px;border:0;border
 button:hover{background:var(--button-hover)}
 .card{background:transparent;width:100%;max-width:900px;margin:10px auto;padding:4px 0;border-radius:15px;box-shadow:0 8px 24px rgba(0,0,0,.18);position:relative;z-index:1}
 .header{display:flex;align-items:center;justify-content:space-between;flex-wrap:nowrap;gap:5px;margin-bottom:20px;padding-bottom:12px;border-bottom:1px solid var(--accent);animation:fadeSlideIn .9s ease both;min-width:0}
-.header h2{margin:0;color:var(--accent);font-size:clamp(14px,5vw,22px);white-space:nowrap;flex:0 1 auto;min-width:0}
+.header h2{margin:0;color:var(--accent);font-size:clamp(16px,5.2vw,25px);font-weight:800;letter-spacing:.45px;white-space:nowrap;flex:0 1 auto;min-width:0}
 .header-actions{display:flex;align-items:center;justify-content:flex-end;gap:7px;flex-shrink:0;white-space:nowrap}
 #aiAssistantBtn{width:34px;height:34px;min-width:34px;padding:0;margin:0;flex-shrink:0;border-radius:50%;display:flex;align-items:center;justify-content:center;background:var(--button-bg);border:1px solid var(--gold);color:var(--gold);cursor:pointer;box-shadow:0 0 9px color-mix(in srgb,var(--gold) 20%,transparent)}
 #aiAssistantBtn svg{width:27px;height:27px;display:block}
@@ -87,10 +87,12 @@ button:hover{background:var(--button-hover)}
 @keyframes fadeSlideIn{from{opacity:0;transform:translateY(-15px)}to{opacity:1;transform:translateY(0)}}
 @keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
 @keyframes menuFadeIn{from{opacity:0;transform:translateY(-12px)}to{opacity:1;transform:translateY(0)}}
-@media(max-width:380px){.header{gap:3px}.header h2{font-size:clamp(13px,4.5vw,18px)}.header-actions{gap:4px}#aiAssistantBtn{width:28px;height:28px;min-width:28px}#aiAssistantBtn svg{width:23px;height:23px}#themePicker{gap:3px}.theme-dot{width:10px;height:10px;min-width:10px}#menuBtn{font-size:20px;padding:7px 5px}}
+@media(max-width:380px){.header{gap:3px}.header h2{font-size:clamp(14px,4.7vw,19px);font-weight:800;letter-spacing:.2px}.header-actions{gap:4px}#aiAssistantBtn{width:28px;height:28px;min-width:28px}#aiAssistantBtn svg{width:23px;height:23px}#themePicker{gap:3px}.theme-dot{width:10px;height:10px;min-width:10px}#menuBtn{font-size:20px;padding:7px 5px}}
 #aiDemo{display:none;text-align:left;color:var(--text);padding:10px 4px 20px}
-#aiDemo .ai-shell{max-width:760px;margin:0 auto;border:1px solid var(--card-border);border-radius:18px;overflow:hidden;background:var(--card-bg);box-shadow:0 12px 32px rgba(0,0,0,.24)}
-#aiDemo .ai-top{padding:18px;background:linear-gradient(135deg,var(--soft-bg),var(--card-bg));border-bottom:1px solid var(--card-border)}
+#aiDemo .ai-shell{max-width:760px;margin:0 auto;border:1px solid var(--card-border);border-radius:18px;overflow:hidden;background:var(--card-bg);box-shadow:0 12px 32px rgba(0,0,0,.24);position:relative}
+#aiDemo .ai-close{position:absolute;top:12px;right:12px;z-index:3;width:34px;height:34px;min-width:34px;padding:0;border-radius:50%;display:flex;align-items:center;justify-content:center;background:var(--soft-bg);border:1px solid var(--gold);color:var(--gold);font-size:23px;line-height:1;cursor:pointer;box-shadow:0 3px 10px rgba(0,0,0,.22)}
+#aiDemo .ai-close:hover{background:var(--button-hover);transform:scale(1.06)}
+#aiDemo .ai-top{padding:18px 58px 18px 18px;background:linear-gradient(135deg,var(--soft-bg),var(--card-bg));border-bottom:1px solid var(--card-border)}
 #aiDemo .ai-top h2{margin:0 0 6px;color:var(--gold);font-size:22px}
 #aiDemo .ai-top p{color:var(--text);font-size:14px;margin:0;opacity:.8}
 #aiDemo .ai-status{display:inline-block;margin-top:10px;padding:5px 9px;border-radius:20px;color:var(--gold);border:1px solid var(--gold);font-size:11px}
@@ -216,8 +218,7 @@ button:hover{background:var(--button-hover)}
 <p>এইজন্যই তো— সমস্ত পৃথিবীটা সীমাহীন দুঃখ-কষ্টের আবাস্থল। আল্লাহ সুখ খুঁজতে বলছেন চিরস্থায়ী জান্নাতের। অথচ আমরা দুনিয়ায় সুখ খুঁজে বেড়ায়। মরীচিকার পিছনে ছুটতে মানুষ গুনাহের দিকে পা বাড়ায়। আলেয়ার বিষের পেয়ালা ভর্তি শরাব পান করতে করতে মানুষ পরকালের যাত্রা শুরু করে।</p><p>এটার পরিবর্তন জরুরি। আল্লাহ মানুষের বোধোদয় দিন।</p></div>
 <div id="videos" style="display:none"><h2 style="color:var(--accent)">ভিডিও</h2><p style="color:var(--text)">ভিডিও শিগগিরই যুক্ত হবে, ইনশাআল্লাহ।</p><p><a href="#" onclick="returnToMenu();return false" style="color:var(--accent);text-decoration:none">← ফিরে যাও</a></p></div>
 <section id="aiDemo">
-<a class="ai-back" href="#" onclick="returnToMenu();return false">← মূল মেনুতে ফিরে যাও</a>
-<div class="ai-shell"><div class="ai-top"><h2>HASAN ALAMIN <span style="color:var(--accent)">AI</span></h2><p>আল-আমীনের ব্যক্তিগত সহকারী</p><span class="ai-status">DEMO MODE · পরীক্ষামূলক সংস্করণ</span></div>
+<div class="ai-shell"><button type="button" class="ai-close" aria-label="বন্ধ করে হোমে ফিরে যান" title="বন্ধ করুন" onclick="openHome()">×</button><div class="ai-top"><h2>HASAN ALAMIN <span style="color:var(--accent)">AI</span></h2><p>আল-আমীনের ব্যক্তিগত সহকারী</p><span class="ai-status">DEMO MODE · পরীক্ষামূলক সংস্করণ</span></div>
 <div class="ai-messages" id="aiDemoMessages" aria-live="polite"><div class="ai-bubble bot">আসসালামু আলাইকুম! আমি HASAN ALAMIN AI-এর ডেমো।\n\nএখানে কিছু নমুনা প্রশ্ন করে দেখতে পারো। এই সংস্করণে উত্তরগুলো পূর্বনির্ধারিত; এখনো লাইভ AI মডেল যুক্ত হয়নি।</div></div>
 <div class="ai-suggestions"><button type="button" data-ai-prompt="HTML কী?">HTML কী?</button><button type="button" data-ai-prompt="আমাকে একটি দৈনিক রুটিন দাও">দৈনিক রুটিন</button><button type="button" data-ai-prompt="AI কীভাবে কাজ করে?">AI কীভাবে কাজ করে?</button></div>
 <div class="ai-compose"><textarea id="aiDemoInput" rows="1" placeholder="এখানে প্রশ্ন লিখো..." aria-label="AI demo message"></textarea><button type="button" id="aiDemoSend">পাঠাও</button></div><div class="ai-note">এটি শুধু ডেমো। বাস্তব AI সংযোগ পরবর্তী ধাপে যুক্ত হবে।</div></div></section>

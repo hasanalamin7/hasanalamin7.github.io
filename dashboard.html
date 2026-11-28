@@ -64,7 +64,7 @@ $('menuToggle').addEventListener('click',()=>{const open=document.body.classList
 function configureAccountLabels(){
  if(!isNahida())return;
  const incomeOption=$('transactionType').querySelector('option[value="Income"]');
- if(incomeOption)incomeOption.textContent='Balance';
+ if(incomeOption)incomeOption.textContent='Add Balance';
  const incomeFilter=document.querySelector('[data-filter="Income"]');
  if(incomeFilter)incomeFilter.textContent='Balance';
  $('totalIncome').previousElementSibling.textContent='Total Balance';
